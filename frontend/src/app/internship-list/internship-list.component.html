@@ -1,0 +1,51 @@
+<table mat-table style="width: 100%" [dataSource]="internships" matSort class="mat-elevation-z8">
+
+  <!-- Title Column -->
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+  </ng-container>
+
+  <!-- Application Status -->
+  <ng-container matColumnDef="application_status">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Application Status</th>
+    <td mat-cell *matCellDef="let element"> {{element.application_status}} </td>
+  </ng-container>
+
+  <!-- Approval Status -->
+  <ng-container matColumnDef="approval_status">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Approval Status</th>
+    <td mat-cell *matCellDef="let element">{{element.approval_status}}</td>
+  </ng-container>
+
+  <!-- Company -->
+  <ng-container matColumnDef="company">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Company</th>
+    <td mat-cell *matCellDef="let element">{{element.company.name}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="approve">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-button color="primary" (click)="approve(element.pk)" *ngIf="is_lecturer">Approve</button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="reject">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-button color="primary" (click)="reject(element.pk)" *ngIf="is_lecturer">Reject</button>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="update">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-button color="primary" [routerLink]="['/internship-form', element.pk]" *ngIf="!is_lecturer">Edit Application Status</button>
+    </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<button mat-button routerLink="/internship-form">New Internship</button>

@@ -1,0 +1,15 @@
+<form [formGroup]="companyFormGroup" (ngSubmit)="createOrUpdateCompany()">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput type="text" placeholder="Title" formControlName="name">
+    <mat-error *ngIf="companyFormGroup.controls['name']">
+      Title is required
+    </mat-error>
+  </mat-form-field>
+  <mat-card-actions align="start">
+    <button mat-raised-button color="primary" [disabled]="!companyFormGroup.valid" (click)="createOrUpdateCompany()" [routerLink]="'/company-list'">Submit</button>
+  </mat-card-actions>
+  <mat-card-actions align="start">
+    <button mat-raised-button color="primary" [routerLink]="'/company-list'">Cancel</button>
+  </mat-card-actions>
+</form>

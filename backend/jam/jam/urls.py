@@ -24,6 +24,7 @@ from rest_framework_simplejwt.views import (
 )
 
 from userapi import views as user_views
+from jamapi import views as jam_views
 
 urlpatterns = [
     # Django Admin URLs:
@@ -43,10 +44,36 @@ urlpatterns = [
     path('api/users/<user_pk>/groups/<group_pk>', user_views.UserGroupViewSet.as_view({"delete" : "destroy" , "get" : "retrieve" })),
     path('api/groups',user_views.GroupViewSet.as_view({'get':"list" , "post" : "create"})),
     path('api/groups/<group_pk>',user_views.GroupViewSet.as_view({'put':"update" , "delete" : "destroy","get":"retrieve"})),
+
+    # jam urls
+
+    #students
+    path('api/students/', jam_views.StudentViewSet.as_view({'get': 'list', 'post': 'create'})),
+    path('api/students/<student_pk>', jam_views.StudentViewSet.as_view({'get': 'retrieve'})),
+
+    #lecturers
+    path('api/lecturers/', jam_views.LecturerViewSet.as_view({'get': 'list', 'post': 'create'})),
+    path('api/lecturers/<lecturer_pk>', jam_views.LecturerViewSet.as_view({'delete': 'destroy', 'get': 'retrieve', 'put': 'update'})),
+
+    #degree_programmes
+    path('api/degree-programmes/', jam_views.DegreeProgramViewSet.as_view({'get': 'list', 'post': 'create'})),
+    path('api/degree-programmes/<dp_pk>', jam_views.DegreeProgramViewSet.as_view({'get': 'retrieve'})),
+
+    #internships
+    path('api/internships/', jam_views.InternshipViewSet.as_view({'get': 'list', 'post': 'create'})),
+    path('api/internships/<internship_pk>', jam_views.InternshipViewSet.as_view({'get': 'retrieve', 'put': 'update'})),
+
+    #vacant_positions
+    path('api/vacant-positions/', jam_views.VacantPositionViewSet.as_view({'get': 'list', 'post': 'create'})),
+    path('api/vacant-positions/<vacant_position_pk>', jam_views.VacantPositionViewSet.as_view({'get': 'retrieve', 'put': 'update'})),
+
+    #companies
+    path('api/companies/', jam_views.CompanyViewSet.as_view({'get': 'list', 'post': 'create'})),
+    path('api/companies/<company_pk>', jam_views.CompanyViewSet.as_view({'get': 'retrieve', 'put': 'update'})),
 ] 
 
 if settings.DEBUG:
     # Adding "static" to the urlpatterns makes all file uploads visible in the admin. 
     # This is OK on development servers (hence, the settings.DEBUG check) but should never 
     # be deployed to production environments as it exposes all uploads to the word. 
-    urpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

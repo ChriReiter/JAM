@@ -1,0 +1,38 @@
+<table>
+  <tr>
+    <th>title</th>
+    <th>description</th>
+    <th>company</th>
+    <th>approval status</th>
+    <th>currently open</th>
+    <th>degree programs</th>
+    <th>approve</th>
+    <th>reject</th>
+    <th>report internship</th>
+  </tr>
+  <tr *ngFor="let vacancy of vacancies_list">
+    <td>{{vacancy.title}}</td>
+    <td>{{vacancy.description}}</td>
+    <td>{{vacancy.company.name}}</td>
+    <td>{{vacancy.approval_status}}</td>
+    <td>{{vacancy.currently_open}}</td>
+    <td>
+      <div *ngFor="let degree_program of vacancy.degree_program">
+        {{degree_program.abbreviation}}
+      </div>
+    </td>
+    <td>
+      <button (click)="approve(vacancy.pk)">Approve</button>
+    </td>
+    <td>
+      <button (click)="reject(vacancy.pk)">Reject</button>
+    </td>
+    <td>
+      <button (click)="report_as_internship(vacancy.pk)">Report Interest</button>
+    </td>
+  </tr>
+</table>
+
+<div>
+  <button [routerLink]="['/vacancies-form']">Report Vacant Position</button>
+</div>
