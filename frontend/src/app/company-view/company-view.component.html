@@ -73,10 +73,6 @@
     <th>name</th>
     <th>orb_num</th>
   </tr>
-  <tr *ngFor="let lookalike of lookalikes">
-    <td>{{lookalike.name}}</td>
-    <a [routerLink]="['/company-view/', lookalike.orb_num]" (click)="paramRefresh(lookalike.orb_num.toString())">View {{lookalike.name}}</a>
-  </tr>
 </table>
 
 

@@ -2,8 +2,15 @@ import { Component } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {AppRoutingModule} from "../app-routing.module";
 import {ActivatedRoute, RouterModule} from "@angular/router";
-import {Address, API_Request, Company_API, Company_API_Result} from "../company-list/company-list.component";
-
+import { API_Request} from "../company-list/company-list.component";
+export interface Address {
+  address1: string;
+  address2: string;
+  country: string;
+  state: string;
+  zip: string;
+  city: string;
+}
 export interface Company_API_All {
   orb_num: number;
   name: string;
@@ -68,7 +75,6 @@ export class CompanyViewComponent {
   url: string = ""
   top_categories: Category[] = []
 
-  lookalikes: Company_API_Result[] = []
   url_lookalikes: string = ""
   displayedColumns: string[] = ['name', 'link']
 
@@ -173,11 +179,7 @@ export class CompanyViewComponent {
         if (a.weight > b.weight) return -1;
         return 0
       }).slice(0, 5)
-      if (this.top_categories.length > 0) {
-        this.http.get<API_Request>(this.url_lookalikes).subscribe(request => {
-          this.lookalikes = request.results
-        })
-      }
+
     })
   }
 }

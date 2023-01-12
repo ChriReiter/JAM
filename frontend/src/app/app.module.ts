@@ -29,6 +29,8 @@ import { VacanciesFormComponent } from './vacancies-form/vacancies-form.componen
 import {JwtModule} from "@auth0/angular-jwt";
 import { CompanyViewComponent } from './company-view/company-view.component';
 import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -47,32 +49,34 @@ export function tokenGetter() {
     VacanciesFormComponent,
     CompanyViewComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatMenuModule,
-    MatButtonModule,
-    MatTableModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    MatCardModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatCheckboxModule,
-    MatSnackBarModule,
-    NgxMatSelectSearchModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter,
-        allowedDomains: ['localhost:8000']
-      }
-    }),
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatTableModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        MatCardModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatCheckboxModule,
+        MatSnackBarModule,
+        NgxMatSelectSearchModule,
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: tokenGetter,
+                allowedDomains: ['localhost:8000']
+            }
+        }),
+        MatPaginatorModule,
+        MatProgressSpinnerModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
