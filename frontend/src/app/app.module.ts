@@ -29,6 +29,8 @@ import { VacanciesFormComponent } from './vacancies-form/vacancies-form.componen
 import {JwtModule} from "@auth0/angular-jwt";
 import { CompanyViewComponent } from './company-view/company-view.component';
 import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
+import { VacanciesViewComponent } from './vacancies-view/vacancies-view.component';
+import {MatDividerModule} from "@angular/material/divider";
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -45,7 +47,8 @@ export function tokenGetter() {
     InternshipFormComponent,
     VacanciesListComponent,
     VacanciesFormComponent,
-    CompanyViewComponent
+    CompanyViewComponent,
+    VacanciesViewComponent
   ],
   imports: [
     BrowserModule,
@@ -72,6 +75,7 @@ export function tokenGetter() {
         allowedDomains: ['localhost:8000']
       }
     }),
+    MatDividerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

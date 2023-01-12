@@ -1,0 +1,20 @@
+<mat-card class="position-card">
+  <mat-card-header>
+    <mat-card-title class="position-title">{{this.vacancy.title}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p class="position-description">Job Description: {{this.vacancy.description}}</p>
+    <mat-divider></mat-divider>
+    <div class="position-company">
+      <p>Company: {{this.vacancy.company.name}}</p>
+    </div>
+    <div class="approval-status">
+      <p>Approval Status: {{this.vacancy.approval_status}}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <button mat-button color="primary" (click)="report_as_internship(this.vacancy.pk)">Report as Internship</button>
+    <button mat-button color="primary" [routerLink]="'/vacancies-list/'">Back</button>
+    <button mat-button color="primary" (click)="approve()">Accept</button>
+    <button mat-button color="primary" (click)="reject()">Reject</button>
+  </mat-card-content>
+</mat-card>

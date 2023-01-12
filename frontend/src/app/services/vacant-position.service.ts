@@ -47,4 +47,6 @@ export class VacantPositionService {
     updateVacancy(vacancy: VacantPosition) {
         return this.http.put<VacantPosition>(`${environment.apiBaseUrl}/vacant-positions/` + vacancy.pk, vacancy)
     }
+
+
 }

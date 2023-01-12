@@ -14,6 +14,8 @@ export class VacanciesListComponent {
   username: string | null = null;
   student: Student[] = [];
 
+  displayedColumns: string[] = ['title', 'company', 'view-button'];
+
   constructor(private router: Router,
               private vacantPositionService: VacantPositionService,
               private userService: UserService,
@@ -32,52 +34,5 @@ export class VacanciesListComponent {
 
 
     }
-  }
-
-  approve(pk: number) {
-    this.vacantPositionService.getVacancy(pk).subscribe( vacancy => {
-      //vacancy.approval_status = "y"
-      this.vacantPositionService.updateVacancy(vacancy).subscribe( () => {
-        console.log("approved" + pk)
-        this.ngOnInit()
-      })
-    })
-
-  }
-
-  reject(pk: number) {
-    this.vacantPositionService.getVacancy(pk).subscribe( vacancy => {
-
-      this.vacantPositionService.updateVacancy(vacancy).subscribe( () => {
-        this.ngOnInit()
-      })
-    })
-  }
-
-  report_as_internship(pk: number) {
-    this.vacantPositionService.getVacancy(pk).subscribe( vacancy => {
-      let vacantPosition: VacantPosition = vacancy
-      if (this.student != null) {
-        console.log(this.student[0].pk)
-        let internship: Internship2 = {
-          pk: 0,
-          title: vacantPosition.title,
-          description: vacantPosition.description,
-          application_status: "o",
-          approval_status: "?",
-          student: this.student[0].pk,
-          company: vacantPosition.company.pk
-        }
-        this.internshipService.createInternships(internship).subscribe( response => {
-          console.log("successfully created internship: " + response)
-          this.router.navigate(['internship-list'])
-        })
-
-      }
-
-
-    })
-
-
   }
 }
