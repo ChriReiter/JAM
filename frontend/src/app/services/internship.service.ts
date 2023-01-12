@@ -14,6 +14,7 @@ export interface Internship {
   company: Company_DB;
 }
 
+////TODO: Get To gork with one Interface
 export interface Internship2 {
   pk: number;
   title: string;

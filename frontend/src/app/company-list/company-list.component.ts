@@ -32,7 +32,7 @@ export interface Address {
   zip: string;
   city: string;
 }
-
+////TODO: API Interfaces redundancy check
 export interface API_Request {
   request_fields: undefined;
   results: Company_API_Result[];
