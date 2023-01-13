@@ -31,6 +31,9 @@ import { CompanyViewComponent } from './company-view/company-view.component';
 import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatListModule} from "@angular/material/list";
+import {MatIconModule} from "@angular/material/icon";
+import {MatGridListModule} from "@angular/material/grid-list";
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -49,34 +52,37 @@ export function tokenGetter() {
     VacanciesFormComponent,
     CompanyViewComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        MatToolbarModule,
-        MatMenuModule,
-        MatButtonModule,
-        MatTableModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        MatInputModule,
-        MatCardModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatCheckboxModule,
-        MatSnackBarModule,
-        NgxMatSelectSearchModule,
-        JwtModule.forRoot({
-            config: {
-                tokenGetter: tokenGetter,
-                allowedDomains: ['localhost:8000']
-            }
-        }),
-        MatPaginatorModule,
-        MatProgressSpinnerModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatCardModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
+    MatSnackBarModule,
+    NgxMatSelectSearchModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:8000']
+      }
+    }),
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatListModule,
+    MatIconModule,
+    MatGridListModule,
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

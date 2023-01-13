@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Company_DB, CompanyDbService} from "../services/company.service";
 import {HttpClient} from "@angular/common/http";
 import {FormControl, FormGroup} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 //import {MatSnackBar} from "@angular/material/snack-bar";
 import {DegreeProgram} from "../services/degree-program-service";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -30,7 +30,9 @@ export interface API_Request {
   styleUrls: ['./company-list.component.scss']
 })
 export class CompanyListComponent implements OnInit {
-  onRowClicked({row}: { row: any }) {
+  //onRowClicked({row}: { row: any }) {
+  onRowClicked(row: any) {
+    this.router.navigate([`company-view/${row.orb_num}`])
     console.log('Row clicked: ', row);
   }
   dataSource: CompanyDataSource;
@@ -44,6 +46,7 @@ export class CompanyListComponent implements OnInit {
 
   constructor(private http: HttpClient,
               public route: ActivatedRoute,
+              private router: Router,
               private snackbar: MatSnackBar,
               private companyAPI:CompanyAPIService
               ) {
@@ -75,3 +78,4 @@ export class CompanyListComponent implements OnInit {
     this.dataSource.loadCompanies(this.filterByName, this.pageSize,this.pageIndex * this.pageSize);
   }
 }
+
