@@ -31,27 +31,25 @@ export class CompanyAPIService {
         map((res: any) =>  res["results"])
       );
       test.push(result);
-
-
       pageSize -= 10;
       pageIndex+=10;
     }
-
     const mergedObservable = test.reduce((acc, curr) => acc.pipe(
       concatMap(val1 => curr.pipe(
         map(val2 => [...val1, ...val2])
       ))
     ), of([]));
-    // const mergedObservable = test.pipe(
-    //   concatMap(val1 => test2.pipe(
-    //     map(val2 => [...val1, ...val2])
-    //   ))
-    // );
-    //const mergedObservable = concat(test, test2).pipe(map(values => [].concat(...values)));
-    mergedObservable.pipe(mergeAll()).subscribe(val => console.log(val));
   return mergedObservable;
-    // this.http.get<API_Request>('https://api.orb-intelligence.com/3/search/?api_key=c66c5dad-395c-4ec6-afdf-7b78eb94166a&limit=' + filterLimit + '&name=' + filterName + "&offset=" + offset).subscribe(request => {
-    //   // return request.results
-    // })
+  }
+
+  getCompanyDetails(orb_num:string):Observable<Company_API_All>{
+
+    let result = this.http.get(`https://api.orb-intelligence.com/3/fetch/${orb_num}`, {
+      params: new HttpParams()
+        .set('api_key', 'c66c5dad-395c-4ec6-afdf-7b78eb94166a')
+    }).pipe(
+      map((res: any) =>  res)
+    );
+    return result;
   }
 }

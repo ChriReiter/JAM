@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {AppRoutingModule} from "../app-routing.module";
 import {ActivatedRoute, RouterModule} from "@angular/router";
 import { API_Request} from "../company-list/company-list.component";
+import {CompanyAPIService} from "../services/company-api.service";
 export interface Address {
   address1: string;
   address2: string;
@@ -29,7 +30,6 @@ export interface Company_API_All {
   facebook_account: SocialAccount;
   twitter_account: SocialAccount;
   technologies: Technology[];
-  ranking_positions: Ranking[];
   favicon: string;
   phone: string;
   email: string;
@@ -53,11 +53,10 @@ export interface Ranking {
   templateUrl: './company-view.component.html',
   styleUrls: ['./company-view.component.scss']
 })
-export class CompanyViewComponent {
+export class CompanyViewComponent implements OnInit {
 
-  orb_num: string | null = ""
+  orb_num: string = ""
   url: string = ""
-  url_lookalikes: string = ""
   displayedColumns: string[] = ['name', 'link']
   address: Address = {
     address1: "unknown",
@@ -98,7 +97,6 @@ export class CompanyViewComponent {
     facebook_account: this.facebookAccount,
     twitter_account: this.twitterAccount,
     technologies: [],
-    ranking_positions: [],
     favicon: "",
     phone: "",
     email: "",
@@ -107,51 +105,15 @@ export class CompanyViewComponent {
   }
 
   constructor(private http: HttpClient, private route: ActivatedRoute,
-              private router: RouterModule) {
+              private router: RouterModule,
+              private companyAPIService: CompanyAPIService) {
 
   }
 
   ngOnInit(): void {
-    this.orb_num = this.route.snapshot.paramMap.get('orb_num');
-    this.loadCompanies(this.orb_num)
-  }
-
-  paramRefresh(orb_num: string) {
-    this.loadCompanies(orb_num)
-  }
-
-  loadCompanies(orb_num: string | null) {
-    this.url = "https://api.orb-intelligence.com/3/fetch/"
-    this.url += orb_num
-    this.url += "/?api_key=c66c5dad-395c-4ec6-afdf-7b78eb94166a"
-
-    this.http.get<Company_API_All>(this.url).subscribe(company => {
-      this.company = {
-        orb_num: company.orb_num,
-        name: company.name,
-        description: company.description,
-        entity_type: company.entity_type,
-        address: company.address,
-        parent_comp: company.parent_comp,
-        ultimate_parent_comp: company.ultimate_parent_comp,
-        other_names: company.other_names,
-        website: company.website,
-        industry: company.industry,
-        employees: company.employees,
-        revenue: company.revenue,
-        year_founded: company.year_founded,
-        linkedin_account: company.linkedin_account,
-        facebook_account: company.facebook_account,
-        twitter_account: company.twitter_account,
-        technologies: company.technologies,
-        ranking_positions: company.ranking_positions,
-        favicon: company.favicon,
-        phone: company.phone,
-        email: company.email,
-        latitude: company.latitude,
-        longitude: company.longitude
-      }
-
-    })
+    const id = this.route.snapshot.paramMap.get('orb_num');
+    if(id){
+      this.companyAPIService.getCompanyDetails(id).subscribe((details:Company_API_All) => this.company = details);
+    }
   }
 }
