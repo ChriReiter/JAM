@@ -15,11 +15,11 @@
   <ng-container matColumnDef="view-button">
     <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
     <td *matCellDef="let element">
-      <button mat-button color="primary" [routerLink]="'/vacancies-view/' + element.pk">View Vacancy</button>
+      <button mat-button color="primary" [routerLink]="'/vacancies-view/' + element.pk">Details</button>
     </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<button mat-button color="primary" routerLink="/internship-form">Report Vacancy</button>
+<button mat-button color="primary" routerLink="/vacancies-form">Report Vacancy</button>

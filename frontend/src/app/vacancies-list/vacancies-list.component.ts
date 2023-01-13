@@ -23,15 +23,23 @@ export class VacanciesListComponent {
   }
 
   ngOnInit() {
-    this.vacantPositionService.getVacancies().subscribe( vacancies => {
+    this.vacantPositionService.getOpenVacancies().subscribe( vacancies => {
       this.vacancies_list = vacancies
     })
     this.username = sessionStorage.getItem("username")
     if (this.username != null) {
       this.userService.getStudentByUsername(this.username).subscribe( student => {
         this.student = student
+        if (this.student[0] != null) {
+          this.vacantPositionService.getVacanciesForStudent(this.student[0].pk).subscribe( vacancies => {
+            this.vacancies_list = vacancies
+          })
+        } else {
+          this.vacantPositionService.getVacanciesForLecturer(1).subscribe( vacancies => {
+            this.vacancies_list = vacancies
+          })
+        }
       })
-
 
     }
   }

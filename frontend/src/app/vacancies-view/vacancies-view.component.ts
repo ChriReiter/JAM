@@ -33,6 +33,8 @@ export class VacanciesViewComponent {
   username: string | null = null
   student: Student[] = []
 
+  isLecturer: boolean = false
+
   constructor(private http: HttpClient, private route: ActivatedRoute,
               private router: Router, private vacantPositionService: VacantPositionService,
               private internshipService: InternshipService, private userService: UserService) {
@@ -51,6 +53,8 @@ export class VacanciesViewComponent {
         this.student = student
       })
     }
+
+    this.isLecturer = this.userService.isLecturer(this.username)
 
   }
 
@@ -73,16 +77,31 @@ export class VacanciesViewComponent {
       }
     })
   }
-
+  //approval status to "y"
   approve() {
     this.vacancy.approval_status = "y"
     this.vacantPositionService.updateVacancy(this.vacancy).subscribe( () => {
       this.ngOnInit()
     })
   }
-
+  //approval status to "y"
   reject() {
     this.vacancy.approval_status = "n"
+    this.vacantPositionService.updateVacancy(this.vacancy).subscribe( () => {
+      this.ngOnInit()
+    })
+  }
+  //set currently_open to false
+  close() {
+    this.vacancy.currently_open = false
+    this.vacantPositionService.updateVacancy(this.vacancy).subscribe( () => {
+      this.ngOnInit()
+    })
+  }
+  //set currently_open to false, approval status to "n"
+  delete() {
+    this.vacancy.approval_status = "n"
+    this.vacancy.currently_open = false
     this.vacantPositionService.updateVacancy(this.vacancy).subscribe( () => {
       this.ngOnInit()
     })

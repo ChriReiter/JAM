@@ -12,9 +12,15 @@
       <p>Approval Status: {{this.vacancy.approval_status}}</p>
     </div>
     <mat-divider></mat-divider>
-    <button mat-button color="primary" (click)="report_as_internship(this.vacancy.pk)">Report as Internship</button>
+    <div *ngIf="!this.isLecturer">
+      <button mat-button color="primary" (click)="report_as_internship(this.vacancy.pk)">Report as Internship</button>
+    </div>
     <button mat-button color="primary" [routerLink]="'/vacancies-list/'">Back</button>
-    <button mat-button color="primary" (click)="approve()">Accept</button>
-    <button mat-button color="primary" (click)="reject()">Reject</button>
+    <div *ngIf="this.isLecturer">
+      <button mat-button color="primary" (click)="approve()">Accept</button>
+      <button mat-button color="primary" (click)="reject()">Reject</button>
+      <button mat-button color="primary" (click)="close()" [routerLink]="'/vacancies-list/'">Closed</button>
+      <button mat-button color="primary" (click)="delete()" [routerLink]="'/vacancies-list/'">Delete</button>
+    </div>
   </mat-card-content>
 </mat-card>

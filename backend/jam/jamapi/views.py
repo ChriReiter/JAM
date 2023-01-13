@@ -188,6 +188,18 @@ class VacantPositionViewSet(viewsets.ViewSet):
 
     def list(self, request):
         queryset = models.VacantPosition.objects.all()
+        if request.GET.get("is-open") is not None:
+            queryset = models.VacantPosition.objects.filter(currently_open=request.GET.get("is-open"))
+        if request.GET.get("lecturer") is not None:
+            queryset = models.VacantPosition.objects.filter(currently_open=True)
+            queryset = queryset.filter(approval_status="?")
+            lecturer = models.Lecturer.objects.filter(pk=request.GET.get("lecturer"))[0]
+            queryset = queryset.filter(degree_program__lecturer=lecturer)
+        if request.GET.get("student") is not None:
+            queryset = models.VacantPosition.objects.filter(currently_open=True)
+            queryset = queryset.filter(approval_status="y")
+            student = models.Student.objects.filter(pk=request.GET.get("student"))[0]
+            queryset = queryset.filter(degree_program__student=student)
         serializer = serializers.VacantPositionSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
 
