@@ -5,37 +5,43 @@ from .models import (
     DegreeProgram,
     Student,
     Internship,
-    Lecturer
+    Lecturer, CompanyDetail
 )
 
-class CompanyAdmin(admin.ModelAdmin):
 
+class CompanyAdmin(admin.ModelAdmin):
     list_display = ["name"]
 
-class VacantPositionAdmin(admin.ModelAdmin):
 
+class VacantPositionAdmin(admin.ModelAdmin):
     list_display = ["title", "description"]
 
-class DegreeProgramAdmin(admin.ModelAdmin):
 
+class DegreeProgramAdmin(admin.ModelAdmin):
     list_display = ["name", "abbreviation", "current_class"]
 
-class StudentAdmin(admin.ModelAdmin):
 
+class StudentAdmin(admin.ModelAdmin):
     list_display = ["firstname", "lastname", "matriculation_no", "email"]
 
-class InternshipAdmin(admin.ModelAdmin):
 
+class InternshipAdmin(admin.ModelAdmin):
     list_display = ["title", "description", "application_status", "approval_status"]
 
 
 class LecturerAdmin(admin.ModelAdmin):
-
     list_display = ["firstname", "lastname", "email"]
 
-admin.site.register(Company,CompanyAdmin)
-admin.site.register(VacantPosition,VacantPositionAdmin)
-admin.site.register(DegreeProgram,DegreeProgramAdmin)
-admin.site.register(Student,StudentAdmin)
-admin.site.register(Internship,InternshipAdmin)
-admin.site.register(Lecturer,LecturerAdmin)
+
+class CompanyDetailAdmin(admin.ModelAdmin):
+    list_display = ['name']
+    search_fields = ['name']
+
+
+admin.site.register(Company, CompanyAdmin)
+admin.site.register(VacantPosition, VacantPositionAdmin)
+admin.site.register(DegreeProgram, DegreeProgramAdmin)
+admin.site.register(Student, StudentAdmin)
+admin.site.register(Internship, InternshipAdmin)
+admin.site.register(Lecturer, LecturerAdmin)
+admin.site.register(CompanyDetail)
