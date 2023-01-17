@@ -60,13 +60,14 @@
     </mat-card-content>
   </mat-card>
 
-
-
-
-
-
-
-
+  <div>
+    <a mat-raised-button [routerLink]="['/company-form/' + company.orb_num]">Edit</a>
+  </div>
+  <div>
+    <a mat-raised-button [routerLink]="['/company-list']">Approve</a>
+  </div>
+  <div>
+    <a mat-raised-button [routerLink]="['/company-list']">Deny</a>
+  </div>
 
 </div>
-

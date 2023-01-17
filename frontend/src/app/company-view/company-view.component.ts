@@ -20,7 +20,6 @@ export interface Company_API_All {
   address: Address;
   parent_comp: string;
   ultimate_parent_comp: string;
-  other_names: string[];
   website: string;
   industry: string;
   employees: number;
@@ -87,7 +86,6 @@ export class CompanyViewComponent implements OnInit {
     address: this.address,
     parent_comp: "",
     ultimate_parent_comp: "",
-    other_names: [],
     website: "",
     industry: "",
     employees: 0,
