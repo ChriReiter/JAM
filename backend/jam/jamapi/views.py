@@ -17,7 +17,6 @@ from .serializers import LecturerSerializer, InternshipSerializer, CompanyDetail
 
 class StudentViewSet(viewsets.ViewSet):
 
-    @staticmethod
     def list(self, request):
         queryset = models.Student.objects.all()
         if request.GET.get("username") is not None:
@@ -25,7 +24,6 @@ class StudentViewSet(viewsets.ViewSet):
         serializer = serializers.StudentSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
 
-    @staticmethod
     def create(self, request):
         degree_program = models.DegreeProgram.objects.get(pk=request.data["degree_program"])
         student = models.Student.objects.create(
@@ -40,7 +38,6 @@ class StudentViewSet(viewsets.ViewSet):
         serializer = serializers.StudentSerializer(student)
         return Response(serializer.data, status=201)
 
-    @staticmethod
     def retrieve(self, request, student_pk=None):
         student = models.Student.objects.get(pk=student_pk)
         serializer = serializers.StudentSerializer(student)
@@ -49,13 +46,11 @@ class StudentViewSet(viewsets.ViewSet):
 
 class LecturerViewSet(viewsets.ViewSet):
 
-    @staticmethod
     def list(self, request):
         queryset = models.Lecturer.objects.all()
         serializer = serializers.LecturerSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
 
-    @staticmethod
     def create(self, request):
         lecturer = models.Lecturer.objects.create(
             firstname=request.data["firstname"],
@@ -70,7 +65,6 @@ class LecturerViewSet(viewsets.ViewSet):
 
 class DegreeProgramViewSet(viewsets.ViewSet):
 
-    @staticmethod
     def list(self, request):
         queryset = models.DegreeProgram.objects.all()
         if request.GET.get("username") is not None:
@@ -78,7 +72,6 @@ class DegreeProgramViewSet(viewsets.ViewSet):
         serializer = serializers.DegreeProgramSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
 
-    @staticmethod
     def create(self, request):
         degree_program = models.DegreeProgram.objects.create(
             name=request.data["name"],
@@ -95,7 +88,6 @@ class DegreeProgramViewSet(viewsets.ViewSet):
         serializer = serializers.DegreeProgramSerializer(degree_program)
         return Response(serializer.data, status=201)
 
-    @staticmethod
     def retrieve(self, request, dp_pk=None):
         degree_program = models.DegreeProgram.objects.get(pk=dp_pk)
         serializer = serializers.DegreeProgramSerializer(degree_program)
@@ -104,7 +96,6 @@ class DegreeProgramViewSet(viewsets.ViewSet):
 
 class InternshipViewSet(viewsets.ViewSet):
 
-    @staticmethod
     def list(self, request):
         queryset = models.Internship.objects.all()
         if request.GET.get("dp") is not None:
@@ -115,7 +106,6 @@ class InternshipViewSet(viewsets.ViewSet):
         serializer = serializers.InternshipSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
 
-    @staticmethod
     def create(self, request):
         student = models.Student.objects.get(pk=request.data["student"])
         company = models.Company.objects.get(pk=request.data["company"])
@@ -131,13 +121,11 @@ class InternshipViewSet(viewsets.ViewSet):
         serializer = serializers.InternshipSerializer(internship)
         return Response(serializer.data, status=201)
 
-    @staticmethod
     def retrieve(self, request, internship_pk=None):
         internship = models.Internship.objects.get(pk=internship_pk)
         serializer = serializers.InternshipSerializer(internship)
         return Response(serializer.data, status=200)
 
-    @staticmethod
     def update(sef, request, internship_pk=None):
         internship = models.Internship.objects.get(pk=internship_pk)
         internship.title = request.data["title"]
@@ -151,7 +139,6 @@ class InternshipViewSet(viewsets.ViewSet):
 
 class CompanyViewSet(viewsets.ViewSet):
 
-    @staticmethod
     def list(request):
         queryset = models.Company.objects.all()
         if request.GET.get("dp") is not None:
@@ -165,7 +152,6 @@ class CompanyViewSet(viewsets.ViewSet):
         serializer = serializers.CompanySerializer(queryset, many=True)
         return Response(serializer.data, status=200)
 
-    @staticmethod
     def create(self, request):
         company = models.Company.objects.create(
             name=request.data["name"],
@@ -177,13 +163,11 @@ class CompanyViewSet(viewsets.ViewSet):
         serializer = serializers.CompanySerializer(company)
         return Response(serializer.data, status=201)
 
-    @staticmethod
     def retrieve(self, request, company_pk=None):
         company = models.Company.objects.get(pk=company_pk)
         serializer = serializers.CompanySerializer(company)
         return Response(serializer.data, status=200)
 
-    @staticmethod
     def update(self, request, company_pk=None):
         company = models.Company.objects.get(pk=company_pk)
         company.name = request.data["name"]
@@ -204,19 +188,16 @@ class CompanyViewSet(viewsets.ViewSet):
 
 class VacantPositionViewSet(viewsets.ViewSet):
 
-    @staticmethod
     def list(self, request):
         queryset = models.VacantPosition.objects.all()
         serializer = serializers.VacantPositionSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
 
-    @staticmethod
     def retrieve(self, request, vacant_position_pk=None):
         vacant_position = models.VacantPosition.objects.get(pk=vacant_position_pk)
         serializer = serializers.VacantPositionSerializer(vacant_position)
         return Response(serializer.data, status=200)
 
-    @staticmethod
     def create(self, request):
         company = models.Company.objects.get(pk=request.data["company"])
         vacant_position = models.VacantPosition.objects.create(
@@ -231,8 +212,7 @@ class VacantPositionViewSet(viewsets.ViewSet):
         serializer = serializers.VacantPositionSerializer(vacant_position)
         return Response(serializer.data, status=201)
 
-    @staticmethod
-    def update(sef, request, vacant_position_pk=None):
+    def update(self, request, vacant_position_pk=None):
         vacant_position = models.VacantPosition.objects.get(pk=vacant_position_pk)
         vacant_position.title = request.data["title"]
         vacant_position.description = request.data["description"]
@@ -246,3 +226,24 @@ class VacantPositionViewSet(viewsets.ViewSet):
 class CompanyDetailViewSet(viewsets.ModelViewSet):
     queryset = CompanyDetail.objects.all()
     serializer_class = CompanyDetailSerializer
+    def retrieve(self, request, company_pk=None):
+        company_detail = models.CompanyDetail.objects.get(pk=company_pk)
+        serializer = serializers.CompanyDetailSerializer(company_detail)
+        return Response(serializer.data, status=200)
+
+    def list(self, request, name=None):
+
+        company_detail = models.CompanyDetail.objects.all()
+
+        serializer = serializers.CompanyDetailSerializer(company_detail, many=True)
+        return Response(serializer.data, status=200)
+
+    def search(self, request, name=None):
+        try:
+            company_detail = models.CompanyDetail.objects.filter(name__contains=name)
+
+        except models.CompanyDetail.DoesNotExist:
+            return Response(status=204)
+
+        serializer = serializers.CompanyDetailSerializer(company_detail, many=True)
+        return Response(serializer.data, status=200)

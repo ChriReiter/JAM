@@ -68,8 +68,6 @@ class CompanyDetailSerializer(serializers.ModelSerializer):
     linkedin_account = SocialAccountSerializer()
     facebook_account = SocialAccountSerializer()
     twitter_account = SocialAccountSerializer()
-    googleplus_account = SocialAccountSerializer()
-    youtube_account = SocialAccountSerializer()
 
     class Meta:
         model = CompanyDetail
@@ -85,16 +83,10 @@ class CompanyDetailSerializer(serializers.ModelSerializer):
         facebook_account = SocialAccount.objects.create(**facebook_account_data)
         twitter_account_data = validated_data.pop('twitter_account')
         twitter_account = SocialAccount.objects.create(**twitter_account_data)
-        googleplus_account_data = validated_data.pop('googleplus_account')
-        googleplus_account = SocialAccount.objects.create(**googleplus_account_data)
-        youtube_account_data = validated_data.pop('youtube_account')
-        youtube_account = SocialAccount.objects.create(**youtube_account_data)
 
         company_detail = CompanyDetail.objects.create(address=address,
                                                       linkedin_account=linkedin_account,
                                                       facebook_account=facebook_account,
                                                       twitter_account=twitter_account,
-                                                      googleplus_account=googleplus_account,
-                                                      youtube_account=youtube_account,
                                                       **validated_data)
         return company_detail

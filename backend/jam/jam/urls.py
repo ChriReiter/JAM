@@ -79,6 +79,10 @@ urlpatterns = [
     path('api/companydetails/', jam_views.CompanyDetailViewSet.as_view({'get': 'list', 'post': 'create'})),
     path('api/companydetails/<company_pk>',
          jam_views.CompanyDetailViewSet.as_view({'get': 'retrieve', 'put': 'update'})),
+    path('api/companydetails/search/',
+         jam_views.CompanyDetailViewSet.as_view({'get': 'list'})),
+    path('api/companydetails/search/<name>',
+         jam_views.CompanyDetailViewSet.as_view({'get': 'search'})),
 ]
 
 if settings.DEBUG:

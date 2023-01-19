@@ -30,6 +30,6 @@ export class CompanyDataSource implements DataSource<Company_API_All>{
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )
-      .subscribe(Company_API_All => this.companiesSubject.next(Company_API_All));
+      .subscribe(Company_API_All => this.companiesSubject.next(Company_API_All.slice(0,pageSize)));
   }
 }
