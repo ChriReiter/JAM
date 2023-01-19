@@ -20,8 +20,10 @@ export class CompanyAPIService {
   findCompanies(filterName: string, pageSize: number, pageIndex: number, country: string):  Observable<Company_API_All[]>{
     const observables: Observable<any>[] = [];
     let cnt = pageSize;
+    if(pageIndex == 0){
+      observables.push(this.customCompanyService.getCustomCompaniesByFilter(filterName));
+    }
 
-    observables.push(this.customCompanyService.getCustomCompaniesByFilter(filterName));
     while(cnt > 0){
       let result = this.http.get('https://api.orb-intelligence.com/3/search/', {
         params: new HttpParams()
