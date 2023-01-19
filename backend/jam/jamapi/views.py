@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.serializers import ValidationError
 from django.views.decorators.csrf import csrf_exempt
+from django.core.mail import send_mail
 
 from . import models
 from . import serializers
@@ -190,6 +191,18 @@ class VacantPositionViewSet(viewsets.ViewSet):
 
     def list(self, request):
         queryset = models.VacantPosition.objects.all()
+        if request.GET.get("is-open") is not None:
+            queryset = models.VacantPosition.objects.filter(currently_open=request.GET.get("is-open"))
+        if request.GET.get("lecturer") is not None:
+            queryset = models.VacantPosition.objects.filter(currently_open=True)
+            queryset = queryset.filter(approval_status="?")
+            lecturer = models.Lecturer.objects.filter(pk=request.GET.get("lecturer"))[0]
+            queryset = queryset.filter(degree_program__lecturer=lecturer)
+        if request.GET.get("student") is not None:
+            queryset = models.VacantPosition.objects.filter(currently_open=True)
+            queryset = queryset.filter(approval_status="y")
+            student = models.Student.objects.filter(pk=request.GET.get("student"))[0]
+            queryset = queryset.filter(degree_program__student=student)
         serializer = serializers.VacantPositionSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
 
@@ -221,6 +234,18 @@ class VacantPositionViewSet(viewsets.ViewSet):
         vacant_position.save()
         serializer = serializers.VacantPositionSerializer(vacant_position)
         return Response(serializer.data, status=201)
+
+class EmailViewSet(viewsets.ViewSet):
+    def send_email(self, request):
+        send_mail(
+            request.data["subject"],
+            request.data["message"],
+            "jam.wapdev@gmail.com",
+            request.data["recipients"],
+            fail_silently=False
+        )
+        return Response(201)
+
 
 
 class CompanyDetailViewSet(viewsets.ModelViewSet):

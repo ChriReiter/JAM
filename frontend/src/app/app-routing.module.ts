@@ -9,6 +9,7 @@ import {CompanyViewComponent} from "./company-view/company-view.component";
 import {VacanciesFormComponent} from "./vacancies-form/vacancies-form.component";
 import {VacanciesListComponent} from "./vacancies-list/vacancies-list.component";
 import {InternshipFormComponent} from "./internship-form/internship-form.component";
+import {VacanciesViewComponent} from "./vacancies-view/vacancies-view.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/company-list', pathMatch: 'full'},
@@ -26,6 +27,7 @@ const routes: Routes = [
   {path: 'vacancies-list', component: VacanciesListComponent},
   {path: 'vacancies-form', component: VacanciesFormComponent},
   {path: 'vacancies-form/:vacant-position-pk', component: VacanciesFormComponent},
+  {path: 'vacancies-view/:vacant-position-pk', component: VacanciesViewComponent},
 ];
 
 @NgModule({

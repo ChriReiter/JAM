@@ -147,8 +147,13 @@ REST_FRAMEWORK = {
 # E-Mails are not send out to real mail servers, but stored as 
 # plain files in the folder given below:
 
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = './mails'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_PASSWORD = 'udlxqhqynhwowtea'
+EMAIL_HOST_USER = 'jam.wapdev@gmail.com'
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:4200'

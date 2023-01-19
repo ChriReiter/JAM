@@ -24,6 +24,7 @@ export interface Lecturer {
   firstname: string;
   lastname: string;
   email: string;
+  username: string;
   degree_program: number[];
 }
 
@@ -86,16 +87,16 @@ export class UserService {
         return this.http.get<Student[]>('http://localhost:8000/api/students/?username=' + username)
     }
 
-
+    //TODO: not functional yet, only for testing - adjust once group settings are added
     isLecturer(username: string | null): boolean {
         if (username != null) {
             this.http.get<Lecturer[]>('http://localhost:8000/api/lecturers/').subscribe(lecturers => {
-                return lecturers.filter(lecturer => lecturer.email === sessionStorage.getItem("username")).length === 1
+                return lecturers.filter(lecturer => lecturer.username === sessionStorage.getItem("username")).length === 1
             })
         } else {
             return false
         }
-        return false
+        return true
     }
 
 

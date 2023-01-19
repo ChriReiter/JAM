@@ -34,6 +34,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
 import {MatGridListModule} from "@angular/material/grid-list";
+import { VacanciesViewComponent } from './vacancies-view/vacancies-view.component';
+import {MatDividerModule} from "@angular/material/divider";
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -50,7 +52,8 @@ export function tokenGetter() {
     InternshipFormComponent,
     VacanciesListComponent,
     VacanciesFormComponent,
-    CompanyViewComponent
+    CompanyViewComponent,
+    VacanciesViewComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +85,7 @@ export function tokenGetter() {
     MatListModule,
     MatIconModule,
     MatGridListModule,
+    MatDividerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

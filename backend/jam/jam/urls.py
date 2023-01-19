@@ -75,6 +75,8 @@ urlpatterns = [
     path('api/companies/', jam_views.CompanyViewSet.as_view({'get': 'list', 'post': 'create'})),
     path('api/companies/<company_pk>', jam_views.CompanyViewSet.as_view({'get': 'retrieve', 'put': 'update'})),
 
+    path('api/send-mail/', jam_views.EmailViewSet.as_view({'post': 'send_email'})),
+
     # companyDetails
     path('api/companydetails/', jam_views.CompanyDetailViewSet.as_view({'get': 'list', 'post': 'create'})),
     path('api/companydetails/<company_pk>',
