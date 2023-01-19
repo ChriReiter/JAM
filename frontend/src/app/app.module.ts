@@ -29,6 +29,11 @@ import { VacanciesFormComponent } from './vacancies-form/vacancies-form.componen
 import {JwtModule} from "@auth0/angular-jwt";
 import { CompanyViewComponent } from './company-view/company-view.component';
 import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatListModule} from "@angular/material/list";
+import {MatIconModule} from "@angular/material/icon";
+import {MatGridListModule} from "@angular/material/grid-list";
 import { VacanciesViewComponent } from './vacancies-view/vacancies-view.component';
 import {MatDividerModule} from "@angular/material/divider";
 
@@ -75,6 +80,11 @@ export function tokenGetter() {
         allowedDomains: ['localhost:8000']
       }
     }),
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatListModule,
+    MatIconModule,
+    MatGridListModule,
     MatDividerModule,
   ],
   providers: [],

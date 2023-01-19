@@ -1,68 +1,58 @@
-<h2>Companies w. Internships</h2>
+<div style="margin: 35px" >
+  <h2>Companies</h2>
 
-<div>
-  <button [routerLink]="['/company-form']">Create Company</button>
+  <div>
+    <a mat-raised-button [routerLink]="['/company-form']">Add Company</a>
+  </div>
+
+  <h2>Search for companies</h2>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Search</mat-label>
+    <input matInput placeholder="z.B. avl" [formControl]="filterFormControlName">
+  </mat-form-field>
+
+  <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+  <table mat-table class="companies-table mat-elevation-z8" [dataSource]="dataSource">
+    <ng-container matColumnDef="orb_num">
+      <th mat-header-cell *matHeaderCellDef>#</th>
+      <td mat-cell *matCellDef="let Company_API_All">{{Company_API_All.orb_num}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell class="description-cell"
+                *matCellDef="let Company_API_All"><img src="{{Company_API_All.favicon}}" width="50px">{{Company_API_All.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="country">
+      <th mat-header-cell *matHeaderCellDef>Country</th>
+      <td mat-cell class="duration-cell"
+                *matCellDef="let Company_API_All">{{Company_API_All.country}}</td>
+    </ng-container>
+    <ng-container matColumnDef="city">
+      <th mat-header-cell *matHeaderCellDef>City</th>
+      <td mat-cell class="duration-cell"
+                *matCellDef="let Company_API_All">{{Company_API_All.city}}</td>
+    </ng-container>
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell class="duration-cell"
+                *matCellDef="let Company_API_All">{{Company_API_All.address}}</td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"
+             (click)="onRowClicked(row)">
+    </tr>
+
+  </table>
+  <mat-paginator [length]="length"
+                 [pageSize]="pageSize"
+                 [pageSizeOptions]="[5, 10, 50, 100]"
+                 (page)="handlePageEvent($event)"
+                 aria-label="Select page"></mat-paginator>
 </div>
 
-<mat-label>Filter By Degree Programs</mat-label>
-<mat-select placeholder="Degree Program">
-  <mat-option value="1" [routerLink]="['/company-list', 'IMA20']" (click)="loadByDP('IMA20')">IMA20</mat-option>
-  <mat-option value="2" [routerLink]="['/company-list', 'DAT19']" (click)="loadByDP('DAT19')">DAT19</mat-option>
-</mat-select>
-<table>
-  <tr>
-    <th>name</th>
-    <th>approval</th>
-    <th>approve</th>
-    <th>reject</th>
-  </tr>
-  <tr *ngFor="let company of companies_db">
-    <td>{{company.name}}</td>
-    <td>{{company.approval_status}}</td>
-    <td>
-      <button (click)="approve(company.pk)">Approve</button>
-    </td>
-    <td>
-      <button (click)="reject(company.pk)">Reject</button>
-    </td>
-  </tr>
-</table>
-
-<h2>Search for companies</h2>
-
-<input type="text" [formControl]="filterFormControlName" placeholder="filter by name"/>
-<input type="number" min="0" max="10" [formControl]="filterFormControlLimit" placeholder="filter companies"/>
-
-<table mat-table style="width: 100%" [dataSource]="filtered_companies" matSort class="mat-elevation-z8">
-
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-  </ng-container>
-  <ng-container matColumnDef="description">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
-    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-  </ng-container>
-  <ng-container matColumnDef="entity_type">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Entity</th>
-    <td mat-cell *matCellDef="let element"> {{element.entity_type}} </td>
-  </ng-container>
-  <ng-container matColumnDef="country">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
-    <td mat-cell *matCellDef="let element"> {{element.country}} </td>
-  </ng-container>
-  <ng-container matColumnDef="view_button">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>View Company</th>
-    <td *matCellDef="let element">
-      <button mat-button color="primary" [routerLink]="'/company-view/' + element.orb_num">View {{element.name}}</button>
-    </td>
-  </ng-container>
-  <ng-container matColumnDef="request_approval">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Request Approval</th>
-    <td *matCellDef="let element">
-      <button mat-button color="primary" (click)="request_approval(element)">Request Approval</button>
-    </td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>

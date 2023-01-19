@@ -1,83 +1,73 @@
-<p>Name: {{company.name}}</p>
-<p>Description: {{company.description}}</p>
-<p>Entity Type: {{company.entity_type}}</p>
-<p>Country: {{company.address.country}}</p>
-<p>Zip: {{company.address.zip}}</p>
-<p>State: {{company.address.state}}</p>
-<p>City: {{company.address.city}}</p>
-<p>Address1: {{company.address.address1}}</p>
-<p>Address2: {{company.address.address2}}</p>
-<table>
-  <tr>
-    <th>name</th>
-    <th>weight</th>
-  </tr>
-  <tr *ngFor="let category of top_categories">
-    <td>{{category.name}}</td>
-    <td>{{category.weight}}</td>
-    <td></td>
-  </tr>
-</table>
-<p>Parent Company: {{company.parent_comp}}</p>
-<p>Ultimate Parent Company: {{company.ultimate_parent_comp}}</p>
-<table>
-  <tr>
-    <th>other names</th>
-  </tr>
-  <tr *ngFor="let name of company.other_names">
-    <td>{{name}}</td>
-    <td></td>
-  </tr>
-</table>
-<p>Website:
-  <a href="{{company.website}}">{{company.website}}</a>
-
-</p>
-<p>Industry: {{company.industry}}</p>
-<p>Employees: {{company.employees}}</p>
-<p>Revenue: {{company.revenue}}</p>
-<p>Year Founded: {{company.year_founded}}</p>
-<p>Linkedin: {{company.linkedin_account.url}}</p>
-<p>Facebook: {{company.facebook_account.url}}</p>
-<p>Twitter: {{company.twitter_account.url}}</p>
-<p>Technologies</p>
-<table>
-  <tr>
-    <th>name</th>
-  </tr>
-  <tr *ngFor="let technology of company.technologies">
-    <td>{{technology.name}}</td>
-  </tr>
-</table>
-<p>Rankings</p>
-<table>
-  <tr>
-    <th>name</th>
-    <th>position</th>
-  </tr>
-  <tr *ngFor="let ranking of company.ranking_positions">
-    <td>{{ranking.ranking}}</td>
-    <td>{{ranking.position}}</td>
-  </tr>
-</table>
-<p>Icon: {{company.favicon}}</p>
-<img src="{{company.favicon}}">
-<p>Telephone: {{company.phone}}</p>
-<p>Email: {{company.email}}</p>
-<p>Latitude: {{company.latitude}}</p>
-<p>Longitude: {{company.longitude}}</p>
-
-<h2>Similar Companies</h2>
-<table>
-  <tr>
-    <th>name</th>
-    <th>orb_num</th>
-  </tr>
-  <tr *ngFor="let lookalike of lookalikes">
-    <td>{{lookalike.name}}</td>
-    <a [routerLink]="['/company-view/', lookalike.orb_num]" (click)="paramRefresh(lookalike.orb_num.toString())">View {{lookalike.name}}</a>
-  </tr>
-</table>
+<div style="margin: 35px" >
+<div>
+  <a mat-raised-button [routerLink]="['/company-list']">Back</a>
+</div>
 
 
+  <mat-card>
+    <mat-card-content>
+      <h1><img src="{{company.favicon}}" width="50px"> {{company.name}} </h1>
+      <p>{{company.description}}</p>
 
+      <mat-grid-list cols="3" rowHeight="1:1">
+        <mat-grid-tile>
+          <mat-card>
+            <mat-card-content>
+              <p>{{company.address.country}}</p>
+              <p>{{company.address.zip}} {{company.address.city}}</p>
+              <p>{{company.address.address1}}</p>
+
+              <p *ngIf="company.phone">{{company.phone}}</p>
+              <p *ngIf="company.email">{{company.email}} </p>
+
+              <p *ngIf="company.website">
+                <a href="{{company.website}}">Website</a>
+              </p>
+              <p *ngIf="company.linkedin_account.url">
+                <a href="{{company.linkedin_account.url}}">Linkedin</a>
+              </p>
+              <p *ngIf="company.facebook_account.url">
+                <a href="{{company.facebook_account.url}}">Facebook</a>
+              </p>
+              <p *ngIf="company.twitter_account.url">
+                <a href="{{company.twitter_account.url}}">Twitter</a>
+              </p>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-card>
+            <mat-card-content>
+              <p>Employees: {{company.employees}}</p>
+              <p>Revenue: {{company.revenue | currency : 'USD':'$':'1.0-0'}}</p>
+              <p>Year Founded: {{company.year_founded}}</p>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="company.technologies.length > 0">
+          <mat-card>
+            <mat-card-content>
+              <p>Technologies:</p>
+              <table>
+                <tr *ngFor="let technology of company.technologies">
+                  <td>{{technology.name}}</td>
+                </tr>
+              </table>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card-content>
+  </mat-card>
+
+  <div>
+    <a mat-raised-button [routerLink]="['/company-form/' + company.orb_num]">Edit</a>
+  </div>
+  <div>
+    <a mat-raised-button [routerLink]="['/company-list']">Approve</a>
+  </div>
+  <div>
+    <a mat-raised-button [routerLink]="['/company-list']">Deny</a>
+  </div>
+
+</div>
