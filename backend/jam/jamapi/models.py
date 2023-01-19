@@ -107,6 +107,13 @@ class Lecturer(models.Model):
     def __str__(self):
         return self.firstname + " " + self.lastname
 
+class File(models.Model):
+    file = models.FileField(blank=False, null=False, upload_to="files")
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.file.name
+
 
 class SocialAccount(models.Model):
     url = models.URLField(null=True)
