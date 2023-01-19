@@ -70,6 +70,8 @@ urlpatterns = [
     #companies
     path('api/companies/', jam_views.CompanyViewSet.as_view({'get': 'list', 'post': 'create'})),
     path('api/companies/<company_pk>', jam_views.CompanyViewSet.as_view({'get': 'retrieve', 'put': 'update'})),
+
+    path('api/send-mail/', jam_views.EmailViewSet.as_view({'post': 'send_email'})),
 ] 
 
 if settings.DEBUG:

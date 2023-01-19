@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.serializers import ValidationError
 from django.views.decorators.csrf import csrf_exempt
+from django.core.mail import send_mail
 
 from . import models
 from . import serializers
@@ -222,7 +223,7 @@ class VacantPositionViewSet(viewsets.ViewSet):
         serializer = serializers.VacantPositionSerializer(vacant_position)
         return Response(serializer.data, status=201)
 
-    def update(sef, request, vacant_position_pk=None):
+    def update(self, request, vacant_position_pk=None):
         vacant_position = models.VacantPosition.objects.get(pk=vacant_position_pk)
         vacant_position.title = request.data["title"]
         vacant_position.description = request.data["description"]
@@ -231,6 +232,18 @@ class VacantPositionViewSet(viewsets.ViewSet):
         vacant_position.save()
         serializer = serializers.VacantPositionSerializer(vacant_position)
         return Response(serializer.data, status=201)
+
+class EmailViewSet(viewsets.ViewSet):
+    def send_email(self, request):
+        send_mail(
+            request.data["subject"],
+            request.data["message"],
+            "jam.wapdev@gmail.com",
+            request.data["recipients"],
+            fail_silently=False
+        )
+        return Response(201)
+
 
 
 
