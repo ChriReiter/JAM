@@ -5,7 +5,8 @@ from .models import (
     DegreeProgram,
     Student,
     Internship,
-    Lecturer
+    Lecturer,
+    File
 )
 
 class CompanyAdmin(admin.ModelAdmin):
@@ -33,9 +34,16 @@ class LecturerAdmin(admin.ModelAdmin):
 
     list_display = ["firstname", "lastname", "email"]
 
-admin.site.register(Company,CompanyAdmin)
-admin.site.register(VacantPosition,VacantPositionAdmin)
-admin.site.register(DegreeProgram,DegreeProgramAdmin)
-admin.site.register(Student,StudentAdmin)
-admin.site.register(Internship,InternshipAdmin)
-admin.site.register(Lecturer,LecturerAdmin)
+
+class FileAdmin(admin.ModelAdmin):
+
+    list_display = ["file", "student"]
+
+
+admin.site.register(Company, CompanyAdmin)
+admin.site.register(VacantPosition, VacantPositionAdmin)
+admin.site.register(DegreeProgram, DegreeProgramAdmin)
+admin.site.register(Student, StudentAdmin)
+admin.site.register(Internship, InternshipAdmin)
+admin.site.register(Lecturer, LecturerAdmin)
+admin.site.register(File, FileAdmin)

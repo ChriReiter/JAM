@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Company, Student, Internship, DegreeProgram, Lecturer, VacantPosition
+from .models import Company, Student, Internship, DegreeProgram, Lecturer, VacantPosition, File
 
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -40,4 +40,11 @@ class VacantPositionSerializer(serializers.ModelSerializer):
     class Meta:
         model = VacantPosition
         fields = ['pk', 'company', 'degree_program', 'title', 'description', 'currently_open', 'approval_status']
+
+
+class FileSerializer(serializers.ModelSerializer):
+    student = StudentSerializer()
+    class Meta:
+        model = File
+        fields = "__all__"
 

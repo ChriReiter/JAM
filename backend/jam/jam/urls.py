@@ -71,7 +71,11 @@ urlpatterns = [
     path('api/companies/', jam_views.CompanyViewSet.as_view({'get': 'list', 'post': 'create'})),
     path('api/companies/<company_pk>', jam_views.CompanyViewSet.as_view({'get': 'retrieve', 'put': 'update'})),
 
+    #send mail
     path('api/send-mail/', jam_views.EmailViewSet.as_view({'post': 'send_email'})),
+
+    #files
+    path('api/files/', jam_views.FileViewSet.as_view({'get': 'list', 'post': 'create'})),
 ] 
 
 if settings.DEBUG:

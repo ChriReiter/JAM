@@ -244,6 +244,23 @@ class EmailViewSet(viewsets.ViewSet):
         )
         return Response(201)
 
+class FileViewSet(viewsets.ViewSet):
+    def list(self, request):
+        queryset = models.File.objects.all()
+        serializer = serializers.FileSerializer(queryset, many=True)
+        return Response(serializer.data, status=200)
+
+    def create(self, request):
+        student = models.Student.objects.get(pk=request.data["student"])
+        file = models.File.objects.create(
+            file=request.data["file"],
+            student=student
+        )
+        file.save()
+        serializer = serializers.FileSerializer(file)
+        return Response(serializer.data, status=200)
+
+
 
 
 
