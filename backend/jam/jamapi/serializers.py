@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Company, Student, Internship, DegreeProgram, Lecturer, VacantPosition, CompanyDetail, AddressDetail, \
+from .models import Company, Internship, DegreeProgram, VacantPosition, CompanyDetail, AddressDetail, \
     SocialAccount
 
 
@@ -16,29 +16,29 @@ class DegreeProgramSerializer(serializers.ModelSerializer):
                   'internship_end', 'deadline_report1', 'deadline_report2', 'deadline_report3']
 
 
-class StudentSerializer(serializers.ModelSerializer):
-    degree_program = DegreeProgramSerializer()
-
-    class Meta:
-        model = Student
-        fields = ['pk', 'firstname', 'lastname', 'username', 'matriculation_no', 'email', 'degree_program']
+# class StudentSerializer(serializers.ModelSerializer):
+#     degree_program = DegreeProgramSerializer()
+#
+#     class Meta:
+#         model = Student
+#         fields = ['pk', 'firstname', 'lastname', 'username', 'matriculation_no', 'email', 'degree_program']
 
 
 class InternshipSerializer(serializers.ModelSerializer):
     company = CompanySerializer()
-    student = StudentSerializer()
+    student = "userapi.UserSerializer()"
 
     class Meta:
         model = Internship
         fields = ['pk', 'company', 'student', 'title', 'description', 'application_status', 'approval_status']
 
 
-class LecturerSerializer(serializers.ModelSerializer):
-    degree_program = DegreeProgramSerializer(many=True)
-
-    class Meta:
-        model = Lecturer
-        fields = '__all__'
+# class LecturerSerializer(serializers.ModelSerializer):
+#     degree_program = DegreeProgramSerializer(many=True)
+#
+#     class Meta:
+#         model = Lecturer
+#         fields = '__all__'
 
 
 class VacantPositionSerializer(serializers.ModelSerializer):

@@ -13,55 +13,55 @@ from django.core.mail import send_mail
 from . import models
 from . import serializers
 from .models import CompanyDetail
-from .serializers import LecturerSerializer, InternshipSerializer, CompanyDetailSerializer
+from .serializers import InternshipSerializer, CompanyDetailSerializer
 
 
-class StudentViewSet(viewsets.ViewSet):
-
-    def list(self, request):
-        queryset = models.Student.objects.all()
-        if request.GET.get("username") is not None:
-            queryset = models.Student.objects.filter(username=request.GET.get("username"))
-        serializer = serializers.StudentSerializer(queryset, many=True)
-        return Response(serializer.data, status=200)
-
-    def create(self, request):
-        degree_program = models.DegreeProgram.objects.get(pk=request.data["degree_program"])
-        student = models.Student.objects.create(
-            firstname=request.data["firstname"],
-            lastname=request.data["lastname"],
-            email=request.data["email"],
-            username=request.data["username"],
-            matriculation_no=request.data["matriculation_no"],
-            degree_program=degree_program
-        )
-        student.save()
-        serializer = serializers.StudentSerializer(student)
-        return Response(serializer.data, status=201)
-
-    def retrieve(self, request, student_pk=None):
-        student = models.Student.objects.get(pk=student_pk)
-        serializer = serializers.StudentSerializer(student)
-        return Response(serializer.data, status=200)
-
-
-class LecturerViewSet(viewsets.ViewSet):
-
-    def list(self, request):
-        queryset = models.Lecturer.objects.all()
-        serializer = serializers.LecturerSerializer(queryset, many=True)
-        return Response(serializer.data, status=200)
-
-    def create(self, request):
-        lecturer = models.Lecturer.objects.create(
-            firstname=request.data["firstname"],
-            lastname=request.data["lastname"],
-            email=request.data["email"]
-        )
-        lecturer.degree_program.add(request.data["degree_program"])
-        lecturer.save()
-        serializer = serializers.LecturerSerializer(lecturer)
-        return Response(serializer.data, status=201)
+# class StudentViewSet(viewsets.ViewSet):
+#
+#     def list(self, request):
+#         queryset = models.Student.objects.all()
+#         if request.GET.get("username") is not None:
+#             queryset = models.Student.objects.filter(username=request.GET.get("username"))
+#         serializer = serializers.StudentSerializer(queryset, many=True)
+#         return Response(serializer.data, status=200)
+#
+#     def create(self, request):
+#         degree_program = models.DegreeProgram.objects.get(pk=request.data["degree_program"])
+#         student = models.Student.objects.create(
+#             firstname=request.data["firstname"],
+#             lastname=request.data["lastname"],
+#             email=request.data["email"],
+#             username=request.data["username"],
+#             matriculation_no=request.data["matriculation_no"],
+#             degree_program=degree_program
+#         )
+#         student.save()
+#         serializer = serializers.StudentSerializer(student)
+#         return Response(serializer.data, status=201)
+#
+#     def retrieve(self, request, student_pk=None):
+#         student = models.Student.objects.get(pk=student_pk)
+#         serializer = serializers.StudentSerializer(student)
+#         return Response(serializer.data, status=200)
+#
+#
+# class LecturerViewSet(viewsets.ViewSet):
+#
+#     def list(self, request):
+#         queryset = models.Lecturer.objects.all()
+#         serializer = serializers.LecturerSerializer(queryset, many=True)
+#         return Response(serializer.data, status=200)
+#
+#     def create(self, request):
+#         lecturer = models.Lecturer.objects.create(
+#             firstname=request.data["firstname"],
+#             lastname=request.data["lastname"],
+#             email=request.data["email"]
+#         )
+#         lecturer.degree_program.add(request.data["degree_program"])
+#         lecturer.save()
+#         serializer = serializers.LecturerSerializer(lecturer)
+#         return Response(serializer.data, status=201)
 
 
 class DegreeProgramViewSet(viewsets.ViewSet):
@@ -69,7 +69,7 @@ class DegreeProgramViewSet(viewsets.ViewSet):
     def list(self, request):
         queryset = models.DegreeProgram.objects.all()
         if request.GET.get("username") is not None:
-            queryset = models.DegreeProgram.objects.filter(student__username=request.GET.get("username"))
+            queryset = models.DegreeProgram.objects.filter(user__username=request.GET.get("username"))
         serializer = serializers.DegreeProgramSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
 
@@ -101,14 +101,14 @@ class InternshipViewSet(viewsets.ViewSet):
         queryset = models.Internship.objects.all()
         if request.GET.get("dp") is not None:
             degree_program = models.DegreeProgram.objects.get(abbreviation=request.GET.get("dp"))
-            queryset = models.Internship.objects.filter(student__degree_program=degree_program)
+            queryset = models.Internship.objects.filter(user__degree_program=degree_program)
         if request.GET.get("student") is not None:
-            queryset = models.Internship.objects.filter(student__username=request.GET.get("student"))
+            queryset = models.Internship.objects.filter(user__username=request.GET.get("student"))
         serializer = serializers.InternshipSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
 
     def create(self, request):
-        student = models.Student.objects.get(pk=request.data["student"])
+        student = models.User.objects.get(pk=request.data["user"])
         company = models.Company.objects.get(pk=request.data["company"])
         internship = models.Internship.objects.create(
             title=request.data["title"],
@@ -197,12 +197,12 @@ class VacantPositionViewSet(viewsets.ViewSet):
             queryset = models.VacantPosition.objects.filter(currently_open=True)
             queryset = queryset.filter(approval_status="?")
             lecturer = models.Lecturer.objects.filter(pk=request.GET.get("lecturer"))[0]
-            queryset = queryset.filter(degree_program__lecturer=lecturer)
+            queryset = queryset.filter(degree_program__user=lecturer)
         if request.GET.get("student") is not None:
             queryset = models.VacantPosition.objects.filter(currently_open=True)
             queryset = queryset.filter(approval_status="y")
             student = models.Student.objects.filter(pk=request.GET.get("student"))[0]
-            queryset = queryset.filter(degree_program__student=student)
+            queryset = queryset.filter(degree_program__user=student)
         serializer = serializers.VacantPositionSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
 

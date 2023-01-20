@@ -3,9 +3,8 @@ from .models import (
     Company,
     VacantPosition,
     DegreeProgram,
-    Student,
     Internship,
-    Lecturer, CompanyDetail
+    CompanyDetail
 )
 
 
@@ -21,16 +20,16 @@ class DegreeProgramAdmin(admin.ModelAdmin):
     list_display = ["name", "abbreviation", "current_class"]
 
 
-class StudentAdmin(admin.ModelAdmin):
-    list_display = ["firstname", "lastname", "matriculation_no", "email"]
+# class StudentAdmin(admin.ModelAdmin):
+#     list_display = ["firstname", "lastname", "matriculation_no", "email"]
 
 
 class InternshipAdmin(admin.ModelAdmin):
     list_display = ["title", "description", "application_status", "approval_status"]
 
 
-class LecturerAdmin(admin.ModelAdmin):
-    list_display = ["firstname", "lastname", "email"]
+# class LecturerAdmin(admin.ModelAdmin):
+#     list_display = ["firstname", "lastname", "email"]
 
 
 class CompanyDetailAdmin(admin.ModelAdmin):
@@ -41,7 +40,5 @@ class CompanyDetailAdmin(admin.ModelAdmin):
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(VacantPosition, VacantPositionAdmin)
 admin.site.register(DegreeProgram, DegreeProgramAdmin)
-admin.site.register(Student, StudentAdmin)
 admin.site.register(Internship, InternshipAdmin)
-admin.site.register(Lecturer, LecturerAdmin)
 admin.site.register(CompanyDetail)
