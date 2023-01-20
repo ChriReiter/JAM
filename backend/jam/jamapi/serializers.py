@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from .models import Company, Student, Internship, DegreeProgram, Lecturer, VacantPosition, CompanyDetail, AddressDetail, \
-    SocialAccount
+from .models import Company, Student, Internship, DegreeProgram, Lecturer, VacantPosition
 
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -90,3 +89,10 @@ class CompanyDetailSerializer(serializers.ModelSerializer):
                                                       twitter_account=twitter_account,
                                                       **validated_data)
         return company_detail
+
+class FileSerializer(serializers.ModelSerializer):
+    student = StudentSerializer()
+    class Meta:
+        model = File
+        fields = "__all__"
+
