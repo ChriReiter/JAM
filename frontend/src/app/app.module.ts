@@ -34,6 +34,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
 import {MatGridListModule} from "@angular/material/grid-list";
+import {MatExpansionModule} from "@angular/material/expansion";
 import { VacanciesViewComponent } from './vacancies-view/vacancies-view.component';
 import {MatDividerModule} from "@angular/material/divider";
 
@@ -86,6 +87,7 @@ export function tokenGetter() {
     MatIconModule,
     MatGridListModule,
     MatDividerModule,
+    MatExpansionModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
