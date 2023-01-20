@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth.models import Group
 
+
+
 class GroupSerializer(serializers.Serializer):
 
     name = serializers.CharField(required=True)
@@ -18,3 +20,10 @@ class GroupSerializer(serializers.Serializer):
         instance.name = validated_data.get("name")
         instance.save()
         return instance
+
+class UserSerializer(serializers.ModelSerializer):
+    degree_program = "jamapi.DegreeProgramSerializer()"
+
+    class Meta:
+        model = "userapi.User"
+        fields = ['pk', 'firstname', 'lastname', 'username', 'matriculation_no', 'email', 'degree_program']

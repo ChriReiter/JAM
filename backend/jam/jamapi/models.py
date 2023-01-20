@@ -57,16 +57,16 @@ class VacantPosition(models.Model):
         return self.title
 
 
-class Student(models.Model):
-    matriculation_no = models.CharField(max_length=1024)
-    firstname = models.CharField(max_length=1024)
-    lastname = models.CharField(max_length=1024)
-    username = models.CharField(max_length=10, default="")
-    email = models.CharField(max_length=1024)
-    degree_program = models.ForeignKey(DegreeProgram, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.firstname + " " + self.lastname
+# class Student(models.Model):
+#     matriculation_no = models.CharField(max_length=1024)
+#     firstname = models.CharField(max_length=1024)
+#     lastname = models.CharField(max_length=1024)
+#     username = models.CharField(max_length=10, default="")
+#     email = models.CharField(max_length=1024)
+#     degree_program = models.ForeignKey(DegreeProgram, on_delete=models.CASCADE)
+#
+#     def __str__(self):
+#         return self.firstname + " " + self.lastname
 
 class Internship(models.Model):
 
@@ -89,23 +89,23 @@ class Internship(models.Model):
     description = models.CharField(max_length=1024)
     application_status = models.CharField(max_length=1, choices=APPLICATION_STATUS_CHOICES)
     approval_status = models.CharField(max_length=1, choices=APPROVAL_STATUS_CHOICES)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    student = models.ForeignKey("userapi.User", on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
 
 
-class Lecturer(models.Model):
-
-    firstname = models.CharField(max_length=1024)
-    lastname = models.CharField(max_length=1024)
-    username = models.CharField(max_length=8)
-    email = models.CharField(max_length=1024)
-    degree_program = models.ManyToManyField(DegreeProgram)
-
-    def __str__(self):
-        return self.firstname + " " + self.lastname
+# class Lecturer(models.Model):
+#
+#     firstname = models.CharField(max_length=1024)
+#     lastname = models.CharField(max_length=1024)
+#     username = models.CharField(max_length=8)
+#     email = models.CharField(max_length=1024)
+#     degree_program = models.ManyToManyField(DegreeProgram)
+#
+#     def __str__(self):
+#         return self.firstname + " " + self.lastname
 
 class File(models.Model):
     file = models.FileField(blank=False, null=False, upload_to="files")
