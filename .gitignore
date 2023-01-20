@@ -130,3 +130,6 @@ dmypy.json
 
 # Venv
 activery-venv/
+
+# IntelliJ
+.idea
