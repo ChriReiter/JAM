@@ -1,7 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {Company_DB} from "./company.service";
 import {VacantPosition, VacantPositionCreate} from "./vacant-position.service";
 import {User, UserService} from "./user.service";
 import {DegreeProgramService} from "./degree-program-service";

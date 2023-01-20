@@ -21,11 +21,6 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatInputModule} from "@angular/material/input";
 import { CompanyFormComponent } from './company-form/company-form.component';
-import { DegreeProgramListComponent } from './degree-program-list/degree-program-list.component';
-import { InternshipListComponent } from './internship-list/internship-list.component';
-import { InternshipFormComponent } from './internship-form/internship-form.component';
-import { VacanciesListComponent } from './vacancies-list/vacancies-list.component';
-import { VacanciesFormComponent } from './vacancies-form/vacancies-form.component';
 import {JwtModule} from "@auth0/angular-jwt";
 import { CompanyViewComponent } from './company-view/company-view.component';
 import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
@@ -35,7 +30,6 @@ import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatExpansionModule} from "@angular/material/expansion";
-import { VacanciesViewComponent } from './vacancies-view/vacancies-view.component';
 import {MatDividerModule} from "@angular/material/divider";
 
 export function tokenGetter() {
@@ -48,13 +42,7 @@ export function tokenGetter() {
     CompanyListComponent,
     LoginComponent,
     CompanyFormComponent,
-    DegreeProgramListComponent,
-    InternshipListComponent,
-    InternshipFormComponent,
-    VacanciesListComponent,
-    VacanciesFormComponent,
-    CompanyViewComponent,
-    VacanciesViewComponent
+    CompanyViewComponent
   ],
   imports: [
     BrowserModule,

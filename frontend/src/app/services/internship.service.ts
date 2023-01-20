@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {Company_DB} from "./company.service";
 import {Student} from "./user.service";
 
 export interface Internship {
@@ -11,7 +10,7 @@ export interface Internship {
   application_status: string;
   approval_status: string;
   student: Student;
-  company: Company_DB;
+  // company: Company_DB;
 }
 
 ////TODO: Get To gork with one Interface

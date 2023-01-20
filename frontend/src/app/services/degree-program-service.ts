@@ -1,8 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-//import {Internship} from "../internship-list/internship-list.component";
 import {environment} from "../../environments/environment";
-import {Company_DB} from "./company.service";
 
 export interface DegreeProgram {
     pk: number;

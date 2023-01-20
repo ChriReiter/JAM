@@ -1,7 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {Company_DB} from "./company.service";
 import {DegreeProgram} from "./degree-program-service";
 import {Lecturer} from "./user.service";
 
@@ -11,7 +10,7 @@ export interface VacantPosition {
     description: string;
     currently_open: boolean;
     approval_status: string;
-    company: Company_DB;
+    // company: Company_DB;
     degree_program: DegreeProgram[];
 }
 

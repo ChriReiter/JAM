@@ -1,10 +1,10 @@
 <mat-toolbar color="primary">
   <button *ngIf="userService.isLoggedIn$ | async" mat-button [matMenuTriggerFor]="menu">My Internships</button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="degree-program-list">List Degree Programs</button>
-    <button mat-menu-item routerLink="internship-list">List internships</button>
+<!--    <button mat-menu-item routerLink="degree-program-list">List Degree Programs</button>-->
+<!--    <button mat-menu-item routerLink="internship-list">List internships</button>-->
     <button mat-menu-item routerLink="company-list">List companies</button>
-    <button mat-menu-item routerLink="vacancies-list">List vacancies</button>
+<!--    <button mat-menu-item routerLink="vacancies-list">List vacancies</button>-->
     <button mat-menu-item (click)="userService.logout()">
       Logout
     </button>

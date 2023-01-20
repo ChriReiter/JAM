@@ -48,16 +48,6 @@ urlpatterns = [
          user_views.GroupViewSet.as_view({'put': "update", "delete": "destroy", "get": "retrieve"})),
 
     # jam urls
-
-    # students
-    path('api/students/', jam_views.StudentViewSet.as_view({'get': 'list', 'post': 'create'})),
-    path('api/students/<student_pk>', jam_views.StudentViewSet.as_view({'get': 'retrieve'})),
-
-    # lecturers
-    path('api/lecturers/', jam_views.LecturerViewSet.as_view({'get': 'list', 'post': 'create'})),
-    path('api/lecturers/<lecturer_pk>',
-         jam_views.LecturerViewSet.as_view({'delete': 'destroy', 'get': 'retrieve', 'put': 'update'})),
-
     # degree_programmes
     path('api/degree-programmes/', jam_views.DegreeProgramViewSet.as_view({'get': 'list', 'post': 'create'})),
     path('api/degree-programmes/<dp_pk>', jam_views.DegreeProgramViewSet.as_view({'get': 'retrieve'})),
@@ -71,20 +61,7 @@ urlpatterns = [
     path('api/vacant-positions/<vacant_position_pk>',
          jam_views.VacantPositionViewSet.as_view({'get': 'retrieve', 'put': 'update'})),
 
-    # companies
-    path('api/companies/', jam_views.CompanyViewSet.as_view({'get': 'list', 'post': 'create'})),
-    path('api/companies/<company_pk>', jam_views.CompanyViewSet.as_view({'get': 'retrieve', 'put': 'update'})),
-
     path('api/send-mail/', jam_views.EmailViewSet.as_view({'post': 'send_email'})),
-
-    # companyDetails
-    path('api/companydetails/', jam_views.CompanyDetailViewSet.as_view({'get': 'list', 'post': 'create'})),
-    path('api/companydetails/<company_pk>',
-         jam_views.CompanyDetailViewSet.as_view({'get': 'retrieve', 'put': 'update'})),
-    path('api/companydetails/search/',
-         jam_views.CompanyDetailViewSet.as_view({'get': 'list'})),
-    path('api/companydetails/search/<name>',
-         jam_views.CompanyDetailViewSet.as_view({'get': 'search'})),
 ]
 
 if settings.DEBUG:

@@ -12,56 +12,7 @@ from django.core.mail import send_mail
 
 from . import models
 from . import serializers
-from .models import CompanyDetail
-from .serializers import LecturerSerializer, InternshipSerializer, CompanyDetailSerializer
 
-
-class StudentViewSet(viewsets.ViewSet):
-
-    def list(self, request):
-        queryset = models.Student.objects.all()
-        if request.GET.get("username") is not None:
-            queryset = models.Student.objects.filter(username=request.GET.get("username"))
-        serializer = serializers.StudentSerializer(queryset, many=True)
-        return Response(serializer.data, status=200)
-
-    def create(self, request):
-        degree_program = models.DegreeProgram.objects.get(pk=request.data["degree_program"])
-        student = models.Student.objects.create(
-            firstname=request.data["firstname"],
-            lastname=request.data["lastname"],
-            email=request.data["email"],
-            username=request.data["username"],
-            matriculation_no=request.data["matriculation_no"],
-            degree_program=degree_program
-        )
-        student.save()
-        serializer = serializers.StudentSerializer(student)
-        return Response(serializer.data, status=201)
-
-    def retrieve(self, request, student_pk=None):
-        student = models.Student.objects.get(pk=student_pk)
-        serializer = serializers.StudentSerializer(student)
-        return Response(serializer.data, status=200)
-
-
-class LecturerViewSet(viewsets.ViewSet):
-
-    def list(self, request):
-        queryset = models.Lecturer.objects.all()
-        serializer = serializers.LecturerSerializer(queryset, many=True)
-        return Response(serializer.data, status=200)
-
-    def create(self, request):
-        lecturer = models.Lecturer.objects.create(
-            firstname=request.data["firstname"],
-            lastname=request.data["lastname"],
-            email=request.data["email"]
-        )
-        lecturer.degree_program.add(request.data["degree_program"])
-        lecturer.save()
-        serializer = serializers.LecturerSerializer(lecturer)
-        return Response(serializer.data, status=201)
 
 
 class DegreeProgramViewSet(viewsets.ViewSet):
@@ -138,55 +89,6 @@ class InternshipViewSet(viewsets.ViewSet):
         return Response(serializer.data, status=201)
 
 
-class CompanyViewSet(viewsets.ViewSet):
-
-    def list(request):
-        queryset = models.Company.objects.all()
-        if request.GET.get("dp") is not None:
-            degree_program = models.DegreeProgram.objects.get(abbreviation=request.GET.get("dp"))
-            queryset = models.Company.objects.filter(internship__student__degree_program=degree_program)
-        if request.GET.get("name") is not None:
-            queryset = models.Company.objects.filter(name=request.GET.get("name"))
-        if request.GET.get("orb-num") is not None:
-            queryset = models.Company.objects.filter(orb_num=request.GET.get("orb-num"))
-        queryset.order_by("name")
-        serializer = serializers.CompanySerializer(queryset, many=True)
-        return Response(serializer.data, status=200)
-
-    def create(self, request):
-        company = models.Company.objects.create(
-            name=request.data["name"],
-            orb_num=request.data["orb_num"],
-            data_in_api=request.data["data_in_api"],
-            approval_status=request.data["approval_status"]
-        )
-        company.save()
-        serializer = serializers.CompanySerializer(company)
-        return Response(serializer.data, status=201)
-
-    def retrieve(self, request, company_pk=None):
-        company = models.Company.objects.get(pk=company_pk)
-        serializer = serializers.CompanySerializer(company)
-        return Response(serializer.data, status=200)
-
-    def update(self, request, company_pk=None):
-        company = models.Company.objects.get(pk=company_pk)
-        company.name = request.data["name"]
-        company.orb_num = request.data["orb_num"]
-        company.data_in_api = request.data["data_in_api"]
-        company.approval_status = request.data["approval_status"]
-        company.save()
-        return Response(
-            {
-                "id": company.pk,
-                "name": company.name,
-                "orb_num": company.orb_num,
-                "data_in_api": company.data_in_api,
-                "approval_status": company.approval_status
-            },
-            status=201)
-
-
 class VacantPositionViewSet(viewsets.ViewSet):
 
     def list(self, request):
@@ -248,27 +150,3 @@ class EmailViewSet(viewsets.ViewSet):
 
 
 
-class CompanyDetailViewSet(viewsets.ModelViewSet):
-    queryset = CompanyDetail.objects.all()
-    serializer_class = CompanyDetailSerializer
-    def retrieve(self, request, company_pk=None):
-        company_detail = models.CompanyDetail.objects.get(pk=company_pk)
-        serializer = serializers.CompanyDetailSerializer(company_detail)
-        return Response(serializer.data, status=200)
-
-    def list(self, request, name=None):
-
-        company_detail = models.CompanyDetail.objects.all()
-
-        serializer = serializers.CompanyDetailSerializer(company_detail, many=True)
-        return Response(serializer.data, status=200)
-
-    def search(self, request, name=None):
-        try:
-            company_detail = models.CompanyDetail.objects.filter(name__contains=name)
-
-        except models.CompanyDetail.DoesNotExist:
-            return Response(status=204)
-
-        serializer = serializers.CompanyDetailSerializer(company_detail, many=True)
-        return Response(serializer.data, status=200)
