@@ -5,7 +5,7 @@
 .column {
   float: left;
   width: 20%;
-  padding: 0 10px;
+  padding: 0 15px;
 }
 
 .row { margin: 0 -5px; }
@@ -28,14 +28,14 @@
 .card-detail {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 16px;
-  text-align: center;
+  text-align: justify-all;
   background-color: #d7dae5;
   margin-top: 10px;
   margin-bottom: 10px;
   //height: 280px;
 }
 
-.card-title { text-align: center; }
+.card-title { text-align: justify-all; }
 
 @media screen and (max-width: 600px) {
   .column {
@@ -43,6 +43,15 @@
     display: block;
     margin-bottom: 20px;
   }
+}
+
+.panel {
+  background: #a6d8d4;
+}
+
+.panel-header {
+  font-size: 24px;
+  background-color: #a6d8d4;
 }
 
 

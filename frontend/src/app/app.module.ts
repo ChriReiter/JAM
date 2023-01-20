@@ -34,6 +34,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
 import {MatGridListModule} from "@angular/material/grid-list";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -82,6 +83,7 @@ export function tokenGetter() {
     MatListModule,
     MatIconModule,
     MatGridListModule,
+    MatExpansionModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

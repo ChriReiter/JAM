@@ -17,81 +17,84 @@
     </mat-card-content>
   </mat-card>
 
-  <div class="row">
-    <div class="column">
-      <mat-card class="card-detail">
-        <mat-card-title class="card-title">Headquarter</mat-card-title>
-        <mat-card-content>
-          <p> {{company.address.address1}} <br>
-            {{company.address.zip}} {{company.address.city}} <br>
-            {{company.address.country}}</p>
-          <p *ngIf="company.website">
-            <a href="{{company.website}}" target="_blank">Website</a>
-          </p>
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <div class="column">
-      <mat-card class="card-detail">
-        <mat-card-title class="card-title">Contact</mat-card-title>
-        <mat-card-content>
-          <p *ngIf="company.phone">{{company.phone}}</p>
-          <p *ngIf="company.email">{{company.email}} </p>
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <div class="column">
-      <mat-card class="card-detail">
-        <mat-card-title class="card-title">Social Media</mat-card-title>
-        <mat-card-content>
-          <p *ngIf="company.linkedin_account.url">
-            <a href="{{company.linkedin_account.url}}" target="_blank">Linkedin</a>
-          </p>
-          <p *ngIf="company.facebook_account.url">
-            <a href="{{company.facebook_account.url}}" target="_blank">Facebook</a>
-          </p>
-          <p *ngIf="company.twitter_account.url">
-            <a href="{{company.twitter_account.url}}" target="_blank">Twitter</a>
-          </p>
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <div class="column">
-      <mat-card class="card-detail">
-        <mat-card-title class="card-title">Company Info</mat-card-title>
-        <mat-card-content>
-          <p>Year Founded: {{company.year_founded}}</p>
-          <p>Industry: {{company.industry}}</p>
-          <p>Employees: {{company.employees | number}}</p>
-          <p>Revenue: {{company.revenue | currency : 'USD':'$':'1.0-0'}}</p>
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <div class="column">
-      <mat-card class="card-detail">
-        <mat-card-title class="card-title">Technologies</mat-card-title>
-        <mat-card-content>
-          <div *ngIf="company.technologies.length > 0; else noTech">
-            <table *ngIf="company.technologies.length > 0">
-              <tr *ngFor="let technology of company.technologies">
-                <li>{{technology.name}}</li>
-              </tr>
-            </table>
-          </div>
-          <ng-template #noTech>No technologies provided...</ng-template>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </div>
+<!--  for testing (so that the panel is expanded by default on every refresh):-->
+<!--  <mat-expansion-panel class="panel" [expanded]="true">-->
+  <mat-expansion-panel class="panel">
+    <mat-expansion-panel-header class="panel-header">Details</mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <div class="row">
+        <div class="column">
+          <mat-card class="card-detail">
+            <mat-card-title class="card-title">Headquarter</mat-card-title>
+            <mat-card-content>
+              <p> {{company.address.address1}} <br>
+                {{company.address.zip}} {{company.address.city}} <br>
+                {{company.address.country}}</p>
+              <p *ngIf="company.website">
+                <a href="{{company.website}}" target="_blank">Website</a>
+              </p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="column">
+          <mat-card class="card-detail">
+            <mat-card-title class="card-title">Contact</mat-card-title>
+            <mat-card-content>
+              <p *ngIf="company.phone">{{company.phone}}</p>
+              <p *ngIf="company.email">{{company.email}} </p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="column">
+          <mat-card class="card-detail">
+            <mat-card-title class="card-title">Social Media</mat-card-title>
+            <mat-card-content>
+              <p *ngIf="company.linkedin_account.url">
+                <a href="{{company.linkedin_account.url}}" target="_blank">Linkedin</a>
+              </p>
+              <p *ngIf="company.facebook_account.url">
+                <a href="{{company.facebook_account.url}}" target="_blank">Facebook</a>
+              </p>
+              <p *ngIf="company.twitter_account.url">
+                <a href="{{company.twitter_account.url}}" target="_blank">Twitter</a>
+              </p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="column">
+          <mat-card class="card-detail">
+            <mat-card-title class="card-title">Company Info</mat-card-title>
+            <mat-card-content>
+              <p>Year Founded: {{company.year_founded}}</p>
+              <p>Industry: {{company.industry}}</p>
+              <p>Employees: {{company.employees | number}}</p>
+              <p>Revenue: {{company.revenue | currency : 'USD':'$':'1.0-0'}}</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="column">
+          <mat-card class="card-detail">
+            <mat-card-title class="card-title">Technologies</mat-card-title>
+            <mat-card-content>
+              <div *ngIf="company.technologies.length > 0; else noTech">
+                <table *ngIf="company.technologies.length > 0">
+                  <tr *ngFor="let technology of company.technologies">
+                    <li>{{technology.name}}</li>
+                  </tr>
+                </table>
+              </div>
+              <ng-template #noTech>No technologies provided...</ng-template>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </ng-template>
+  </mat-expansion-panel>
 
   <div style="margin-top: 10px">
-    <a mat-raised-button [routerLink]="['/company-form/' + company.orb_num]">Edit</a>
-  </div>
-  <div style="margin-top: 10px">
-    <a mat-raised-button color="primary" [routerLink]="['/company-list']">Approve</a>
-  </div>
-  <div style="margin-top: 10px">
-    <a mat-raised-button color="warn" [routerLink]="['/company-list']">Deny</a>
+    <a mat-raised-button style="margin-right: 10px" [routerLink]="['/company-form/' + company.orb_num]">Edit</a>
+    <a mat-raised-button style="margin-right: 10px" color="primary" [routerLink]="['/company-list']">Approve</a>
+    <a mat-raised-button style="margin-right: 10px" color="warn" [routerLink]="['/company-list']">Deny</a>
   </div>
 
 </div>
