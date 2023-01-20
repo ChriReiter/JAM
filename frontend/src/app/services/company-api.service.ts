@@ -3,6 +3,7 @@ import {Company_API_All} from "../company-view/company-view.component";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {concat, concatMap, forkJoin, map, merge, mergeAll, Observable, of, tap} from "rxjs";
 import {CompanyDetailService} from "./company-detail.service";
+import {UserService} from "./user.service";
 interface API_Request {
   request_fields: undefined;
   results: Company_API_All[];
@@ -15,12 +16,12 @@ interface API_Request {
 
 export class CompanyAPIService {
 
-  constructor(private http: HttpClient, private customCompanyService: CompanyDetailService) { }
+  constructor(private http: HttpClient, private customCompanyService: CompanyDetailService, private userService: UserService) { }
 
   findCompanies(filterName: string, pageSize: number, pageIndex: number, country: string):  Observable<Company_API_All[]>{
     const observables: Observable<any>[] = [];
     let cnt = pageSize;
-    if(pageIndex == 0){
+    if(pageIndex == 0 && this.userService.isLoggedIn$){
       observables.push(this.customCompanyService.getCustomCompaniesByFilter(filterName));
     }
 
