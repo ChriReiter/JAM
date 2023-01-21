@@ -9,7 +9,7 @@ from .models import User
 
 class UserAdminConfig(UserAdmin):
     # Fields that are shown in the list
-    list_display=['pk','email','username','matriculation_no','first_name','gender','degree_program']
+    list_display=['pk','email','username','matriculation_no','first_name','last_name','gender','degree_program']
     # Searchable fields
     search_fields=['email','username']
     readonly_fields=['date_joined','last_login']
@@ -25,7 +25,7 @@ class UserAdminConfig(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'matriculation_no','gender', 'password1', 'password2','degree_program'),
+            'fields': ('username', 'matriculation_no','first_name','last_name','gender', 'password1', 'password2','degree_program'),
         }),
     )
 
