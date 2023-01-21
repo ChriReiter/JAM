@@ -15,9 +15,11 @@ class User(AbstractUser):
         ('f', 'Female'),
         ('x', 'Diverse'),
     )
-    
+
     gender = models.CharField(max_length=1,choices=GENDER,blank=True,null=True)
     profile_image = models.ImageField(upload_to=upload_to,blank=True,null=True)
+    matriculation_no = models.CharField(max_length=1024,blank=True,null=True)
+    degree_program = models.ForeignKey("jamapi.DegreeProgram",blank=True, null=True,on_delete=models.CASCADE)
 
     # You can add additional fields here, as you need them. If you want 
     # to appear these new fields in the admin as well, open admin.py 

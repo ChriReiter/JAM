@@ -49,14 +49,14 @@ urlpatterns = [
 
     # jam urls
 
-    # students
-    path('api/students/', jam_views.StudentViewSet.as_view({'get': 'list', 'post': 'create'})),
-    path('api/students/<student_pk>', jam_views.StudentViewSet.as_view({'get': 'retrieve'})),
+    # # students
+    # path('api/students/', jam_views.StudentViewSet.as_view({'get': 'list', 'post': 'create'})),
+    # path('api/students/<student_pk>', jam_views.StudentViewSet.as_view({'get': 'retrieve'})),
 
-    # lecturers
-    path('api/lecturers/', jam_views.LecturerViewSet.as_view({'get': 'list', 'post': 'create'})),
-    path('api/lecturers/<lecturer_pk>',
-         jam_views.LecturerViewSet.as_view({'delete': 'destroy', 'get': 'retrieve', 'put': 'update'})),
+    # # lecturers
+    # path('api/lecturers/', jam_views.LecturerViewSet.as_view({'get': 'list', 'post': 'create'})),
+    # path('api/lecturers/<lecturer_pk>',
+    #      jam_views.LecturerViewSet.as_view({'delete': 'destroy', 'get': 'retrieve', 'put': 'update'})),
 
     # degree_programmes
     path('api/degree-programmes/', jam_views.DegreeProgramViewSet.as_view({'get': 'list', 'post': 'create'})),
