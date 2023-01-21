@@ -64,7 +64,8 @@ export class UserService {
     logout(): void {
         localStorage.removeItem(this.accessTokenLocalStorageKey);
         this.isLoggedIn$.next(false);
-        this.router.navigate(['/login']);
+        this.router.navigate(['/company-list']);
+        this.snackbar.open('Successfully logged out', 'OK', {duration: 3000});
     }
 
     hasPermission(permission: string): boolean {
