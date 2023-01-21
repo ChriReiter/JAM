@@ -9,6 +9,7 @@ import {UserService} from "./services/user.service";
 })
 export class AppComponent {
   constructor(private router: Router, public userService: UserService) {
+
   }
   title = 'frontend';
 }

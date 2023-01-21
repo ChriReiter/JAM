@@ -1,15 +1,27 @@
 <mat-toolbar color="primary">
-  <button *ngIf="userService.isLoggedIn$ | async" mat-button [matMenuTriggerFor]="menu">My Internships</button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="degree-program-list">List Degree Programs</button>
-    <button mat-menu-item routerLink="internship-list">List internships</button>
-    <button mat-menu-item routerLink="company-list">List companies</button>
-    <button mat-menu-item routerLink="vacancies-list">List vacancies</button>
-    <button mat-menu-item (click)="userService.logout()">
-      Logout
-    </button>
-  </mat-menu>
+  <div>
+  <span>Job Application Management</span>
+  </div>
+      <ul *ngIf="userService.isLoggedIn$ | async" class="container-fluid">
+        <button mat-button routerLink="internship-list">My Internships</button>
+        <button mat-button routerLink="degree-program-list">List Degree Programs</button>
+        <button mat-button routerLink="internship-list">List internships</button>
+        <button mat-button routerLink="company-list">List companies</button>
+        <button mat-button routerLink="vacancies-list">List vacancies</button>
+      </ul>
+        <span class="example-spacer"></span>
+        <ng-container
+          *ngIf="userService.isLoggedIn$ | async; then loggedIn; else loggedOut">
+        </ng-container>
+        <ng-template #loggedIn>
+          <button mat-button (click)="userService.logout()"> Logout </button>
+        </ng-template>
+        <ng-template #loggedOut>
+          <button mat-button routerLink="login"> Login </button>
+        </ng-template>
 </mat-toolbar>
 
+
 <router-outlet></router-outlet>
+
 
