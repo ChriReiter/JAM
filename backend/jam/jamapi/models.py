@@ -109,7 +109,7 @@ class Internship(models.Model):
 
 class File(models.Model):
     file = models.FileField(blank=False, null=False, upload_to="files")
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    student = models.ForeignKey("userapi.User", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.file.name
@@ -149,7 +149,7 @@ class CompanyDetail(models.Model):
     twitter_account = models.ForeignKey(SocialAccount, on_delete=models.CASCADE, related_name="twitter_account", null=True, blank=True)
     # technologies = models.ManyToManyField(Technologies, null=True, blank=True)
     favicon = models.URLField(null=True)
-    phone = models.CharField(max_length=255)
+    phone = models.CharField(max_length=254)
     email = models.EmailField(null=True)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)

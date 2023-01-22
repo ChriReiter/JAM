@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import Company, Student, Internship, DegreeProgram, Lecturer, VacantPosition, CompanyDetail, AddressDetail, \
-    SocialAccount
+from .models import Company, Internship, DegreeProgram, VacantPosition, CompanyDetail, AddressDetail, \
+    SocialAccount, File
 
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -92,7 +92,7 @@ class CompanyDetailSerializer(serializers.ModelSerializer):
         return company_detail
 
 class FileSerializer(serializers.ModelSerializer):
-    student = StudentSerializer()
+    student = "userapi.UserSerializer()"
     class Meta:
         model = File
         fields = "__all__"
