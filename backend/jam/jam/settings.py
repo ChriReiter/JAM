@@ -26,9 +26,11 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['djangojam.matthiaswindisch.eu']
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:4200']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:4200',
+                        'http://192.168.0.239:8000',
+                        'http://matthiaswindisch.eu:8000']
 
 # Application definition
 
@@ -87,7 +89,7 @@ DATABASES = {
     }
 }
 
-
+# test
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -156,6 +158,8 @@ EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:4200'
+    'http://localhost:4200',
+    'http://192.168.0.239:8000',
+    'http://matthiaswindisch.eu:8000'
 ]
 
