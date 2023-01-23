@@ -52,7 +52,7 @@ export class UserService {
                 next: (res: any) => {
                     this.isLoggedIn$.next(true);
                     localStorage.setItem('access_token', res.access);
-                    this.router.navigate(['student-list']);
+                    this.router.navigate(['/company-list']);
                     this.snackbar.open('Successfully logged in', 'OK', {duration: 3000});
                 },
                 error: () => {

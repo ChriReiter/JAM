@@ -8,8 +8,10 @@
         <input matInput placeholder="Username" formControlName="username" name="username" required>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Password" formControlName="password" type="password" name="password"
+        <input [type]="showPassword ? 'text' : 'password'" matInput placeholder="Password" formControlName="password"  name="password"
                required>
+        <mat-icon (click)="togglePasswordVisibility()"
+                  matSuffix>{{showPassword ? 'visibility' : 'visibility_off'}}</mat-icon>
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
