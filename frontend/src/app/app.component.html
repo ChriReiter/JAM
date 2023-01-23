@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <mat-toolbar-row class="first-row">
+  <mat-toolbar-row class="first-row" fxflex="row">
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
             routerLink="company-list">
       <mat-icon>home</mat-icon>
@@ -19,18 +19,16 @@
     <ng-template #loggedOut>
       <button mat-button routerLink="login"> Login</button>
     </ng-template>
-
   </mat-toolbar-row>
-
-  <mat-toolbar-row *ngIf="userService.isLoggedIn$ | async" class="second-row">
-    <button mat-button routerLink="internship-list">My Internships</button>
-    <button mat-button routerLink="degree-program-list">List Degree Programs</button>
-    <button mat-button routerLink="internship-list">List internships</button>
-    <button mat-button routerLink="company-list">List companies</button>
-    <button mat-button routerLink="vacancies-list">List vacancies</button>
-  </mat-toolbar-row>
-
 </mat-toolbar>
+
+<div class="second-row" *ngIf="userService.isLoggedIn$ | async">
+  <button mat-button routerLink="internship-list">My Internships</button>
+  <button mat-button routerLink="degree-program-list">List Degree Programs</button>
+  <button mat-button routerLink="internship-list">List internships</button>
+  <button mat-button routerLink="company-list">List companies</button>
+  <button mat-button routerLink="vacancies-list">List vacancies</button>
+</div>
 
 
 <router-outlet></router-outlet>
