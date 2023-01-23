@@ -61,7 +61,11 @@ urlpatterns = [
     path('api/vacant-positions/<vacant_position_pk>',
          jam_views.VacantPositionViewSet.as_view({'get': 'retrieve', 'put': 'update'})),
 
+    #Email
     path('api/send-mail/', jam_views.EmailViewSet.as_view({'post': 'send_email'})),
+
+    #company
+    path('api/company/', jam_views.CompanyViewSet.as_view({'get': 'list', 'post': 'create'})),
 ]
 
 if settings.DEBUG:

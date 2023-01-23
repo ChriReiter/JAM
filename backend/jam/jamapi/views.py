@@ -9,10 +9,12 @@ from rest_framework.response import Response
 from rest_framework.serializers import ValidationError
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
+from rest_framework.viewsets import ModelViewSet
 
 from . import models
 from . import serializers
-
+from .models import Company
+from .serializers import CompanySerializer
 
 
 class DegreeProgramViewSet(viewsets.ViewSet):
@@ -148,5 +150,6 @@ class EmailViewSet(viewsets.ViewSet):
         )
         return Response(201)
 
-
-
+class CompanyViewSet(ModelViewSet):
+    serializer_class = CompanySerializer
+    queryset = Company.objects.all()

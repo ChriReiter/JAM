@@ -1,4 +1,29 @@
+from django.core.exceptions import ValidationError
 from django.db import models
+
+
+
+
+
+class CompanyLocalDetails(models.Model):
+    description = models.CharField(max_length=1024)
+
+
+class Company(models.Model):
+    name = models.CharField(max_length=255)
+    city = models.CharField(max_length=255, null=True, blank=True)
+    state = models.CharField(max_length=255, null=True, blank=True)
+    orb_num = models.CharField(max_length=20, null=True, blank=True)
+    local_details = models.ForeignKey(CompanyLocalDetails, null=True, on_delete=models.CASCADE, blank=True)
+    approved_status = models.BooleanField(null=True)
+
+    def clean(self):
+        super().clean()
+        if self.orb_num is None and self.local_details is None:
+            raise ValidationError('orb_num or local_details are both None')
+
+        if self.orb_num is not None and self.local_details is not None:
+            raise ValidationError('orb_num or local_details are both not None')
 
 
 class DegreeProgram(models.Model):
