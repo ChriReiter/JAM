@@ -4,6 +4,8 @@ import {Router} from '@angular/router';
 import {BehaviorSubject} from 'rxjs';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {environment} from "../../environments/environment";
+
 
 export interface User {
     pk: number;
@@ -47,7 +49,7 @@ export class UserService {
     }
 
     login(userData: { username: string, password: string }): void {
-        this.http.post('http://localhost:8000/api/token/', userData)
+        this.http.post(`${environment.apiBaseUrl}/token/`, userData)
             .subscribe({
                 next: (res: any) => {
                     this.isLoggedIn$.next(true);
@@ -85,13 +87,13 @@ export class UserService {
     }
 
     getStudentByUsername(username: string) {
-        return this.http.get<Student[]>('http://localhost:8000/api/students/?username=' + username)
+        return this.http.get<Student[]>(`${environment.apiBaseUrl}/students/?username=` + username)
     }
 
     //TODO: not functional yet, only for testing - adjust once group settings are added
     isLecturer(username: string | null): boolean {
         if (username != null) {
-            this.http.get<Lecturer[]>('http://localhost:8000/api/lecturers/').subscribe(lecturers => {
+            this.http.get<Lecturer[]>(`${environment.apiBaseUrl}/lecturers/`).subscribe(lecturers => {
                 return lecturers.filter(lecturer => lecturer.username === sessionStorage.getItem("username")).length === 1
             })
         } else {
