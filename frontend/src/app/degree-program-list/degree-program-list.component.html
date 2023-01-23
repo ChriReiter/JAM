@@ -65,5 +65,8 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 <button mat-button routerLink="/internship-form">New Internship</button>
+<form [formGroup]="formGroup">
+  <input type="file" name="profile" (change)="onChange($event)"/>
+</form>
 
 
