@@ -85,7 +85,11 @@ urlpatterns = [
          jam_views.CompanyDetailViewSet.as_view({'get': 'list'})),
     path('api/companydetails/search/<name>',
          jam_views.CompanyDetailViewSet.as_view({'get': 'search'})),
+
+    # files
+    path('api/files/', jam_views.FileViewSet.as_view({'get': 'list', 'post': 'create'})),
 ]
+
 
 if settings.DEBUG:
     # Adding "static" to the urlpatterns makes all file uploads visible in the admin. 

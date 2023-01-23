@@ -4,7 +4,8 @@ from .models import (
     VacantPosition,
     DegreeProgram,
     Internship,
-    CompanyDetail
+    CompanyDetail,
+    File
 )
 
 
@@ -37,8 +38,14 @@ class CompanyDetailAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 
+class FileAdmin(admin.ModelAdmin):
+
+    list_display = ["file", "student"]
+
+
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(VacantPosition, VacantPositionAdmin)
 admin.site.register(DegreeProgram, DegreeProgramAdmin)
 admin.site.register(Internship, InternshipAdmin)
 admin.site.register(CompanyDetail)
+admin.site.register(File, FileAdmin)
