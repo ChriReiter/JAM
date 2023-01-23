@@ -36,7 +36,7 @@ export class CompanyListComponent implements OnInit {
     console.log('Row clicked: ', row);
   }
   dataSource: CompanyDataSource;
-  displayedColumns = ['name', 'country','city', 'address']
+  displayedColumns = ['name', 'country','city']
   length = 100;
   pageSize = 10;
   pageIndex = 0;

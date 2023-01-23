@@ -1,24 +1,35 @@
 <mat-toolbar color="primary">
-  <div>
-  <span>Job Application Management</span>
-  </div>
-      <ul *ngIf="userService.isLoggedIn$ | async" class="container-fluid">
-        <button mat-button routerLink="internship-list">My Internships</button>
-        <button mat-button routerLink="degree-program-list">List Degree Programs</button>
-        <button mat-button routerLink="internship-list">List internships</button>
-        <button mat-button routerLink="company-list">List companies</button>
-        <button mat-button routerLink="vacancies-list">List vacancies</button>
-      </ul>
-        <span class="example-spacer"></span>
-        <ng-container
-          *ngIf="userService.isLoggedIn$ | async; then loggedIn; else loggedOut">
-        </ng-container>
-        <ng-template #loggedIn>
-          <button mat-button (click)="userService.logout()"> Logout </button>
-        </ng-template>
-        <ng-template #loggedOut>
-          <button mat-button routerLink="login"> Login </button>
-        </ng-template>
+  <mat-toolbar-row class="first-row">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+            routerLink="company-list">
+      <mat-icon>home</mat-icon>
+    </button>
+    <span>
+      <a href="company-list" style="text-decoration: none">Job Application Manager</a>
+    </span>
+
+    <span class="example-spacer"></span>
+
+    <ng-container
+      *ngIf="userService.isLoggedIn$ | async; then loggedIn; else loggedOut">
+    </ng-container>
+    <ng-template #loggedIn>
+      <button mat-button (click)="userService.logout()"> Logout</button>
+    </ng-template>
+    <ng-template #loggedOut>
+      <button mat-button routerLink="login"> Login</button>
+    </ng-template>
+
+  </mat-toolbar-row>
+
+  <mat-toolbar-row *ngIf="userService.isLoggedIn$ | async" class="second-row">
+    <button mat-button routerLink="internship-list">My Internships</button>
+    <button mat-button routerLink="degree-program-list">List Degree Programs</button>
+    <button mat-button routerLink="internship-list">List internships</button>
+    <button mat-button routerLink="company-list">List companies</button>
+    <button mat-button routerLink="vacancies-list">List vacancies</button>
+  </mat-toolbar-row>
+
 </mat-toolbar>
 
 

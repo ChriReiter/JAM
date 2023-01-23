@@ -24,7 +24,7 @@
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Name</th>
       <td mat-cell class="description-cell"
-                *matCellDef="let Company_API_All"><img src="{{Company_API_All.favicon}}" width="50px">{{Company_API_All.name}}</td>
+                *matCellDef="let Company_API_All">{{Company_API_All.name}}</td>
     </ng-container>
 
     <ng-container matColumnDef="country">
@@ -36,11 +36,6 @@
       <th mat-header-cell *matHeaderCellDef>City</th>
       <td mat-cell class="duration-cell"
                 *matCellDef="let Company_API_All">{{Company_API_All.city}}</td>
-    </ng-container>
-    <ng-container matColumnDef="address">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell class="duration-cell"
-                *matCellDef="let Company_API_All">{{Company_API_All.address}}</td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
