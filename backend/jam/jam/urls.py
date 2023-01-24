@@ -25,13 +25,14 @@ from rest_framework_simplejwt.views import (
 
 from userapi import views as user_views
 from jamapi import views as jam_views
+from jamapi import serializers as jam_seri
 
 urlpatterns = [
     # Django Admin URLs:
     path('admin/', admin.site.urls),
     # user and authentication apis:
     path('api/', user_views.ApiView.as_view({'get': "list"})),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/', jam_seri.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/users/', user_views.UserViewSet.as_view({"get": "list",
                                                        "post": "create"})),

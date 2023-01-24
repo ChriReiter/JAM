@@ -91,17 +91,17 @@ export class UserService {
     }
 
     //TODO: not functional yet, only for testing - adjust once group settings are added
-    isLecturer(username: string | null): boolean {
-        if (username != null) {
-            this.http.get<Lecturer[]>(`${environment.apiBaseUrl}/lecturers/`).subscribe(lecturers => {
-                return lecturers.filter(lecturer => lecturer.username === sessionStorage.getItem("username")).length === 1
-            })
-        } else {
-            return false
-        }
-        return true
+    isLecturer(): boolean {
+      if(this.hasPermission('jamapi.delete_company')){
+        return true;
+      }else{return false}
     }
-
+    getGroupByToken(){
+      const token = localStorage.getItem(this.accessTokenLocalStorageKey);
+      const decodedToken = this.jwtHelperService.decodeToken(token ? token : '');
+      const group = decodedToken?.groups;
+      return group
+    }
 
 
 }
