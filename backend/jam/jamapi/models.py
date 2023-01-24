@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 class Company(models.Model):
@@ -14,12 +15,20 @@ class Company(models.Model):
     )
 
     name = models.CharField(max_length=1024)
-    orb_num = models.CharField(max_length=8, default="")
-    data_in_api = models.CharField(max_length=1, choices=DATA_IN_API, default="n")
+    orb_num = models.CharField(max_length=8, default="", null=True, blank=True)
+    custom_companies = models.ForeignKey('CompanyDetail', on_delete=models.CASCADE, null=True, blank=True)
     approval_status = models.CharField(max_length=1, choices=APPROVAL_STATUS, default='?')
 
     def __str__(self):
         return self.name
+
+    def clean(self):
+        super().clean()
+        if self.orb_num is None and self.custom_companies is None:
+            raise ValidationError('orb_num or local_details are both None')
+
+        if self.orb_num is not None and self.custom_companies is not None:
+            raise ValidationError('orb_num or local_details are both not None')
 
 
 
@@ -132,7 +141,6 @@ class AddressDetail(models.Model):
 
 
 class CompanyDetail(models.Model):
-    orb_num = models.BigIntegerField(primary_key=True)
     entity_type = models.CharField(max_length=255)
     parent_name = models.CharField(max_length=512, null=True)
     name = models.CharField(max_length=512)
