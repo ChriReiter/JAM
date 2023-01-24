@@ -23,11 +23,11 @@
 </mat-toolbar>
 
 <div class="second-row" *ngIf="userService.isLoggedIn$ | async">
-  <button mat-button routerLink="internship-list">My Internships</button>
-  <button mat-button routerLink="degree-program-list">List Degree Programs</button>
-  <button mat-button routerLink="internship-list">List internships</button>
-  <button mat-button routerLink="company-list">List companies</button>
-  <button mat-button routerLink="vacancies-list">List vacancies</button>
+  <button mat-button class="custom-button" routerLink="internship-list">My Internships</button>
+  <button mat-button class="custom-button" routerLink="degree-program-list">List Degree Programs</button>
+  <button mat-button class="custom-button" routerLink="internship-list">List Internships</button>
+  <button mat-button class="custom-button" routerLink="company-list">List Companies</button>
+  <button mat-button class="custom-button" routerLink="vacancies-list">List Vacancies</button>
 </div>
 
 

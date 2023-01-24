@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {DegreeProgram} from "../services/degree-program-service";
 import {HttpClient} from "@angular/common/http";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-degree-program-list',
@@ -17,7 +18,7 @@ export class DegreeProgramListComponent {
   constructor(private http: HttpClient) {
   }
   ngOnInit(): void {
-    this.http.get<DegreeProgram[]>('http://localhost:8000/api/degree-programmes/').subscribe(degree_programs => {
+    this.http.get<DegreeProgram[]>(`${environment.apiBaseUrl}/degree-programmes/`).subscribe(degree_programs => {
       this.degree_programs = degree_programs
     })
   }

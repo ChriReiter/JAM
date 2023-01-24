@@ -5,6 +5,7 @@ import {DegreeProgram} from "../services/degree-program-service";
 import {HttpClient} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ActivatedRoute} from "@angular/router";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-internship-list',
@@ -29,7 +30,7 @@ export class InternshipListComponent {
   ngOnInit(): void {
     this.degree_program = this.route.snapshot.paramMap.get('degree-program');
     let username = sessionStorage.getItem("username")
-    this.http.get<Lecturer[]>('http://localhost:8000/api/lecturers/').subscribe(lecturers => {
+    this.http.get<Lecturer[]>(`${environment.apiBaseUrl}/lecturers/`).subscribe(lecturers => {
       this.is_lecturer = lecturers.filter(lecturer => lecturer.email === username).length === 1
 
       if (username != null && !this.is_lecturer) {
