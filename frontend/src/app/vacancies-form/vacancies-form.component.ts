@@ -42,7 +42,7 @@ export class VacanciesFormComponent {
         this.degree_program_pk = degree_program.map(degree_program => degree_program.pk)
       })
     }
-    if (this.userService.isLecturer(username)) {
+    if (this.userService.isLecturer()) {
       this.approval_status = "y"
     }
 

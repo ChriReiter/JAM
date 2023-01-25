@@ -48,27 +48,31 @@ export class UserService {
         }
     }
 
-    login(userData: { username: string, password: string }): void {
-        this.http.post(`${environment.apiBaseUrl}/token/`, userData)
-            .subscribe({
-                next: (res: any) => {
-                    this.isLoggedIn$.next(true);
-                    localStorage.setItem('access_token', res.access);
-                    this.router.navigate(['/company-list']);
-                    this.snackbar.open('Successfully logged in', 'OK', {duration: 3000});
-                },
-                error: () => {
-                    this.snackbar.open('Invalid credentials', 'OK', {duration: 3000});
-                }
-            });
-    }
+  //TODO: add distinction between user/lecturer to route to correct dashboard (only student for now)
+  login(userData: { username: string, password: string }): void {
+    this.http.post(`${environment.apiBaseUrl}/token/`, userData)
+      .subscribe({
+        next: (res: any) => {
+          this.isLoggedIn$.next(true);
+          localStorage.setItem('access_token', res.access);
+          this.router.navigate(['/student-dashboard']);
+          this.snackbar.open('Successfully logged in', 'OK', {duration: 3000});
+          sessionStorage.setItem('username', userData.username);
+        },
+        error: () => {
+          this.snackbar.open('Invalid credentials', 'OK', {duration: 3000});
+        }
+      });
 
-    logout(): void {
-        localStorage.removeItem(this.accessTokenLocalStorageKey);
-        this.isLoggedIn$.next(false);
-        this.router.navigate(['/company-list']);
-        this.snackbar.open('Successfully logged out', 'OK', {duration: 3000});
-    }
+  }
+
+  logout(): void {
+    localStorage.removeItem(this.accessTokenLocalStorageKey);
+    this.isLoggedIn$.next(false);
+    this.router.navigate(['/company-list']);
+    this.snackbar.open('Successfully logged out', 'OK', {duration: 3000});
+    sessionStorage.clear();
+  }
 
     hasPermission(permission: string): boolean {
         const token = localStorage.getItem(this.accessTokenLocalStorageKey);
@@ -86,9 +90,9 @@ export class UserService {
         }
     }
 
-    getStudentByUsername(username: string) {
-        return this.http.get<Student[]>(`${environment.apiBaseUrl}/students/?username=` + username)
-    }
+  getStudentByUsername(username: string) {
+    return this.http.get<Student[]>(`${environment.apiBaseUrl}/students/?username=` + username)
+  }
 
     //TODO: not functional yet, only for testing - adjust once group settings are added
     isLecturer(): boolean {
@@ -102,6 +106,5 @@ export class UserService {
       const group = decodedToken?.groups;
       return group
     }
-
 
 }
