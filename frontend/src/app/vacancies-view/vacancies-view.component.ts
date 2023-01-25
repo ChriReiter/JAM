@@ -16,7 +16,7 @@ export class VacanciesViewComponent {
     pk: 0,
     name: "",
     orb_num: "",
-    data_in_api: "n",
+    custom_companies: null,
     approval_status: "n"
 
   }
@@ -69,7 +69,7 @@ export class VacanciesViewComponent {
           application_status: "o",
           approval_status: "?",
           student: this.student[0].pk,
-          company: vacantPosition.company.pk
+          company: vacantPosition.company.pk! ////TODO: quickfix with !
         }
         this.internshipService.createInternships(internship).subscribe( response => {
           this.router.navigate(['internship-list'])

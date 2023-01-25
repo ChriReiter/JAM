@@ -1,3 +1,5 @@
+import enum
+
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -29,6 +31,12 @@ class Company(models.Model):
 
         if self.orb_num is not None and self.custom_companies is not None:
             raise ValidationError('orb_num or local_details are both not None')
+
+        if Company.objects.filter(orb_num=self.orb_num and self.orb_num is not None):
+            raise ValidationError('orb_num already exists')
+
+        if Company.objects.filter(custom_companies=self.custom_companies) and self.custom_companies is not None:
+            raise ValidationError('custom_companies already exists')
 
 
 

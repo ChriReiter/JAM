@@ -3,10 +3,10 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment"
 
 export interface Company_DB {
-    pk: number;
+    pk: number | null;
     name: string;
-    orb_num: string;
-    data_in_api: string;
+    orb_num: string | null;
+    custom_companies: string | null;
     approval_status: string;
 }
 
@@ -48,4 +48,5 @@ export class CompanyDbService {
     updateCompany(pk: number, company: Company_DB) {
         return this.http.put<Company_DB>(`${environment.apiBaseUrl}/companies/` + pk, company)
     }
+
 }

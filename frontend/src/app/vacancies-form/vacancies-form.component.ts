@@ -57,7 +57,7 @@ export class VacanciesFormComponent {
         description: this.vacantPositionFormGroup.get("description")?.value,
         currently_open: true,
         approval_status: this.approval_status,
-        company: company_for_vacancy.pk,
+        company: company_for_vacancy.pk!, ////TODO: quickfix with !
         degree_program: this.degree_program_pk
       }
       this.vacantPositionService.createVacancy(vacant_position).subscribe( response => {

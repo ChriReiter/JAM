@@ -9,7 +9,7 @@ from .models import Company, Internship, DegreeProgram, VacantPosition, CompanyD
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
-        fields = ['pk', 'name', 'orb_num', 'data_in_api', 'approval_status']
+        fields = ['pk', 'name', 'orb_num', 'custom_companies', 'approval_status']
 
 
 class DegreeProgramSerializer(serializers.ModelSerializer):
