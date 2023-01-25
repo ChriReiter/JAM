@@ -10,6 +10,7 @@ import {VacanciesFormComponent} from "./vacancies-form/vacancies-form.component"
 import {VacanciesListComponent} from "./vacancies-list/vacancies-list.component";
 import {InternshipFormComponent} from "./internship-form/internship-form.component";
 import {VacanciesViewComponent} from "./vacancies-view/vacancies-view.component";
+import { StudentDashboardComponent } from './student-dashboard/student-dashboard.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/company-list', pathMatch: 'full'},
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path: 'vacancies-form', component: VacanciesFormComponent},
   {path: 'vacancies-form/:vacant-position-pk', component: VacanciesFormComponent},
   {path: 'vacancies-view/:vacant-position-pk', component: VacanciesViewComponent},
+  {path: 'student-dashboard', component: StudentDashboardComponent}
 ];
 
 @NgModule({
