@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {Internship, InternshipService} from "../services/internship.service";
-import {Lecturer, Student, UserService} from "../services/user.service";
+import {Student, UserService} from "../services/user.service";
 import {DegreeProgram} from "../services/degree-program-service";
 import {HttpClient} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -30,19 +30,25 @@ export class InternshipListComponent {
   ngOnInit(): void {
     this.degree_program = this.route.snapshot.paramMap.get('degree-program');
     let username = sessionStorage.getItem("username")
-    this.http.get<Lecturer[]>(`${environment.apiBaseUrl}/lecturers/`).subscribe(lecturers => {
-      this.is_lecturer = lecturers.filter(lecturer => lecturer.email === username).length === 1
+    // this.http.get<Lecturer[]>(`${environment.apiBaseUrl}/lecturers/`).subscribe(lecturers => {
+    //   this.is_lecturer = lecturers.filter(lecturer => lecturer.email === username).length === 1
+    //
+    //   if (username != null && !this.is_lecturer) {
+    //     this.internshipService.getInternshipsByStudent(username).subscribe(internships => {
+    //       this.internships = internships
+    //     })
+    //   } else if (this.degree_program != null && this.is_lecturer) {
+    //     this.filterByDP(this.degree_program)
+    //   } else {
+    //     this.internships = []
+    //   }
+    // })
+    if (username != null) {
+      this.internshipService.getInternshipsByStudent(username).subscribe(internships => {
+        this.internships = internships
+      })
 
-      if (username != null && !this.is_lecturer) {
-        this.internshipService.getInternshipsByStudent(username).subscribe(internships => {
-          this.internships = internships
-        })
-      } else if (this.degree_program != null && this.is_lecturer) {
-        this.filterByDP(this.degree_program)
-      } else {
-        this.internships = []
-      }
-    })
+    }
   }
 
   filterForStudent(filterValue: string | null) {

@@ -33,11 +33,11 @@ export class CompanyDbService {
         console.log(company.pk)
     }
 
-    getCompanyDB(pk: number) {
+    getCompanyDB(pk: number | null) {
         return this.http.get<Company_DB>(`${environment.apiBaseUrl}/companies/` + pk);
     }
 
-    getCompanyDBByOrbNum(orb_num: string) {
+  getCompanyDBByOrbNum(orb_num: string | null) {
         return this.http.get<Company_DB[]>(`${environment.apiBaseUrl}/companies/?orb-num=` + orb_num);
     }
 
