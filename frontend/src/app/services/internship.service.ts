@@ -22,7 +22,7 @@ export interface Internship2 {
   application_status: string;
   approval_status: string;
   student: number;
-  company: number;
+  company: number | null;
 }
 
 @Injectable({
@@ -45,7 +45,7 @@ export class InternshipService {
     }
 
     getInternshipsByStudent(student: string) {
-        return this.http.get<Internship[]>(`${environment.apiBaseUrl}/internships/?student=` + student);
+        return this.http.get<Internship[]>(`${environment.apiBaseUrl}/internships/?user=` + student);
     }
 
     createInternships(internship: Internship2) {

@@ -54,7 +54,7 @@ export class VacanciesViewComponent {
       })
     }
 
-    this.isLecturer = this.userService.isLecturer()
+    //this.isLecturer = this.userService.isLecturer()
 
   }
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {VacantPositionCreate, VacantPositionService} from "../services/vacant-position.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Company_DB, CompanyDbService} from "../services/company.service";
@@ -42,22 +42,22 @@ export class VacanciesFormComponent {
         this.degree_program_pk = degree_program.map(degree_program => degree_program.pk)
       })
     }
-    if (this.userService.isLecturer()) {
-      this.approval_status = "y"
-    }
+
+    // if (this.userService.isLecturer(username)) {
+    //   this.approval_status = "y"
+    // }
 
   }
 
   createOrUpdateVacantPosition() {
     this.companyDbService.getCompanyDB(this.vacantPositionFormGroup.get("company")?.value).subscribe( company => {
-      let company_for_vacancy = company
       let vacant_position: VacantPositionCreate = {
         pk: 0,
         title: this.vacantPositionFormGroup.get("title")?.value,
         description: this.vacantPositionFormGroup.get("description")?.value,
         currently_open: true,
         approval_status: this.approval_status,
-        company: company_for_vacancy.pk!, ////TODO: quickfix with !
+        company: company.pk!, ////TODO: quickfix with !
         degree_program: this.degree_program_pk
       }
       this.vacantPositionService.createVacancy(vacant_position).subscribe( response => {
