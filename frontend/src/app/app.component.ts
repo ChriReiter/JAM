@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {UserService} from "./services/user.service";
 
@@ -9,7 +9,12 @@ import {UserService} from "./services/user.service";
 })
 export class AppComponent {
   constructor(private router: Router, public userService: UserService) {
-
   }
   title = 'frontend';
+
+  getUsername(): string {
+    console.log(this.userService.getUsername());
+    return this.userService.getUsername();
+  }
+
 }

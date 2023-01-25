@@ -1,26 +1,26 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row class="first-row" fxflex="row">
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
-            routerLink="company-list">
-      <mat-icon>home</mat-icon>
-    </button>
-    <span>
-      <a href="company-list" style="text-decoration: none">Job Application Manager</a>
-    </span>
+<div class="first-row">
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+          routerLink="company-list">
+    <mat-icon>home</mat-icon>
+  </button>
+    <a href="company-list" style="text-decoration: none">Job Application Manager</a>
+    <div *ngIf="userService.isLoggedIn$ | async; then showHello;"></div>
+  <ng-template #showHello>
+    | <a [ngStyle]="{'font-size': '14px'}">Hello, {{getUsername()}}!</a>
+  </ng-template>
 
-    <span class="example-spacer"></span>
+  <span class="example-spacer"></span>
 
-    <ng-container
-      *ngIf="userService.isLoggedIn$ | async; then loggedIn; else loggedOut">
-    </ng-container>
-    <ng-template #loggedIn>
-      <button mat-button (click)="userService.logout()"> Logout</button>
-    </ng-template>
-    <ng-template #loggedOut>
-      <button mat-button routerLink="login"> Login</button>
-    </ng-template>
-  </mat-toolbar-row>
-</mat-toolbar>
+  <ng-container
+    *ngIf="userService.isLoggedIn$ | async; then loggedIn; else loggedOut">
+  </ng-container>
+  <ng-template #loggedIn>
+    <button class="login-container" mat-button (click)="userService.logout()"> Logout</button>
+  </ng-template>
+  <ng-template #loggedOut>
+    <button class="login-container" mat-button routerLink="login"> Login</button>
+  </ng-template>
+</div>
 
 <div class="second-row" *ngIf="userService.isLoggedIn$ | async">
   <button mat-button class="custom-button" routerLink="internship-list">My Internships</button>

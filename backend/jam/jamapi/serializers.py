@@ -1,4 +1,7 @@
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
 from .models import Company, Internship, DegreeProgram, VacantPosition, CompanyDetail, AddressDetail, \
     SocialAccount, File
 
@@ -97,3 +100,16 @@ class FileSerializer(serializers.ModelSerializer):
         model = File
         fields = "__all__"
 
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+# Add custom claims
+        token['permissions'] = dict.fromkeys(user.get_all_permissions())
+        token['groups'] = dict.fromkeys(user.get_group_permissions())
+        return token
+
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer

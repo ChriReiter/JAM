@@ -5,6 +5,10 @@ a {
 .first-row {
   background-color: #b9cdda;
   color: black;
+  overflow: hidden;
+  font-size: 24px;
+  padding-bottom: 10px;
+  padding-top: 10px;
 }
 
 .second-row {
@@ -19,4 +23,18 @@ a {
   margin-left: 10px;
   margin-bottom: 10px;
   margin-top: 10px;
+}
+
+.hello {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.login-container {
+  float: right;
+  text-align: center;
+  justify-content: center;
+  font-size: 24px;
+  padding-right: 25px;
 }
