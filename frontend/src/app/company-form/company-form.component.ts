@@ -12,7 +12,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class CompanyFormComponent implements OnInit{
   companyFormGroup: FormGroup;
   ngOnInit(): void {
-    
+
   }
   constructor(private route: ActivatedRoute,
               private companyDbService: CompanyDbService) {
@@ -40,7 +40,7 @@ export class CompanyFormComponent implements OnInit{
       pk: 0,
       name: this.companyFormGroup.get('name')?.value,
       approval_status: "?",
-      data_in_api: "n",
+      custom_companies: null,
       orb_num: ""
     }
     this.companyDbService.createCompany(company)

@@ -140,7 +140,7 @@ class InternshipViewSet(viewsets.ViewSet):
 
 class CompanyViewSet(viewsets.ViewSet):
 
-    def list(request):
+    def list(self, request):
         queryset = models.Company.objects.all()
         if request.GET.get("dp") is not None:
             degree_program = models.DegreeProgram.objects.get(abbreviation=request.GET.get("dp"))

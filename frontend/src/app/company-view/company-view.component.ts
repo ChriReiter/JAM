@@ -4,6 +4,7 @@ import {AppRoutingModule} from "../app-routing.module";
 import {ActivatedRoute, RouterModule} from "@angular/router";
 import { API_Request} from "../company-list/company-list.component";
 import {CompanyAPIService} from "../services/company-api.service";
+import {Company_DB, CompanyDbService} from "../services/company.service";
 export interface Address {
   address1: string;
   address2: string;
@@ -104,7 +105,8 @@ export class CompanyViewComponent implements OnInit {
 
   constructor(private http: HttpClient, private route: ActivatedRoute,
               private router: RouterModule,
-              private companyAPIService: CompanyAPIService) {
+              private companyAPIService: CompanyAPIService,
+              private companyDbService: CompanyDbService) {
 
   }
 
@@ -112,6 +114,15 @@ export class CompanyViewComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('orb_num');
     if(id){
       this.companyAPIService.getCompanyDetails(id).subscribe((details:Company_API_All) => this.company = details);
+      let companyDB: Company_DB = {
+        name: this.company.name,
+        orb_num: this.company.orb_num.toString(),
+        custom_companies: null,
+        approval_status: '?',
+        pk: null
+      }
+      this.companyDbService.createCompany(companyDB)
     }
+
   }
 }
