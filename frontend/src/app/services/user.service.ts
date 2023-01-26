@@ -105,14 +105,14 @@ export class UserService {
     return this.http.get<Student[]>(`${environment.apiBaseUrl}/students/?username=` + username)
   }
 
-  //TODO: you have to be superuser to get id. change this
+  //TODO: you have to be superuser to get id. find other solution?
   getStudentId(username: string): number {
     let students = this.http.get<UserAPI[]>(`${environment.apiBaseUrl}/users/`)
     console.log(JSON.stringify(students))
-    return 3
+    return 2
   }
 
-  //TODO: right user has to be looked for by ID (see method above)
+  //TODO: correct user has to be looked for by ID (see method above)
   isLecturer(username: string): Observable<boolean> {
     return this.http.get<Group[]>(`${environment.apiBaseUrl}/users/${this.getStudentId(username)}/groups`)
       .pipe(
@@ -122,16 +122,6 @@ export class UserService {
         })
       );
   }
-
-  // isLecturer(username: string): boolean {
-  //   let group = "";
-  //   this.http.get<Group[]>(`${environment.apiBaseUrl}/users/2/groups`).subscribe(groups => {
-  //     group = (groups[0].name);
-  //     console.log((group == 'Student'))
-  //     return (group === 'Lecturer');
-  //   })
-  //   return (group === 'Lecturer');
-  // }
 
   getGroupByToken() {
     const token = localStorage.getItem(this.accessTokenLocalStorageKey);

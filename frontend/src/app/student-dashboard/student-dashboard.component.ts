@@ -1,20 +1,20 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../services/user.service";
 
+//TODO: add distinction between Student and Lecturer for different Dashboards
 @Component({
   selector: 'app-student-dashboard',
   // templateUrl: './student-dashboard.component.html',
   template: `
-    <div>
-<!--      <h1>My Applications</h1>-->
-<!--      <div *ngIf="this.userService.isLecturer('user10') | async; then lecturer; else student"></div>-->
-<!--      <ng-template #lecturer>-->
-<!--        <app-degree-program-list></app-degree-program-list>-->
-<!--      </ng-template>-->
-<!--      <ng-template #student>-->
-<!--        <app-internship-list></app-internship-list>-->
-<!--      </ng-template>-->
+    <div style="margin: 35px">
+      <h2>My Applications</h2>
       <app-internship-list></app-internship-list>
+      <hr/>
+      <h2>Companies</h2>
+      <app-company-list></app-company-list>
+      <hr/>
+      <h2>Vacancies</h2>
+      <app-vacancies-list></app-vacancies-list>
     </div>
   `,
   styleUrls: ['./student-dashboard.component.scss']
@@ -25,9 +25,6 @@ export class StudentDashboardComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.userService.isLecturer("user10").subscribe(result => {
-      console.log(result);
-    })
   }
 
 }
