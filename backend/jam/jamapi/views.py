@@ -148,18 +148,23 @@ class CompanyViewSet(viewsets.ViewSet):
         if request.GET.get("name") is not None:
             queryset = models.Company.objects.filter(name=request.GET.get("name"))
         if request.GET.get("orb-num") is not None:
-            queryset = models.Company.objects.filter(orb_num=request.GET.get("orb-num"))
+            queryset = models.Company.objects.filter(orb_num=request.GET.get("orb-num", "1"))
         queryset.order_by("name")
         serializer = serializers.CompanySerializer(queryset, many=True)
         return Response(serializer.data, status=200)
 
     def create(self, request):
+
+        if models.Company.objects.filter(orb_num=request.data["orb_num"]).count() > 0 or models.Company.objects.filter(custom_companies=request.data["custom_companies"]).count() > 0:
+            return Response(status=202)
+
         company = models.Company.objects.create(
             name=request.data["name"],
             orb_num=request.data["orb_num"],
-            data_in_api=request.data["data_in_api"],
+            custom_companies=request.data["custom_companies"],
             approval_status=request.data["approval_status"]
         )
+
         company.save()
         serializer = serializers.CompanySerializer(company)
         return Response(serializer.data, status=201)
