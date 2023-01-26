@@ -113,16 +113,21 @@ export class CompanyViewComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('orb_num');
     if(id){
-      this.companyAPIService.getCompanyDetails(id).subscribe((details:Company_API_All) => this.company = details);
-      let companyDB: Company_DB = {
-        name: this.company.name,
-        orb_num: this.company.orb_num.toString(),
-        custom_companies: null,
-        approval_status: '?',
-        pk: null
-      }
-      this.companyDbService.createCompany(companyDB)
+      this.companyAPIService.getCompanyDetails(id).subscribe((details:Company_API_All) => {
+        this.company = details;
+        let companyDB: Company_DB = {
+          name: this.company.name,
+          orb_num: this.company.orb_num.toString(),
+          custom_companies: null,
+          approval_status: '?',
+          pk: null
+        }
+        this.companyDbService.createCompany(companyDB).subscribe();
+      });
+      //wait for last line to finish
+
     }
 
   }
+
 }
