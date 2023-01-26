@@ -157,7 +157,7 @@ class CompanyViewSet(viewsets.ViewSet):
         company = models.Company.objects.create(
             name=request.data["name"],
             orb_num=request.data["orb_num"],
-            data_in_api=request.data["data_in_api"],
+            custom_companies=request.data["custom_companies"],
             approval_status=request.data["approval_status"]
         )
         company.save()
@@ -173,7 +173,7 @@ class CompanyViewSet(viewsets.ViewSet):
         company = models.Company.objects.get(pk=company_pk)
         company.name = request.data["name"]
         company.orb_num = request.data["orb_num"]
-        company.data_in_api = request.data["data_in_api"]
+        company.custom_companies = request.data["custom_companies"]
         company.approval_status = request.data["approval_status"]
         company.save()
         return Response(
@@ -181,7 +181,7 @@ class CompanyViewSet(viewsets.ViewSet):
                 "id": company.pk,
                 "name": company.name,
                 "orb_num": company.orb_num,
-                "data_in_api": company.data_in_api,
+                "custom_companies": company.custom_companies,
                 "approval_status": company.approval_status
             },
             status=201)

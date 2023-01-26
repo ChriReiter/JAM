@@ -5,10 +5,6 @@ from django.db import models
 
 class Company(models.Model):
 
-    DATA_IN_API = (
-        ('y', 'yes'),
-        ('n', 'no')
-    )
 
     APPROVAL_STATUS = (
         ('y', 'yes'),
@@ -17,8 +13,8 @@ class Company(models.Model):
     )
 
     name = models.CharField(max_length=1024)
-    orb_num = models.CharField(max_length=8, default="", null=True, blank=True)
-    custom_companies = models.ForeignKey('CompanyDetail', on_delete=models.CASCADE, null=True, blank=True)
+    orb_num = models.CharField(max_length=8, default="", null=True, blank=True, unique=True)
+    custom_companies = models.OneToOneField('CompanyDetail', on_delete=models.CASCADE, null=True, blank=True)
     approval_status = models.CharField(max_length=1, choices=APPROVAL_STATUS, default='?')
 
     def __str__(self):
@@ -32,10 +28,10 @@ class Company(models.Model):
         if self.orb_num is not None and self.custom_companies is not None:
             raise ValidationError('orb_num or local_details are both not None')
 
-        if Company.objects.filter(orb_num=self.orb_num and self.orb_num is not None):
+        if self.pk is None and Company.objects.filter(orb_num=self.orb_num).count() > 0 and self.orb_num is not None:
             raise ValidationError('orb_num already exists')
 
-        if Company.objects.filter(custom_companies=self.custom_companies) and self.custom_companies is not None:
+        if self.pk is None and Company.objects.filter(custom_companies=self.custom_companies).count() > 0 and self.custom_companies is not None:
             raise ValidationError('custom_companies already exists')
 
 
