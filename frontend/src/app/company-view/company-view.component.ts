@@ -5,6 +5,7 @@ import {ActivatedRoute, RouterModule} from "@angular/router";
 import { API_Request} from "../company-list/company-list.component";
 import {CompanyAPIService} from "../services/company-api.service";
 import {Company_DB, CompanyDbService} from "../services/company.service";
+import {CustomCompanyService} from "../services/custom-company.service";
 export interface Address {
   address1: string;
   address2: string;
@@ -103,17 +104,29 @@ export class CompanyViewComponent implements OnInit {
     longitude: ""
   }
 
+  companyApproval: Company_DB = {
+    orb_num: null,
+    custom_companies: null,
+    approval_status: 'x',
+    pk:null,
+    name:""
+  }
+
   constructor(private http: HttpClient, private route: ActivatedRoute,
               private router: RouterModule,
               private companyAPIService: CompanyAPIService,
-              private companyDbService: CompanyDbService) {
+              private companyDbService: CompanyDbService,
+              private customCompanyService: CustomCompanyService) {
 
   }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('orb_num');
-    if(id){
-      this.companyAPIService.getCompanyDetails(id).subscribe((details:Company_API_All) => {
+    //const orb_num = this.route.snapshot.paramMap.get('orb_num');
+    const orb_num = this.route.snapshot.queryParamMap.get('orb_num')
+    const custom_companies = this.route.snapshot.queryParamMap.get('custom_companies');
+
+    if(orb_num && orb_num?.length > 0 && orb_num != "undefined") {
+      this.companyAPIService.getCompanyDetails(orb_num).subscribe((details: Company_API_All) => {
         this.company = details;
         let companyDB: Company_DB = {
           name: this.company.name,
@@ -122,10 +135,26 @@ export class CompanyViewComponent implements OnInit {
           approval_status: '?',
           pk: null
         }
-        this.companyDbService.createCompany(companyDB).subscribe();
+        this.companyDbService.createCompany(companyDB).subscribe(t => {
+            this.companyDbService.getCompanyDBByOrbNum(this.company.orb_num.toString()).subscribe((company: Company_DB[]) => this.companyApproval = company[0])
+          }
+        );
       });
-      //wait for last line to finish
-
+    }else if(custom_companies && custom_companies?.length > 0){
+      this.customCompanyService.getCustomCompaniesId(custom_companies).subscribe((details: Company_API_All) => {
+        this.company = details;
+        let companyDB: Company_DB = {
+          name: this.company.name,
+          orb_num: this.company.orb_num.toString(),
+          custom_companies: null,
+          approval_status: '?',
+          pk: null
+        }
+        this.companyDbService.createCompany(companyDB).subscribe(t => {
+            this.companyDbService.getCompanyDBByCustomCompany(custom_companies).subscribe((company: Company_DB[]) => this.companyApproval = company[0])
+          }
+        );
+      });
     }
 
   }

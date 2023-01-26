@@ -6,12 +6,16 @@ import {environment} from "../../environments/environment";
 @Injectable({
   providedIn: 'root'
 })
-export class CompanyDetailService {
+export class CustomCompanyService {
 
   constructor(private http: HttpClient) { }
 
 
   getCustomCompaniesByFilter(name:string){
     return this.http.get<Company_API_All[]>(`${environment.apiBaseUrl}/companydetails/search/${name}`)
+  }
+
+  getCustomCompaniesId(id:string){
+    return this.http.get<Company_API_All>(`${environment.apiBaseUrl}/companydetails/${id}`)
   }
 }

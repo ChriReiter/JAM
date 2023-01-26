@@ -17,7 +17,7 @@ const routes: Routes = [
   {path: 'company-form/:company-pk', component: CompanyFormComponent},
   {path: 'company-list', component: CompanyListComponent},
   {path: 'company-list/:degree-program', component: CompanyListComponent},
-  {path: 'company-view/:orb_num', component: CompanyViewComponent},
+  {path: 'company-view', component: CompanyViewComponent},
   {path: 'degree-program-list', component: DegreeProgramListComponent},
   {path: 'internship-form', component: InternshipFormComponent},
   {path: 'internship-form/:internship', component: InternshipFormComponent},

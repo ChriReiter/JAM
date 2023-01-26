@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Company_API_All} from "../company-view/company-view.component";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {concat, concatMap, forkJoin, map, merge, mergeAll, Observable, of, tap} from "rxjs";
-import {CompanyDetailService} from "./company-detail.service";
+import {CustomCompanyService} from "./custom-company.service";
 import {UserService} from "./user.service";
 interface API_Request {
   request_fields: undefined;
@@ -16,7 +16,7 @@ interface API_Request {
 
 export class CompanyAPIService {
 
-  constructor(private http: HttpClient, private customCompanyService: CompanyDetailService, private userService: UserService) { }
+  constructor(private http: HttpClient, private customCompanyService: CustomCompanyService, private userService: UserService) { }
 
   findCompanies(filterName: string, pageSize: number, pageIndex: number, country: string):  Observable<Company_API_All[]>{
     const observables: Observable<any>[] = [];

@@ -93,8 +93,10 @@
 
   <div style="margin-top: 10px">
     <a mat-raised-button style="margin-right: 10px" [routerLink]="['/company-form/' + company.orb_num]">Edit</a>
-    <a mat-raised-button style="margin-right: 10px" color="primary" [routerLink]="['/company-list']">Approve</a>
-    <a mat-raised-button style="margin-right: 10px" color="warn" [routerLink]="['/company-list']">Deny</a>
+    <a *ngIf="(companyApproval.approval_status == 'y' || companyApproval.approval_status == '?')" mat-raised-button style="margin-right: 10px" color="primary" [routerLink]="['/company-list']">Approve</a>
+    <a *ngIf="(companyApproval.approval_status == 'n' || companyApproval.approval_status == '?')" mat-raised-button style="margin-right: 10px" color="warn" [routerLink]="['/company-list']">Deny</a>
+
+
   </div>
 
 </div>

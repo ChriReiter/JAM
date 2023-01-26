@@ -32,7 +32,7 @@ export interface API_Request {
 export class CompanyListComponent implements OnInit {
   //onRowClicked({row}: { row: any }) {
   onRowClicked(row: any) {
-    this.router.navigate([`company-view/${row.orb_num}`])
+    this.router.navigate([`company-view`],{queryParams:{'orb_num':row.orb_num, 'custom_companies':row.id}})
     console.log('Row clicked: ', row);
   }
   dataSource: CompanyDataSource;

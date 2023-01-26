@@ -41,6 +41,10 @@ export class CompanyDbService {
         return this.http.get<Company_DB[]>(`${environment.apiBaseUrl}/companies/?orb-num=` + orb_num);
     }
 
+  getCompanyDBByCustomCompany(custom_companies: string) {
+    return this.http.get<Company_DB[]>(`${environment.apiBaseUrl}/companies/?custom_companies=` + custom_companies);
+  }
+
     createCompany(company: Company_DB) {
         return this.http.post(`${environment.apiBaseUrl}/companies/`, company)
     }
