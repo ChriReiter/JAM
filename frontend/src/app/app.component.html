@@ -2,10 +2,10 @@
   <div *ngIf="userService.isLoggedIn$ | async; then routeDashboard; else routeCompanyList"></div>
   <ng-template #routeDashboard>
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
-            routerLink="studentDashboard">
+            routerLink="dashboard">
       <mat-icon>home</mat-icon>
     </button>
-    <a href="student-dashboard" style="text-decoration: none">Job Application Manager</a>
+    <a href="dashboard" style="text-decoration: none">Job Application Manager</a>
     <div *ngIf="userService.isLoggedIn$ | async; then showHello;"></div>
     <ng-template #showHello>
       | <a [ngStyle]="{'font-size': '14px'}">Hello, {{getUsername()}}!</a>

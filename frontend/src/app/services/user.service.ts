@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {BehaviorSubject, map, Observable} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {environment} from "../../environments/environment";
@@ -30,17 +30,6 @@ export interface Lecturer {
   degree_program: number[];
 }
 
-interface Group {
-  name: string;
-  url: string;
-}
-
-interface UserAPI {
-  id: number;
-  username: string;
-  url: string;
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -48,6 +37,7 @@ export class UserService {
 
   readonly accessTokenLocalStorageKey = 'access_token';
   isLoggedIn$ = new BehaviorSubject(false);
+  isLecturer$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(private http: HttpClient, private router: Router, private jwtHelperService: JwtHelperService,
               private snackbar: MatSnackBar) {
@@ -66,7 +56,7 @@ export class UserService {
         next: (res: any) => {
           this.isLoggedIn$.next(true);
           localStorage.setItem('access_token', res.access);
-          this.router.navigate(['/student-dashboard']);
+          this.router.navigate(['/dashboard']);
           this.snackbar.open('Successfully logged in', 'OK', {duration: 3000});
           sessionStorage.setItem('username', userData.username);
         },
@@ -105,22 +95,11 @@ export class UserService {
     return this.http.get<Student[]>(`${environment.apiBaseUrl}/students/?username=` + username)
   }
 
-  //TODO: you have to be superuser to get id. find other solution?
-  getStudentId(username: string): number {
-    let students = this.http.get<UserAPI[]>(`${environment.apiBaseUrl}/users/`)
-    console.log(JSON.stringify(students))
-    return 2
-  }
-
-  //TODO: correct user has to be looked for by ID (see method above)
-  isLecturer(username: string): Observable<boolean> {
-    return this.http.get<Group[]>(`${environment.apiBaseUrl}/users/${this.getStudentId(username)}/groups`)
-      .pipe(
-        map((groups: { name: string; }[]) => {
-          console.log(groups[0].name)
-          return (groups[0].name === 'Lecturer');
-        })
-      );
+  isLecturer(): boolean {
+    const token = localStorage.getItem(this.accessTokenLocalStorageKey);
+    const decodedToken = this.jwtHelperService.decodeToken(token ? token : '');
+    this.isLecturer$.next(!decodedToken?.groups.Student);
+    return !decodedToken?.groups.Student;
   }
 
   getGroupByToken() {

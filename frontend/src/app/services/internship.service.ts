@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Company_DB} from "./company.service";
 import {Student} from "./user.service";
+import {JwtHelperService} from "@auth0/angular-jwt";
 
 export interface Internship {
   pk: number;
@@ -26,60 +27,67 @@ export interface Internship2 {
 }
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class InternshipService {
+  internships: Internship[] = [];
+  internshipsByStudent: Internship[] = [];
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private jwtHelperService: JwtHelperService) {
+  }
 
-    getInternships() {
-        return this.http.get<Internship[]>(`${environment.apiBaseUrl}/internships/`);
-    }
+  readonly accessTokenLocalStorageKey = 'access_token';
 
-    getInternship(id: string) {
-        return this.http.get<Internship>(`${environment.apiBaseUrl}/internships/${id}`);
-    }
+  getInternships() {
+    return this.http.get<Internship[]>(`${environment.apiBaseUrl}/internships/`);
+  }
 
-    getInternshipsByDP(degree_program: string) {
-        return this.http.get<Internship[]>(`${environment.apiBaseUrl}/internships/?dp=` + degree_program);
-    }
+  getInternship(id: string) {
+    return this.http.get<Internship>(`${environment.apiBaseUrl}/internships/${id}`);
+  }
 
-    getInternshipsByStudent(student: string) {
-        return this.http.get<Internship[]>(`${environment.apiBaseUrl}/internships/?user=` + student);
-    }
+  getInternshipsByDP(degree_program: string) {
+    return this.http.get<Internship[]>(`${environment.apiBaseUrl}/internships/?dp=` + degree_program);
+  }
 
-    createInternships(internship: Internship2) {
-        return this.http.post(`${environment.apiBaseUrl}/internships/`, internship)
-    }
-    updateInternships(internship: Internship) {
-        return this.http.put(`${environment.apiBaseUrl}/internships/` + internship.pk, internship);
-    }
+  getInternshipsByStudent() {
+    return this.http.get<Internship[]>(`${environment.apiBaseUrl}/internships/`)
+  }
 
-    mapAbbToFull(status_string: string) {
-        if (status_string === "a") {
-            return "applied"
-        } else if (status_string === "t") {
-            return "talks ongoing"
-        } else if (status_string === "y") {
-            return "accepted"
-        } else if (status_string === "n") {
-            return "rejected"
-        } else {
-            return "other"
-        }
-    }
 
-    mapFullToAbb(status_num: number): string {
-        if (status_num == 1) {
-            return "a"
-        } else if (status_num == 2) {
-            return "t"
-        } else if (status_num == 3) {
-            return "y"
-        } else if (status_num == 4) {
-            return "n"
-        } else {
-            return "o"
-        }
+  createInternships(internship: Internship2) {
+    return this.http.post(`${environment.apiBaseUrl} / internships / `, internship)
+  }
+
+  updateInternships(internship: Internship) {
+    return this.http.put(`${environment.apiBaseUrl} / internships / ` + internship.pk, internship);
+  }
+
+  mapAbbToFull(status_string: string) {
+    if (status_string === "a") {
+      return "applied"
+    } else if (status_string === "t") {
+      return "talks ongoing"
+    } else if (status_string === "y") {
+      return "accepted"
+    } else if (status_string === "n") {
+      return "rejected"
+    } else {
+      return "other"
     }
+  }
+
+  mapFullToAbb(status_num: number): string {
+    if (status_num == 1) {
+      return "a"
+    } else if (status_num == 2) {
+      return "t"
+    } else if (status_num == 3) {
+      return "y"
+    } else if (status_num == 4) {
+      return "n"
+    } else {
+      return "o"
+    }
+  }
 }
