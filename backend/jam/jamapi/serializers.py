@@ -106,8 +106,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
 # Add custom claims
-        token['permissions'] = dict.fromkeys(user.get_all_permissions())
-        token['groups'] = dict.fromkeys(user.get_group_permissions())
+        token['permissions'] = dict.fromkeys(user.get_all_permissions(), True)
+        token['groups'] = dict.fromkeys(user.groups.values_list('name', flat=True), True)
         return token
 
 
