@@ -1,16 +1,14 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {Company_DB, CompanyDbService} from "../services/company.service";
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-//import {MatSnackBar} from "@angular/material/snack-bar";
-import {DegreeProgram} from "../services/degree-program-service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Company_API_All} from "../company-view/company-view.component";
 import {CompanyDataSource} from "../services/company-data-source.service";
 import {CompanyAPIService} from "../services/company-api.service";
 import {PageEvent} from "@angular/material/paginator";
 import {debounceTime, distinctUntilChanged} from "rxjs";
+
 export interface Company_API_Result {
   orb_num: number;
   name: string;
@@ -18,6 +16,7 @@ export interface Company_API_Result {
   entity_type: string;
   country: string;
 }
+
 export interface API_Request {
   request_fields: undefined;
   results: Company_API_All[];
@@ -30,13 +29,13 @@ export interface API_Request {
   styleUrls: ['./company-list.component.scss']
 })
 export class CompanyListComponent implements OnInit {
-  //onRowClicked({row}: { row: any }) {
   onRowClicked(row: any) {
     this.router.navigate([`company-view/${row.orb_num}`])
     console.log('Row clicked: ', row);
   }
+
   dataSource: CompanyDataSource;
-  displayedColumns = ['name', 'country','city']
+  displayedColumns = ['name', 'country', 'city']
   length = 100;
   pageSize = 10;
   pageIndex = 0;
@@ -48,34 +47,36 @@ export class CompanyListComponent implements OnInit {
               public route: ActivatedRoute,
               private router: Router,
               private snackbar: MatSnackBar,
-              private companyAPI:CompanyAPIService
-              ) {
+              private companyAPI: CompanyAPIService
+  ) {
     this.dataSource = new CompanyDataSource(this.companyAPI);
     this.pageEvent = new PageEvent();
   }
+
   ngOnInit() {
     this.dataSource = new CompanyDataSource(this.companyAPI);
-    this.dataSource.loadCompanies(this.filterByName, this.pageSize,this.pageIndex);
+    this.dataSource.loadCompanies(this.filterByName, this.pageSize, this.pageIndex);
 
     this.filterFormControlName.valueChanges.pipe(
       debounceTime(400),
       distinctUntilChanged()
     ).subscribe(value => {
-      if(value){
+      if (value) {
         this.filterByName = value;
-      }else{
+      } else {
         this.filterByName = '';
       }
-      this.dataSource.loadCompanies(this.filterByName, this.pageSize,this.pageIndex * this.pageSize);
+      this.dataSource.loadCompanies(this.filterByName, this.pageSize, this.pageIndex * this.pageSize);
     })
 
   }
+
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
     this.length = e.length;
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
-    this.dataSource.loadCompanies(this.filterByName, this.pageSize,this.pageIndex * this.pageSize);
+    this.dataSource.loadCompanies(this.filterByName, this.pageSize, this.pageIndex * this.pageSize);
   }
 }
 

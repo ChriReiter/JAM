@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { CompanyListComponent } from './company-list/company-list.component';
-import { LoginComponent } from './login/login.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {CompanyListComponent} from './company-list/company-list.component';
+import {LoginComponent} from './login/login.component';
 import {HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ReactiveFormsModule} from "@angular/forms";
@@ -20,14 +20,14 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatInputModule} from "@angular/material/input";
-import { CompanyFormComponent } from './company-form/company-form.component';
-import { DegreeProgramListComponent } from './degree-program-list/degree-program-list.component';
-import { InternshipListComponent } from './internship-list/internship-list.component';
-import { InternshipFormComponent } from './internship-form/internship-form.component';
-import { VacanciesListComponent } from './vacancies-list/vacancies-list.component';
-import { VacanciesFormComponent } from './vacancies-form/vacancies-form.component';
+import {CompanyFormComponent} from './company-form/company-form.component';
+import {DegreeProgramListComponent} from './degree-program-list/degree-program-list.component';
+import {InternshipListComponent} from './internship-list/internship-list.component';
+import {InternshipFormComponent} from './internship-form/internship-form.component';
+import {VacanciesListComponent} from './vacancies-list/vacancies-list.component';
+import {VacanciesFormComponent} from './vacancies-form/vacancies-form.component';
 import {JwtModule} from "@auth0/angular-jwt";
-import { CompanyViewComponent } from './company-view/company-view.component';
+import {CompanyViewComponent} from './company-view/company-view.component';
 import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
@@ -35,8 +35,10 @@ import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatExpansionModule} from "@angular/material/expansion";
-import { VacanciesViewComponent } from './vacancies-view/vacancies-view.component';
+import {VacanciesViewComponent} from './vacancies-view/vacancies-view.component';
 import {MatDividerModule} from "@angular/material/divider";
+import {LecturerDashboardComponent} from './lecturer-dashboard/lecturer-dashboard.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
 import { StudentDashboardComponent } from './student-dashboard/student-dashboard.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 
@@ -58,7 +60,9 @@ export function tokenGetter() {
     CompanyViewComponent,
     VacanciesViewComponent,
     StudentDashboardComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    LecturerDashboardComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -78,6 +82,7 @@ export function tokenGetter() {
     MatNativeDateModule,
     MatCheckboxModule,
     MatSnackBarModule,
+    MatIconModule,
     NgxMatSelectSearchModule,
     JwtModule.forRoot({
       config: {
@@ -96,4 +101,5 @@ export function tokenGetter() {
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

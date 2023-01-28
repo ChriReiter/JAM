@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Internship2, InternshipService} from "../services/internship.service";
 import {VacantPosition, VacantPositionService} from "../services/vacant-position.service";
 import {Router} from "@angular/router";
@@ -22,18 +22,22 @@ export class VacanciesListComponent {
   pageIndex = 0;
   pageEvent: PageEvent;
 
-  displayedColumns: string[] = ['title', 'company', 'view-button'];
+  displayedColumns: string[] = ['title', 'company', 'approval_status', 'view-button'];
 
   constructor(private router: Router,
-              private vacantPositionService: VacantPositionService,
+              public vacantPositionService: VacantPositionService,
               private userService: UserService,
               private internshipService: InternshipService) {
     this.pageEvent = new PageEvent();
   }
 
   ngOnInit() {
+    // Student: open vacancies; status
+    // Lecturer: all vacancies with option to approve/deny and close
+
+
     this.userService.isLecturer(sessionStorage.getItem("username")!).subscribe( isLecturer => {
-      this.vacantPositionService.getOpenVacancies().subscribe( vacancies => {
+      this.vacantPositionService.getOpenVacancies().subscribe(vacancies => {
         if (isLecturer) {
           this.approval_status = "?"
           this.vacancies_list = vacancies.filter(vacancy => vacancy.approval_status=="?").slice(0, 5)

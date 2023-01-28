@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {CompanyListComponent} from "./company-list/company-list.component";
 import {CompanyFormComponent} from "./company-form/company-form.component";
 import {DegreeProgramListComponent} from "./degree-program-list/degree-program-list.component";
@@ -10,7 +10,9 @@ import {VacanciesFormComponent} from "./vacancies-form/vacancies-form.component"
 import {VacanciesListComponent} from "./vacancies-list/vacancies-list.component";
 import {InternshipFormComponent} from "./internship-form/internship-form.component";
 import {VacanciesViewComponent} from "./vacancies-view/vacancies-view.component";
-import { StudentDashboardComponent } from './student-dashboard/student-dashboard.component';
+import {StudentDashboardComponent} from './student-dashboard/student-dashboard.component';
+import {LecturerDashboardComponent} from "./lecturer-dashboard/lecturer-dashboard.component";
+import {DashboardComponent} from "./dashboard/dashboard.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/company-list', pathMatch: 'full'},
@@ -29,11 +31,14 @@ const routes: Routes = [
   {path: 'vacancies-form', component: VacanciesFormComponent},
   {path: 'vacancies-form/:vacant-position-pk', component: VacanciesFormComponent},
   {path: 'vacancies-view/:vacant-position-pk', component: VacanciesViewComponent},
-  {path: 'student-dashboard', component: StudentDashboardComponent}
+  {path: 'student-dashboard', component: StudentDashboardComponent},
+  {path: 'lecturer-dashboard', component: LecturerDashboardComponent},
+  {path: 'dashboard', component: DashboardComponent}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Internship, InternshipService} from "../services/internship.service";
 import {Student, UserService} from "../services/user.service";
 import {DegreeProgram} from "../services/degree-program-service";
 import {HttpClient} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ActivatedRoute} from "@angular/router";
-import {environment} from "../../environments/environment";
+import {JwtHelperService} from "@auth0/angular-jwt";
 
 @Component({
   selector: 'app-internship-list',
@@ -14,6 +14,7 @@ import {environment} from "../../environments/environment";
 })
 export class InternshipListComponent {
   internships: Internship[] = []
+  internshipsByStudent: Internship[] = []
   all_internships: Internship[] = []
   students: Student[] = []
   degree_programs: DegreeProgram[] = []
@@ -23,31 +24,36 @@ export class InternshipListComponent {
 
   displayedColumns = ['title', 'application_status', 'approval_status', 'company', 'approve', 'reject', 'update']
 
-  constructor(private http: HttpClient, private internshipService: InternshipService,
+  constructor(private http: HttpClient, public internshipService: InternshipService,
               public userService: UserService, private snackbar: MatSnackBar,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute, private jwtHelperService: JwtHelperService) {
   }
+
+  readonly accessTokenLocalStorageKey = 'access_token';
+
   ngOnInit(): void {
     this.degree_program = this.route.snapshot.paramMap.get('degree-program');
     let username = sessionStorage.getItem("username")
-    // this.http.get<Lecturer[]>(`${environment.apiBaseUrl}/lecturers/`).subscribe(lecturers => {
-    //   this.is_lecturer = lecturers.filter(lecturer => lecturer.email === username).length === 1
-    //
-    //   if (username != null && !this.is_lecturer) {
-    //     this.internshipService.getInternshipsByStudent(username).subscribe(internships => {
-    //       this.internships = internships
-    //     })
-    //   } else if (this.degree_program != null && this.is_lecturer) {
-    //     this.filterByDP(this.degree_program)
-    //   } else {
-    //     this.internships = []
-    //   }
-    // })
-    if (username != null) {
-      this.internshipService.getInternshipsByStudent(username).subscribe(internships => {
-        this.internships = internships
-      })
 
+    const token = localStorage.getItem(this.accessTokenLocalStorageKey);
+    const decodedToken = this.jwtHelperService.decodeToken(token ? token : '');
+    const userId = decodedToken?.user_id;
+
+
+    // For Lecturers all internships should be shown, so they can approve/deny them
+    if (username != null && !this.userService.isLecturer()) {
+      this.internshipService.getInternshipsByStudent().subscribe(internships => {
+        this.internships = internships;
+
+        for (let i = 0; i < this.internships.length; i++) {
+          if (!(this.internships[i].student == userId))
+            this.internships.splice(i, 1);
+        }
+      })
+    } else {
+      this.internshipService.getInternshipsByStudent().subscribe(internships => {
+        this.internships = internships;
+      })
     }
   }
 
@@ -58,7 +64,7 @@ export class InternshipListComponent {
   }
 
   filterByDP(degree_program: string) {
-    this.internshipService.getInternshipsByDP(degree_program).subscribe( internships => {
+    this.internshipService.getInternshipsByDP(degree_program).subscribe(internships => {
       this.internships = internships
     })
   }
@@ -68,10 +74,9 @@ export class InternshipListComponent {
       internship.approval_status = 'y'
       this.internshipService.updateInternships(internship).subscribe(() => {
         this.ngOnInit()
-        this.snackbar.open('approved internship: ' + internship.title)
+        this.snackbar.open('Approved Internship: ' + internship.title)
       })
     })
-
   }
 
   reject(internship_pk: number) {
@@ -79,7 +84,7 @@ export class InternshipListComponent {
       internship.approval_status = 'n'
       this.internshipService.updateInternships(internship).subscribe(() => {
         this.ngOnInit()
-        this.snackbar.open('rejected internship ' + internship.title)
+        this.snackbar.open('Rejected Internship ' + internship.title)
       })
     })
   }

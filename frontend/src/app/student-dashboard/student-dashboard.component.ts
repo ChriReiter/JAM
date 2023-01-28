@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../services/user.service";
 
-//TODO: add distinction between Student and Lecturer for different Dashboards
 @Component({
   selector: 'app-student-dashboard',
   // templateUrl: './student-dashboard.component.html',
@@ -19,9 +18,9 @@ import {UserService} from "../services/user.service";
   `,
   styleUrls: ['./student-dashboard.component.scss']
 })
-export class StudentDashboardComponent implements OnInit{
+export class StudentDashboardComponent implements OnInit {
 
-  constructor(public userService:UserService) {
+  constructor(public userService: UserService) {
   }
 
   ngOnInit(): void {
