@@ -1,3 +1,4 @@
+<button mat-button color="primary" routerLink="/vacancies-form">Report Vacancy</button>
 <table mat-table style="width: 100%" [dataSource]="vacancies_list" matSort class="mat-elevation-z8">
 
   <!-- Title Column -->
@@ -18,8 +19,13 @@
       <button mat-button color="primary" [routerLink]="'/vacancies-view/' + element.pk">Details</button>
     </td>
   </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<button mat-button color="primary" routerLink="/vacancies-form">Report Vacancy</button>
+<mat-paginator [length]="length"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="[5, 10, 20, 50]"
+               (page)="handlePageEvent($event)"
+               aria-label="Select page">
+
+</mat-paginator>

@@ -11,14 +11,14 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="card-info">
+  <mat-card class="card-info" style="background: #a6d8d4">
     <mat-card-content>
       <h2>
         <div>
           Approval Status
         </div>
       </h2>
-      <p>{{vacancy.approval_status}}</p>
+      <p>{{vacancy_status_ui}}</p>
       <h2>
         <div>
           Company
@@ -27,12 +27,14 @@
       <p>{{vacancy.company.name}}</p>
     </mat-card-content>
   </mat-card>
-  <button mat-raised-button style="margin-right: 10px" color="primary" (click)="report_as_internship(vacancy.pk)">Report as Applied</button>
-  <div style="margin-top: 10px">
+  <!--<div *ngIf=!this.isLecturer style="margin-top: 10px">-->
+    <button mat-raised-button style="margin-right: 10px" color="primary" (click)="report_as_internship(vacancy.pk)">Report as Applied</button>
+  <!--</div>-->
+  <!--<div *ngIf=this.isLecturer style="margin-top: 10px">-->
     <button mat-raised-button style="margin-right: 10px" (click)="close()" [routerLink]="'/vacancies-list/'">Taken</button>
     <button mat-raised-button style="margin-right: 10px" color="primary" (click)="approve()">Approve</button>
     <button mat-raised-button style="margin-right: 10px" color="warn" (click)="reject()">Reject</button>
-  </div>
+  <!--</div>-->
 </div>
 
 

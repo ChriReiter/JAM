@@ -2,7 +2,7 @@
   <div *ngIf="userService.isLoggedIn$ | async; then routeDashboard; else routeCompanyList"></div>
   <ng-template #routeDashboard>
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
-            routerLink="studentDashboard">
+            routerLink="student-dashboard">
       <mat-icon>home</mat-icon>
     </button>
     <a href="student-dashboard" style="text-decoration: none">Job Application Manager</a>
@@ -13,7 +13,7 @@
   </ng-template>
   <ng-template #routeCompanyList>
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
-            routerLink="company-lists">
+            routerLink="company-list">
       <mat-icon>home</mat-icon>
     </button>
     <a href="company-list" style="text-decoration: none">Job Application Manager</a>

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {VacantPositionCreate, VacantPositionService} from "../services/vacant-position.service";
+import {VacantPosition, VacantPositionCreate, VacantPositionService} from "../services/vacant-position.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Company_DB, CompanyDbService} from "../services/company.service";
 import {DegreeProgramService} from "../services/degree-program-service";
@@ -8,6 +8,7 @@ import {UserService} from "../services/user.service";
 import {CompanyAPIService} from "../services/company-api.service";
 import {Company_API_All} from "../company-view/company-view.component";
 import {CompanyDataSource} from "../services/company-data-source.service";
+import {EmailService} from "../services/email-service";
 
 @Component({
   selector: 'app-vacancies-form',
@@ -17,10 +18,13 @@ import {CompanyDataSource} from "../services/company-data-source.service";
 export class VacanciesFormComponent {
   vacantPositionFormGroup: FormGroup;
   pk: number | null = null;
+  vacantPosition: VacantPositionCreate | null = null;
   companyOptions: Company_API_All[] = []
   username: string | null = null;
   degree_program_pk: number[] = [];
   approval_status: string = "?";
+  isLecturer: boolean = false;
+  mailRecipients: string[] = [];
 
   public companySearchFromControl: FormControl = new FormControl();
 
@@ -30,7 +34,8 @@ export class VacanciesFormComponent {
               private router: Router,
               private userService: UserService,
               private companyApiService: CompanyAPIService,
-              private companyDataSourceService: CompanyDataSource) {
+              private companyDataSourceService: CompanyDataSource,
+              private emailService: EmailService) {
     this.vacantPositionFormGroup = new FormGroup({
       pk: new FormControl(null),
       title: new FormControl('', [Validators.required]),
@@ -42,8 +47,13 @@ export class VacanciesFormComponent {
     this.companyApiService.findCompanies('', 10, 1, 'austria').subscribe( companies => {
       this.companyOptions = companies
     })
-    let username = sessionStorage.getItem("username")
-
+    this.username = sessionStorage.getItem("username")
+    this.userService.isLecturer(this.username!).subscribe( res => {
+      this.isLecturer = res
+      if (this.isLecturer) {
+        this.approval_status = 'y'
+      }
+    })
     this.vacantPositionFormGroup.get("company")?.valueChanges.subscribe( company => {
       this.companyDbService.getCompanyDBByOrbNum(company.orb_num.toString()).subscribe(companyDB => {
         if (companyDB.length == 0) {
@@ -54,9 +64,7 @@ export class VacanciesFormComponent {
             custom_companies: null,
             approval_status: 'tbd'
           }
-          this.companyDbService.createCompany(companyToCreate).subscribe(() => {
-            //console.log("created company ", companyToCreate)
-          })
+          this.companyDbService.createCompany(companyToCreate).subscribe()
         }
       })
     })
@@ -78,43 +86,30 @@ export class VacanciesFormComponent {
         company: company[0].pk!!,
         degree_program: this.degree_program_pk
       }
-
-    this.vacantPositionService.createVacancy(vacant_position).subscribe( response => {
-      this.router.navigate(['vacancies-list'])
-    })
-    })
-    /*
-    this.companyDbService.getCompanyDBByOrbNum(selected_company.orb_num.toString()).subscribe( company => {
-      if (company.length == 0) {
-        let companyToCreate: Company_DB = {
-          pk: 0,
-          name: selected_company.name,
-          orb_num: selected_company.orb_num.toString(),
-          data_in_api: 'y',
-          approval_status: 'tbd'
-        }
-        this.companyDbService.createCompany(companyToCreate).subscribe( res => {
-          console.log(res)
-        })
+      this.vacantPosition = vacant_position
+      //TODO: Add correct recipients
+      if (this.isLecturer) {
+        this.emailService.sendEmail(this.emailService.mailBuilder(
+          "New Vacancy Added",
+          "Hi "+ this.username + "!\n\n The vacancy \"" + this.vacantPosition!!.title + "\" was just added to the database!\n\n"+
+          "Apply quickly before its too late!\n\n" +
+          "Best regards, your JAM-Team",
+          ["jam.wapdev@gmail.com"]
+        )).subscribe()
       } else {
-        let company_for_vacancy = company
-        console.log(company)
-        let vacant_position: VacantPositionCreate = {
-          pk: 0,
-          title: this.vacantPositionFormGroup.get("title")?.value,
-          description: this.vacantPositionFormGroup.get("description")?.value,
-          currently_open: true,
-          approval_status: this.approval_status,
-          company: company_for_vacancy[0].pk,
-          degree_program: this.degree_program_pk
-        }
+        this.emailService.sendEmail(this.emailService.mailBuilder(
+          "New Vacancy Added",
+          "Hi "+ this.username + "!\n\n The vacancy \"" + this.vacantPosition!!.title + "\" was just added to the database!\n\n"+
+          "Please accept or reject the request for students to see!" +
+          "Click here to view the request: \nhttp://localhost:4200/vacancies-view/" + this.vacantPosition!!.pk +
+          "\n\nKind Greetings, your JAM-Team",
+          ["jam.wapdev@gmail.com"]
+        )).subscribe()
       }
-
-
-      //this.vacantPositionService.createVacancy(vacant_position).subscribe( response => {
-      //  this.router.navigate(['vacancies-list'])
-      //})
-    })*/
+      this.vacantPositionService.createVacancy(vacant_position).subscribe( response => {
+        this.router.navigate(['vacancies-list'])
+      })
+    })
   }
 
   filterCompanyOptions(filterValue: string) {
@@ -123,6 +118,5 @@ export class VacanciesFormComponent {
         this.companyOptions = companies
       })
     }
-
   }
 }

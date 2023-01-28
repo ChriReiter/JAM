@@ -49,6 +49,8 @@ export class VacantPositionService {
     return this.http.get<VacantPosition[]>(`${environment.apiBaseUrl}/vacant-positions/?student=` + student_pk);
   }
 
+
+
     getVacancy(pk: number) {
         return this.http.get<VacantPosition>(`${environment.apiBaseUrl}/vacant-positions/` + pk);
     }
@@ -59,6 +61,16 @@ export class VacantPositionService {
 
     updateVacancy(vacancy: VacantPosition) {
         return this.http.put<VacantPosition>(`${environment.apiBaseUrl}/vacant-positions/` + vacancy.pk, vacancy)
+    }
+
+    approvalStatusMapper(shortString: String):String {
+      if (shortString=="y") {
+        return "This vacancy has been approved!"
+      } else if (shortString=="?") {
+        return "This vacancy has not been approved yet!"
+      } else {
+        return "This vacancy was rejected by your lecturer"
+      }
     }
 
 

@@ -108,6 +108,10 @@ export class UserService {
     return 2
   }
 
+  getStudentById(pk: number) {
+    return this.http.get<UserAPI[]>(`${environment.apiBaseUrl}/users/` + pk)
+  }
+
   //TODO: correct user has to be looked for by ID (see method above)
   isLecturer(username: string): Observable<boolean> {
     return this.http.get<Group[]>(`${environment.apiBaseUrl}/users/${this.getStudentId(username)}/groups`)

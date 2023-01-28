@@ -13,7 +13,7 @@ export class AppComponent {
   title = 'frontend';
 
   getUsername(): string {
-    console.log(this.userService.getUsername());
+    //console.log(this.userService.getUsername());
     return this.userService.getUsername();
   }
 

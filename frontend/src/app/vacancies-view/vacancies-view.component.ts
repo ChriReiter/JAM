@@ -18,7 +18,6 @@ export class VacanciesViewComponent {
     orb_num: "",
     custom_companies: null,
     approval_status: "n"
-
   }
   vacancy: VacantPosition = {
     pk: 0,
@@ -37,6 +36,8 @@ export class VacanciesViewComponent {
 
   isLecturer: boolean = false
 
+  vacancy_status_ui: String = ""
+
   constructor(private http: HttpClient, private route: ActivatedRoute,
               private router: Router, private vacantPositionService: VacantPositionService,
               private internshipService: InternshipService, private userService: UserService) {
@@ -47,14 +48,18 @@ export class VacanciesViewComponent {
     if (this.vacancy_pk != null) {
       this.vacantPositionService.getVacancy(parseInt(this.vacancy_pk)).subscribe( vacancy => {
         this.vacancy = vacancy
+        this.vacancy_status_ui = this.vacantPositionService.approvalStatusMapper(this.vacancy.approval_status)
       })
     }
     this.username = sessionStorage.getItem("username")
     if (this.username != null) {
+      this.userService.isLecturer(this.username).subscribe( res => {
+        this.isLecturer = res
+      })
       this.student_id = this.userService.getStudentId(this.username)
     }
   }
-
+  //TODO: Creating internship does not work yet, API error
   report_as_internship(pk: number) {
     this.vacantPositionService.getVacancy(pk).subscribe( vacancy => {
       let vacantPosition: VacantPosition = vacancy
@@ -64,14 +69,13 @@ export class VacanciesViewComponent {
         title: vacantPosition.title,
         description: vacantPosition.description,
         application_status: "o",
-        approval_status: "?",
+        approval_status: vacancy.approval_status,
         student: this.student_id!,
         company: vacantPosition.company.pk!
       }
       this.internshipService.createInternships(internship).subscribe( response => {
         this.router.navigate(['internship-list'])
       })
-
     })
   }
   //approval status to "y"
