@@ -101,10 +101,6 @@ export class UserService {
     }
   }
 
-  getStudentByUsername(username: string) {
-    return this.http.get<Student[]>(`${environment.apiBaseUrl}/students/?username=` + username)
-  }
-
   //TODO: you have to be superuser to get id. find other solution?
   getStudentId(username: string): number {
     let students = this.http.get<UserAPI[]>(`${environment.apiBaseUrl}/users/`)

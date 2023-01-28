@@ -16,8 +16,11 @@
   <mat-form-field *ngIf="this.pk==null">
     <mat-label>Company</mat-label>
     <mat-select placeholder="Company" formControlName="company">
+      <mat-option>
+        <ngx-mat-select-search [formControl]="companySearchFromControl"></ngx-mat-select-search>
+      </mat-option>
       <mat-option *ngFor="let company of companyOptions"
-                  [value]="company.pk">{{company.name}}
+                  [value]="company">{{company.name}}
       </mat-option>
     </mat-select>
   </mat-form-field>

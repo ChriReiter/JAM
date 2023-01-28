@@ -38,6 +38,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import { VacanciesViewComponent } from './vacancies-view/vacancies-view.component';
 import {MatDividerModule} from "@angular/material/divider";
 import { StudentDashboardComponent } from './student-dashboard/student-dashboard.component';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -56,7 +57,8 @@ export function tokenGetter() {
     VacanciesFormComponent,
     CompanyViewComponent,
     VacanciesViewComponent,
-    StudentDashboardComponent
+    StudentDashboardComponent,
+    FileUploadComponent
   ],
   imports: [
     BrowserModule,

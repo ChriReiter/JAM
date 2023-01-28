@@ -33,6 +33,8 @@ export class VacanciesViewComponent {
   username: string | null = null
   student: Student[] = []
 
+  student_id: number | null = null
+
   isLecturer: boolean = false
 
   constructor(private http: HttpClient, private route: ActivatedRoute,
@@ -49,32 +51,27 @@ export class VacanciesViewComponent {
     }
     this.username = sessionStorage.getItem("username")
     if (this.username != null) {
-      this.userService.getStudentByUsername(this.username).subscribe( student => {
-        this.student = student
-      })
+      this.student_id = this.userService.getStudentId(this.username)
     }
-
-    //this.isLecturer = this.userService.isLecturer()
-
   }
 
   report_as_internship(pk: number) {
     this.vacantPositionService.getVacancy(pk).subscribe( vacancy => {
       let vacantPosition: VacantPosition = vacancy
-      if (this.student != null) {
-        let internship: Internship2 = {
-          pk: 0,
-          title: vacantPosition.title,
-          description: vacantPosition.description,
-          application_status: "o",
-          approval_status: "?",
-          student: this.student[0].pk,
-          company: vacantPosition.company.pk! ////TODO: quickfix with !
-        }
-        this.internshipService.createInternships(internship).subscribe( response => {
-          this.router.navigate(['internship-list'])
-        })
+
+      let internship: Internship2 = {
+        pk: 0,
+        title: vacantPosition.title,
+        description: vacantPosition.description,
+        application_status: "o",
+        approval_status: "?",
+        student: this.student_id!,
+        company: vacantPosition.company.pk!
       }
+      this.internshipService.createInternships(internship).subscribe( response => {
+        this.router.navigate(['internship-list'])
+      })
+
     })
   }
   //approval status to "y"
