@@ -4,37 +4,31 @@
   </div>
   <mat-card class="card-info">
     <mat-card-content>
-      <h1>
-          {{vacancy.title}}
-      </h1>
+      <h1>{{vacancy.title}}</h1>
       <p>{{vacancy.description}}</p>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="card-info" style="background: #a6d8d4">
-    <mat-card-content>
-      <h2>
-        <div>
-          Approval Status
-        </div>
-      </h2>
-      <p>{{vacancy_status_ui}}</p>
-      <h2>
-        <div>
-          Company
-        </div>
-      </h2>
+      <h1 style="margin-top: 30px">Company</h1>
       <p>{{vacancy.company.name}}</p>
     </mat-card-content>
   </mat-card>
-  <!--<div *ngIf=!this.isLecturer style="margin-top: 10px">-->
-    <button mat-raised-button style="margin-right: 10px" color="primary" (click)="report_as_internship(vacancy.pk)">Report as Applied</button>
-  <!--</div>-->
-  <!--<div *ngIf=this.isLecturer style="margin-top: 10px">-->
-    <button mat-raised-button style="margin-right: 10px" (click)="close()" [routerLink]="'/vacancies-list/'">Taken</button>
+  <mat-card class="card-status">
+    <mat-card-content>
+      <h1>Approval Status</h1>
+      <p>{{vacancy_status_ui}}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <div *ngIf="!this.userService.isLecturer(); then showStudentButton; else showLecturerButton;"></div>
+  <ng-template #showStudentButton>
+    <button mat-raised-button style="margin-right: 10px" class="button-new" (click)="report_as_internship(vacancy.pk)">
+      Report as Applied
+    </button>
+  </ng-template>
+  <ng-template #showLecturerButton>
+    <button mat-raised-button style="margin-right: 10px" (click)="close()" [routerLink]="'/vacancies-list/'">Taken
+    </button>
     <button mat-raised-button style="margin-right: 10px" color="primary" (click)="approve()">Approve</button>
     <button mat-raised-button style="margin-right: 10px" color="warn" (click)="reject()">Reject</button>
-  <!--</div>-->
+  </ng-template>
 </div>
 
 

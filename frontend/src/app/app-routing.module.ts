@@ -31,6 +31,7 @@ const routes: Routes = [
   {path: 'vacancies-form', component: VacanciesFormComponent},
   {path: 'vacancies-form/:vacant-position-pk', component: VacanciesFormComponent},
   {path: 'vacancies-view/:vacant-position-pk', component: VacanciesViewComponent},
+  {path: 'vacant-positions/:vacant-position-pk', component: VacanciesViewComponent},
   {path: 'student-dashboard', component: StudentDashboardComponent},
   {path: 'lecturer-dashboard', component: LecturerDashboardComponent},
   {path: 'dashboard', component: DashboardComponent}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {VacantPosition, VacantPositionService} from "../services/vacant-position.service";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router, RouterModule} from "@angular/router";
@@ -41,17 +41,18 @@ export class VacanciesViewComponent {
 
   constructor(private http: HttpClient, private route: ActivatedRoute,
               private router: Router, private vacantPositionService: VacantPositionService,
-              private internshipService: InternshipService, private userService: UserService,
+              private internshipService: InternshipService, public userService: UserService,
               private jwtHelperService: JwtHelperService) {
 
   }
 
   readonly accessTokenLocalStorageKey = 'access_token';
 
+  //TODO: maybe put link to company in detail view?
   ngOnInit() {
     this.vacancy_pk = this.route.snapshot.paramMap.get('vacant-position-pk');
     if (this.vacancy_pk != null) {
-      this.vacantPositionService.getVacancy(parseInt(this.vacancy_pk)).subscribe( vacancy => {
+      this.vacantPositionService.getVacancy(parseInt(this.vacancy_pk)).subscribe(vacancy => {
         this.vacancy = vacancy
         this.vacancy_status_ui = this.vacantPositionService.approvalStatusMapper(this.vacancy.approval_status)
       })
@@ -63,9 +64,10 @@ export class VacanciesViewComponent {
     const userId = decodedToken?.user_id;
 
   }
+
   //TODO: Creating internship does not work yet, API error
   report_as_internship(pk: number) {
-    this.vacantPositionService.getVacancy(pk).subscribe( vacancy => {
+    this.vacantPositionService.getVacancy(pk).subscribe(vacancy => {
       let vacantPosition: VacantPosition = vacancy
 
       let internship: Internship2 = {
@@ -77,37 +79,41 @@ export class VacanciesViewComponent {
         student: this.student_id!,
         company: vacantPosition.company.pk!
       }
-      this.internshipService.createInternships(internship).subscribe( response => {
+      this.internshipService.createInternships(internship).subscribe(response => {
         this.router.navigate(['internship-list'])
       })
     })
   }
+
   //approval status to "y"
   approve() {
     this.vacancy.approval_status = "y"
-    this.vacantPositionService.updateVacancy(this.vacancy).subscribe( () => {
+    this.vacantPositionService.updateVacancy(this.vacancy).subscribe(() => {
       this.ngOnInit()
     })
   }
-  //approval status to "y"
+
+  //approval status to "n"
   reject() {
     this.vacancy.approval_status = "n"
-    this.vacantPositionService.updateVacancy(this.vacancy).subscribe( () => {
+    this.vacantPositionService.updateVacancy(this.vacancy).subscribe(() => {
       this.ngOnInit()
     })
   }
+
   //set currently_open to false
   close() {
     this.vacancy.currently_open = false
-    this.vacantPositionService.updateVacancy(this.vacancy).subscribe( () => {
+    this.vacantPositionService.updateVacancy(this.vacancy).subscribe(() => {
       this.ngOnInit()
     })
   }
+
   //set currently_open to false, approval status to "n"
   delete() {
     this.vacancy.approval_status = "n"
     this.vacancy.currently_open = false
-    this.vacantPositionService.updateVacancy(this.vacancy).subscribe( () => {
+    this.vacantPositionService.updateVacancy(this.vacancy).subscribe(() => {
       this.ngOnInit()
     })
   }
