@@ -1,11 +1,6 @@
-<div style="margin: 35px" >
-  <h2>Companies</h2>
+<div style="margin: 35px">
 
-  <div>
-    <a mat-raised-button [routerLink]="['/company-form']">Add Company</a>
-  </div>
-
-  <h2>Search for companies</h2>
+  <h3>Search for companies</h3>
 
   <mat-form-field class="example-full-width">
     <mat-label>Search</mat-label>
@@ -15,6 +10,7 @@
   <div class="spinner-container" *ngIf="dataSource.loading$ | async">
     <mat-spinner></mat-spinner>
   </div>
+
   <table mat-table class="companies-table mat-elevation-z8" [dataSource]="dataSource">
     <ng-container matColumnDef="orb_num">
       <th mat-header-cell *matHeaderCellDef>#</th>
@@ -24,26 +20,29 @@
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Name</th>
       <td mat-cell class="description-cell"
-                *matCellDef="let Company_API_All">{{Company_API_All.name}}</td>
+          *matCellDef="let Company_API_All">{{Company_API_All.name}}</td>
     </ng-container>
 
     <ng-container matColumnDef="country">
       <th mat-header-cell *matHeaderCellDef>Country</th>
       <td mat-cell class="duration-cell"
-                *matCellDef="let Company_API_All">{{Company_API_All.country}}</td>
+          *matCellDef="let Company_API_All">{{Company_API_All.country}}</td>
     </ng-container>
     <ng-container matColumnDef="city">
       <th mat-header-cell *matHeaderCellDef>City</th>
       <td mat-cell class="duration-cell"
-                *matCellDef="let Company_API_All">{{Company_API_All.city}}</td>
+          *matCellDef="let Company_API_All">{{Company_API_All.city}}</td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
     <tr mat-row *matRowDef="let row; columns: displayedColumns"
-             (click)="onRowClicked(row)">
+        (click)="onRowClicked(row)">
     </tr>
 
   </table>
+  <div>
+    <a mat-raised-button class="button-new" [routerLink]="['/company-form']">Add Company</a>
+  </div>
   <mat-paginator [length]="length"
                  [pageSize]="pageSize"
                  [pageSizeOptions]="[5, 10, 50, 100]"

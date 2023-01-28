@@ -49,7 +49,6 @@ export class UserService {
     }
   }
 
-  //TODO: add distinction between user/lecturer to route to correct dashboard (only student for now)
   login(userData: { username: string, password: string }): void {
     this.http.post(`${environment.apiBaseUrl}/token/`, userData)
       .subscribe({
@@ -64,7 +63,6 @@ export class UserService {
           this.snackbar.open('Invalid credentials', 'OK', {duration: 3000});
         }
       });
-
   }
 
   logout(): void {
@@ -107,5 +105,4 @@ export class UserService {
     const decodedToken = this.jwtHelperService.decodeToken(token ? token : '');
     return decodedToken?.groups
   }
-
 }

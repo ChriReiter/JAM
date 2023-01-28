@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Company_DB, CompanyDbService} from "../services/company.service";
-import {API_Request, Company_API_Result} from "../company-list/company-list.component";
 import {Internship, Internship2, InternshipService} from "../services/internship.service";
 import {Student, UserService} from "../services/user.service";
 import {HttpClient} from "@angular/common/http";
@@ -12,6 +11,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
   templateUrl: './internship-form.component.html',
   styleUrls: ['./internship-form.component.scss']
 })
+
 export class InternshipFormComponent {
   internshipFormGroup: FormGroup;
   pk: string | null = null;
@@ -26,7 +26,6 @@ export class InternshipFormComponent {
   current_internship: Internship | null = null;
 
   public companySearchFromControl: FormControl = new FormControl();
-
 
 
   constructor(private http: HttpClient,
@@ -45,36 +44,36 @@ export class InternshipFormComponent {
   }
 
   ngOnInit(): void {
-    // this.pk = this.route.snapshot.paramMap.get('internship');
-    // let username = sessionStorage.getItem("username")
-    // if (this.pk) {
-    //   this.internshipService.getInternship(this.pk)
-    //     .subscribe(internship => {
-    //       this.internship = internship
-    //       this.internshipFormGroup.setValue({
-    //         pk: internship.pk,
-    //         title: internship.title,
-    //         description: internship.description,
-    //         application_status: this.internshipService.mapAbbToFull(internship.application_status),
-    //         company: internship.company.name
-    //       });
-    //       this.approval_status = internship.approval_status
-    //       this.current_company = internship.company
-    //       this.current_internship = internship
-    //     })
-    // }
-    // this.companyService.getCompaniesDB().subscribe(companies => {
-    //   this.companyOptions = companies
-    //   this.companyOptionsDB = this.companyOptions
-    // });
-    // if (username != null) {
-    //   this.userService.getStudentByUsername(username).subscribe( student => this.current_student = student[0])
-    // }
-    // this.companySearchFromControl.valueChanges.subscribe( value => {
-    //   this.filterCompanyOptions(value)
-    // })
-  }
-
+  //   this.pk = this.route.snapshot.paramMap.get('internship');
+  //   let username = sessionStorage.getItem("username")
+  //   if (this.pk) {
+  //     this.internshipService.getInternship(this.pk)
+  //       .subscribe(internship => {
+  //         this.internship = internship
+  //         this.internshipFormGroup.setValue({
+  //           pk: internship.pk,
+  //           title: internship.title,
+  //           description: internship.description,
+  //           application_status: this.internshipService.mapAbbToFull(internship.application_status),
+  //           company: internship.company.name
+  //         });
+  //         this.approval_status = internship.approval_status
+  //         this.current_company = internship.company
+  //         this.current_internship = internship
+  //       })
+  //   }
+  //   this.companyService.getCompaniesDB().subscribe(companies => {
+  //     this.companyOptions = companies
+  //     this.companyOptionsDB = this.companyOptions
+  //   });
+  //   if (username != null) {
+  //     this.userService.getStudentByUsername(username).subscribe(student => this.current_student = student[0])
+  //   }
+  //   this.companySearchFromControl.valueChanges.subscribe(value => {
+  //     this.filterCompanyOptions(value)
+  //   })
+  // }
+  //
   // createOrUpdateInternship() {
   //   if (this.pk != null && this.current_student != null
   //     && this.current_company != null && this.current_internship != null) {
@@ -87,7 +86,7 @@ export class InternshipFormComponent {
   //       this.approval_status,
   //       this.current_student,
   //       this.current_company)
-  //     this.internshipService.updateInternships(internship).subscribe( response => {
+  //     this.internshipService.updateInternships(internship).subscribe(response => {
   //       this.router.navigate(['internship-list'])
   //     })
   //   } else if (this.pk === null) {
@@ -106,14 +105,14 @@ export class InternshipFormComponent {
   //             this.current_student.pk,
   //             this.current_company.pk
   //           )
-  //           this.internshipService.createInternships(internship).subscribe( () => {
+  //           this.internshipService.createInternships(internship).subscribe(() => {
   //             this.router.navigate(['internship-list'])
   //           })
   //         }
   //       })
   //     } else if (company_fg != null && company_fg.pk === 0) {
-  //       this.companyService.createCompany(company_fg).subscribe( new_comp => {
-  //         this.companyService.getCompanyDBByOrbNum(company_fg.orb_num).subscribe( new_company => {
+  //       this.companyService.createCompany(company_fg).subscribe(new_comp => {
+  //         this.companyService.getCompanyDBByOrbNum(company_fg.orb_num).subscribe(new_company => {
   //           this.current_company_array = new_company
   //           this.current_company = this.current_company_array[0]
   //           if (this.current_student != null && this.current_company != null) {
@@ -126,7 +125,7 @@ export class InternshipFormComponent {
   //               this.current_student.pk,
   //               this.current_company.pk
   //             )
-  //             this.internshipService.createInternships(internship).subscribe( () => {
+  //             this.internshipService.createInternships(internship).subscribe(() => {
   //               this.router.navigate(['internship-list'])
   //             })
   //           }
@@ -135,6 +134,7 @@ export class InternshipFormComponent {
   //     }
   //   }
   // }
+  //
   // createInternshipInterface(pk: number, title: string, description: string, application_status: string,
   //                           approval_status: string, student: Student, company: Company_DB): Internship {
   //   let internship: Internship = {
@@ -166,7 +166,7 @@ export class InternshipFormComponent {
   // filterCompanyOptions(filterValue: string) {
   //   if (filterValue != "") {
   //     this.http.get<API_Request>('https://api.orb-intelligence.com/3/search/?api_key=c66c5dad-395c-4ec6-afdf-7b78eb94166a&limit=' +
-  //       + "10" + '&name=' + filterValue).subscribe(request => {
+  //       +"10" + '&name=' + filterValue).subscribe(request => {
   //       this.companyOptions = request.results.map(company => this.APIResultToCompanyDB(company))
   //       console.log(this.companyOptions)
   //     })
@@ -187,8 +187,7 @@ export class InternshipFormComponent {
   //     }
   //     return companyDb
   //   }
-  //
-  //
-  //
-  // }
+
+
+  }
 }

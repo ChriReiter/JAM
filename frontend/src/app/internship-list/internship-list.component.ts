@@ -24,7 +24,7 @@ export class InternshipListComponent {
 
   displayedColumns = ['title', 'application_status', 'approval_status', 'company', 'approve', 'reject', 'update']
 
-  constructor(private http: HttpClient, private internshipService: InternshipService,
+  constructor(private http: HttpClient, public internshipService: InternshipService,
               public userService: UserService, private snackbar: MatSnackBar,
               private route: ActivatedRoute, private jwtHelperService: JwtHelperService) {
   }
@@ -39,6 +39,8 @@ export class InternshipListComponent {
     const decodedToken = this.jwtHelperService.decodeToken(token ? token : '');
     const userId = decodedToken?.user_id;
 
+
+    // For Lecturers all internships should be shown, so they can approve/deny them
     if (username != null && !this.userService.isLecturer()) {
       this.internshipService.getInternshipsByStudent().subscribe(internships => {
         this.internships = internships;
@@ -72,10 +74,9 @@ export class InternshipListComponent {
       internship.approval_status = 'y'
       this.internshipService.updateInternships(internship).subscribe(() => {
         this.ngOnInit()
-        this.snackbar.open('approved internship: ' + internship.title)
+        this.snackbar.open('Approved Internship: ' + internship.title)
       })
     })
-
   }
 
   reject(internship_pk: number) {
@@ -83,7 +84,7 @@ export class InternshipListComponent {
       internship.approval_status = 'n'
       this.internshipService.updateInternships(internship).subscribe(() => {
         this.ngOnInit()
-        this.snackbar.open('rejected internship ' + internship.title)
+        this.snackbar.open('Rejected Internship ' + internship.title)
       })
     })
   }

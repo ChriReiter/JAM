@@ -60,34 +60,49 @@ export class InternshipService {
   }
 
   updateInternships(internship: Internship) {
-    return this.http.put(`${environment.apiBaseUrl} / internships / ` + internship.pk, internship);
+    return this.http.put(`${environment.apiBaseUrl}/internships/` + internship.pk, internship);
   }
 
-  mapAbbToFull(status_string: string) {
-    if (status_string === "a") {
-      return "applied"
-    } else if (status_string === "t") {
-      return "talks ongoing"
-    } else if (status_string === "y") {
-      return "accepted"
-    } else if (status_string === "n") {
-      return "rejected"
-    } else {
-      return "other"
+  mapStatusAbbToFull(status_string: string): string {
+    switch (status_string) {
+      case "a":
+        return "Applied"
+      case "t":
+        return "Talks ongoing"
+      case "y":
+        return "Accepted"
+      case "n":
+        return "Rejected"
+      default:
+        return "Other"
+    }
+  }
+
+  mapApprovalStatusToFull(status_string: string): string {
+    switch (status_string) {
+      case "?":
+        return "tbd"
+      case "y":
+        return "Approved"
+      case "n":
+        return "Not approved"
+      default:
+        return "Other"
     }
   }
 
   mapFullToAbb(status_num: number): string {
-    if (status_num == 1) {
-      return "a"
-    } else if (status_num == 2) {
-      return "t"
-    } else if (status_num == 3) {
-      return "y"
-    } else if (status_num == 4) {
-      return "n"
-    } else {
-      return "o"
+    switch (status_num) {
+      case 1:
+        return "a"
+      case 2:
+        return "t"
+      case 3:
+        return "y"
+      case 4:
+        return "n"
+      default:
+        return "o"
     }
   }
 }

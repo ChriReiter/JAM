@@ -4,7 +4,7 @@ import { UserService } from '../services/user.service';
 @Component({
   selector: 'app-dashboard',
   template: `
-    <div style="margin: 35px">
+    <div>
       <div *ngIf="userService.isLecturer$ | async; then lecturer; else student"></div>
       <ng-template #lecturer>
         <app-lecturer-dashboard></app-lecturer-dashboard>

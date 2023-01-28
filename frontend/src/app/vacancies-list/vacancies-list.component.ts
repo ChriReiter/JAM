@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Internship2, InternshipService} from "../services/internship.service";
 import {VacantPosition, VacantPositionService} from "../services/vacant-position.service";
 import {Router} from "@angular/router";
@@ -14,28 +14,32 @@ export class VacanciesListComponent {
   username: string | null = null;
   student: Student[] = [];
 
-  displayedColumns: string[] = ['title', 'company', 'view-button'];
+  displayedColumns: string[] = ['title', 'company', 'approval_status', 'view-button'];
 
   constructor(private router: Router,
-              private vacantPositionService: VacantPositionService,
+              public vacantPositionService: VacantPositionService,
               private userService: UserService,
               private internshipService: InternshipService) {
   }
 
   ngOnInit() {
-    this.vacantPositionService.getOpenVacancies().subscribe( vacancies => {
+    // Student: open vacancies; status
+    // Lecturer: all vacancies with option to approve/deny and close
+
+
+    this.vacantPositionService.getOpenVacancies().subscribe(vacancies => {
       this.vacancies_list = vacancies
     })
     this.username = sessionStorage.getItem("username")
     if (this.username != null) {
-      this.userService.getStudentByUsername(this.username).subscribe( student => {
+      this.userService.getStudentByUsername(this.username).subscribe(student => {
         this.student = student
         if (this.student[0] != null) {
-          this.vacantPositionService.getVacanciesForStudent(this.student[0].pk).subscribe( vacancies => {
+          this.vacantPositionService.getVacanciesForStudent(this.student[0].pk).subscribe(vacancies => {
             this.vacancies_list = vacancies
           })
         } else {
-          this.vacantPositionService.getVacanciesForLecturer(1).subscribe( vacancies => {
+          this.vacantPositionService.getVacanciesForLecturer(1).subscribe(vacancies => {
             this.vacancies_list = vacancies
           })
         }

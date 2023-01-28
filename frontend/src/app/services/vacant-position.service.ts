@@ -3,63 +3,75 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Company_DB} from "./company.service";
 import {DegreeProgram} from "./degree-program-service";
-import {Lecturer} from "./user.service";
+import {UserService} from "./user.service";
 
 export interface VacantPosition {
-    pk: number;
-    title: string;
-    description: string;
-    currently_open: boolean;
-    approval_status: string;
-    company: Company_DB;
-    degree_program: DegreeProgram[];
+  pk: number;
+  title: string;
+  description: string;
+  currently_open: boolean;
+  approval_status: string;
+  company: Company_DB;
+  degree_program: DegreeProgram[];
 }
 
 export interface VacantPositionCreate {
-    pk: number;
-    title: string;
-    description: string;
-    currently_open: boolean;
-    approval_status: string;
-    company: number;
-    degree_program: number[];
+  pk: number;
+  title: string;
+  description: string;
+  currently_open: boolean;
+  approval_status: string;
+  company: number;
+  degree_program: number[];
 }
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class VacantPositionService {
 
-    constructor(private http: HttpClient) {
-    }
+  constructor(private http: HttpClient, public userService: UserService) {
+  }
 
-    getVacancies() {
-        return this.http.get<VacantPosition[]>(`${environment.apiBaseUrl}/vacant-positions/`);
-    }
+  getVacancies() {
+    return this.http.get<VacantPosition[]>(`${environment.apiBaseUrl}/vacant-positions/`);
+  }
 
-    getOpenVacancies() {
-      return this.http.get<VacantPosition[]>(`${environment.apiBaseUrl}/vacant-positions/?is-open=True`);
-    }
-    //get only open vacancies with approval status "?" for lecturers of associated degree programs
-    getVacanciesForLecturer(lecturer_pk: number) {
-      return this.http.get<VacantPosition[]>(`${environment.apiBaseUrl}/vacant-positions/?lecturer=` + lecturer_pk);
-    }
+  getOpenVacancies() {
+    return this.http.get<VacantPosition[]>(`${environment.apiBaseUrl}/vacant-positions/?is-open=True`);
+  }
+
+  //get only open vacancies with approval status "?" for lecturers of associated degree programs
+  getVacanciesForLecturer(lecturer_pk: number) {
+    return this.http.get<VacantPosition[]>(`${environment.apiBaseUrl}/vacant-positions/?lecturer=` + lecturer_pk);
+  }
 
   getVacanciesForStudent(student_pk: number) {
     return this.http.get<VacantPosition[]>(`${environment.apiBaseUrl}/vacant-positions/?student=` + student_pk);
   }
 
-    getVacancy(pk: number) {
-        return this.http.get<VacantPosition>(`${environment.apiBaseUrl}/vacant-positions/` + pk);
+  getVacancy(pk: number) {
+    return this.http.get<VacantPosition>(`${environment.apiBaseUrl}/vacant-positions/` + pk);
+  }
+
+  createVacancy(vacancy: VacantPositionCreate) {
+    return this.http.post(`${environment.apiBaseUrl}/vacant-positions/`, vacancy)
+  }
+
+  updateVacancy(vacancy: VacantPosition) {
+    return this.http.put<VacantPosition>(`${environment.apiBaseUrl}/vacant-positions/` + vacancy.pk, vacancy)
+  }
+
+  mapApprovalStatusToFull(status_string: string): string {
+    switch (status_string) {
+      case "?":
+        return "tbd"
+      case "y":
+        return "Approved"
+      case "n":
+        return "Not approved"
+      default:
+        return "Other"
     }
-
-    createVacancy(vacancy: VacantPositionCreate) {
-        return this.http.post(`${environment.apiBaseUrl}/vacant-positions/`, vacancy)
-    }
-
-    updateVacancy(vacancy: VacantPosition) {
-        return this.http.put<VacantPosition>(`${environment.apiBaseUrl}/vacant-positions/` + vacancy.pk, vacancy)
-    }
-
-
+  }
 }
