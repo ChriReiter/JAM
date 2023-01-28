@@ -5,6 +5,7 @@ import {ActivatedRoute, Router, RouterModule} from "@angular/router";
 import {Company_DB} from "../services/company.service";
 import {Internship2, InternshipService} from "../services/internship.service";
 import {Student, UserService} from "../services/user.service";
+import {JwtHelperService} from "@auth0/angular-jwt";
 
 @Component({
   selector: 'app-vacancies-view',
@@ -40,9 +41,13 @@ export class VacanciesViewComponent {
 
   constructor(private http: HttpClient, private route: ActivatedRoute,
               private router: Router, private vacantPositionService: VacantPositionService,
-              private internshipService: InternshipService, private userService: UserService) {
+              private internshipService: InternshipService, private userService: UserService,
+              private jwtHelperService: JwtHelperService) {
 
   }
+
+  readonly accessTokenLocalStorageKey = 'access_token';
+
   ngOnInit() {
     this.vacancy_pk = this.route.snapshot.paramMap.get('vacant-position-pk');
     if (this.vacancy_pk != null) {
@@ -52,12 +57,11 @@ export class VacanciesViewComponent {
       })
     }
     this.username = sessionStorage.getItem("username")
-    if (this.username != null) {
-      this.userService.isLecturer(this.username).subscribe( res => {
-        this.isLecturer = res
-      })
-      this.student_id = this.userService.getStudentId(this.username)
-    }
+
+    const token = localStorage.getItem(this.accessTokenLocalStorageKey);
+    const decodedToken = this.jwtHelperService.decodeToken(token ? token : '');
+    const userId = decodedToken?.user_id;
+
   }
   //TODO: Creating internship does not work yet, API error
   report_as_internship(pk: number) {

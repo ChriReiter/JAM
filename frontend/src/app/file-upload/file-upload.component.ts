@@ -3,6 +3,7 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {FileService} from "../services/file.service";
 import {Student, UserService} from "../services/user.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {JwtHelperService} from "@auth0/angular-jwt";
 
 @Component({
   selector: 'app-file-upload',
@@ -14,16 +15,21 @@ export class FileUploadComponent {
   file: File | null = null;
   student: number = -1;
   constructor(private fileService: FileService, private userService: UserService,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar, private jwtHelperService: JwtHelperService) {
     this.formGroup = new FormGroup({
       fileUpload: new FormControl([])
     })
   }
+
+  readonly accessTokenLocalStorageKey = 'access_token';
   //TODO: Adjust UI Design
   //TODO: Add FileType (Report 1, 2 or 3) in Backend
   ngOnInit() {
     let username = sessionStorage.getItem("username")
-    this.student = this.userService.getStudentId(sessionStorage.getItem("username")!)
+
+    const token = localStorage.getItem(this.accessTokenLocalStorageKey);
+    const decodedToken = this.jwtHelperService.decodeToken(token ? token : '');
+    const userId = decodedToken?.user_id;
   }
 
   onChange(event: any) {

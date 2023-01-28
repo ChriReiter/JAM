@@ -32,22 +32,18 @@ export class VacanciesListComponent {
   }
 
   ngOnInit() {
-    // Student: open vacancies; status
-    // Lecturer: all vacancies with option to approve/deny and close
 
-
-    this.userService.isLecturer(sessionStorage.getItem("username")!).subscribe( isLecturer => {
-      this.vacantPositionService.getOpenVacancies().subscribe(vacancies => {
-        if (isLecturer) {
-          this.approval_status = "?"
-          this.vacancies_list = vacancies.filter(vacancy => vacancy.approval_status=="?").slice(0, 5)
-        } else {
-          this.approval_status = "y"
-          this.vacancies_list = vacancies.filter(vacancy => vacancy.approval_status=="y").slice(0, 5)
-        }
-      })
+    this.vacantPositionService.getOpenVacancies().subscribe(vacancies => {
+      if (this.userService.isLecturer()) {
+        this.approval_status = "?"
+        this.vacancies_list = vacancies.filter(vacancy => vacancy.approval_status == "?").slice(0, 5)
+      } else {
+        this.approval_status = "y"
+        this.vacancies_list = vacancies.filter(vacancy => vacancy.approval_status == "y").slice(0, 5)
+      }
     })
   }
+
   //TODO: Filter for DegreeProgram (waiting for user-service)
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
@@ -55,7 +51,7 @@ export class VacanciesListComponent {
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
 
-    this.vacantPositionService.getVacancies().subscribe( vacancies => {
+    this.vacantPositionService.getVacancies().subscribe(vacancies => {
       this.vacancies_list = vacancies
         .filter(vacancy => vacancy.approval_status === this.approval_status && vacancy.currently_open)
         //.filter(vacancy => vacancy.degree_program.includes(this.degree_program)))

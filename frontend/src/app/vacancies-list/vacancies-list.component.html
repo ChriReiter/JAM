@@ -16,7 +16,7 @@
     <!-- Approval Status -->
     <ng-container matColumnDef="approval_status">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-      <td mat-cell *matCellDef="let element"> {{this.vacantPositionService.mapApprovalStatusToFull(element.approval_status)}} </td>
+      <td mat-cell *matCellDef="let element"> {{this.vacantPositionService.approvalStatusMapper(element.approval_status)}} </td>
     </ng-container>
 
     <ng-container matColumnDef="view-button">

@@ -43,18 +43,17 @@ export class VacanciesFormComponent {
       company: new FormControl('')
     })
   }
+
   ngOnInit() {
-    this.companyApiService.findCompanies('', 10, 1, 'austria').subscribe( companies => {
+    this.companyApiService.findCompanies('', 10, 1, 'austria').subscribe(companies => {
       this.companyOptions = companies
     })
     this.username = sessionStorage.getItem("username")
-    this.userService.isLecturer(this.username!).subscribe( res => {
-      this.isLecturer = res
-      if (this.isLecturer) {
-        this.approval_status = 'y'
-      }
-    })
-    this.vacantPositionFormGroup.get("company")?.valueChanges.subscribe( company => {
+    if (this.userService.isLecturer()) {
+      this.approval_status = 'y'
+    }
+
+    this.vacantPositionFormGroup.get("company")?.valueChanges.subscribe(company => {
       this.companyDbService.getCompanyDBByOrbNum(company.orb_num.toString()).subscribe(companyDB => {
         if (companyDB.length == 0) {
           let companyToCreate: Company_DB = {
@@ -69,14 +68,14 @@ export class VacanciesFormComponent {
       })
     })
 
-    this.companySearchFromControl.valueChanges.subscribe( value => {
-         this.filterCompanyOptions(value)
+    this.companySearchFromControl.valueChanges.subscribe(value => {
+      this.filterCompanyOptions(value)
     })
   }
 
   createOrUpdateVacantPosition() {
     let selected_company: Company_API_All = this.vacantPositionFormGroup.get("company")?.value
-    this.companyDbService.getCompanyDBByOrbNum(selected_company.orb_num.toString()).subscribe( company => {
+    this.companyDbService.getCompanyDBByOrbNum(selected_company.orb_num.toString()).subscribe(company => {
       let vacant_position: VacantPositionCreate = {
         pk: 0,
         title: this.vacantPositionFormGroup.get("title")?.value,
@@ -91,7 +90,7 @@ export class VacanciesFormComponent {
       if (this.isLecturer) {
         this.emailService.sendEmail(this.emailService.mailBuilder(
           "New Vacancy Added",
-          "Hi "+ this.username + "!\n\n The vacancy \"" + this.vacantPosition!!.title + "\" was just added to the database!\n\n"+
+          "Hi " + this.username + "!\n\n The vacancy \"" + this.vacantPosition!!.title + "\" was just added to the database!\n\n" +
           "Apply quickly before its too late!\n\n" +
           "Best regards, your JAM-Team",
           ["jam.wapdev@gmail.com"]
@@ -99,14 +98,14 @@ export class VacanciesFormComponent {
       } else {
         this.emailService.sendEmail(this.emailService.mailBuilder(
           "New Vacancy Added",
-          "Hi "+ this.username + "!\n\n The vacancy \"" + this.vacantPosition!!.title + "\" was just added to the database!\n\n"+
+          "Hi " + this.username + "!\n\n The vacancy \"" + this.vacantPosition!!.title + "\" was just added to the database!\n\n" +
           "Please accept or reject the request for students to see!" +
           "Click here to view the request: \nhttp://localhost:4200/vacancies-view/" + this.vacantPosition!!.pk +
           "\n\nKind Greetings, your JAM-Team",
           ["jam.wapdev@gmail.com"]
         )).subscribe()
       }
-      this.vacantPositionService.createVacancy(vacant_position).subscribe( response => {
+      this.vacantPositionService.createVacancy(vacant_position).subscribe(response => {
         this.router.navigate(['vacancies-list'])
       })
     })
@@ -114,7 +113,7 @@ export class VacanciesFormComponent {
 
   filterCompanyOptions(filterValue: string) {
     if (filterValue != "") {
-      this.companyApiService.findCompanies(filterValue, 10, 1, "").subscribe( companies => {
+      this.companyApiService.findCompanies(filterValue, 10, 1, "").subscribe(companies => {
         this.companyOptions = companies
       })
     }
