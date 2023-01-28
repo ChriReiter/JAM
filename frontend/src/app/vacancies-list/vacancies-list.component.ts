@@ -4,6 +4,18 @@ import {VacantPosition, VacantPositionService} from "../services/vacant-position
 import {Router} from "@angular/router";
 import {Student, User, UserService} from "../services/user.service";
 import {PageEvent} from "@angular/material/paginator";
+import {Company_DB} from "../services/company.service";
+import {DegreeProgram} from "../services/degree-program-service";
+
+export interface Vacancy {
+  pk: number;
+  company: Company_DB;
+  degree_program: DegreeProgram;
+  title: string;
+  description: string;
+  currently_open: boolean;
+  approval_status: string;
+}
 
 @Component({
   selector: 'app-vacancies-list',
@@ -11,6 +23,10 @@ import {PageEvent} from "@angular/material/paginator";
   styleUrls: ['./vacancies-list.component.scss']
 })
 export class VacanciesListComponent {
+  onRowClicked(row: any) {
+    this.router.navigate([`vacant-positions/${row.pk}`])
+  }
+
   vacancies_list: VacantPosition[] = []
   username: string | null = null;
   user: User | null = null;
@@ -22,7 +38,7 @@ export class VacanciesListComponent {
   pageIndex = 0;
   pageEvent: PageEvent;
 
-  displayedColumns: string[] = ['title', 'company', 'approval_status', 'view-button'];
+  displayedColumns: string[] = ['title', 'company', 'approval_status'];
 
   constructor(private router: Router,
               public vacantPositionService: VacantPositionService,

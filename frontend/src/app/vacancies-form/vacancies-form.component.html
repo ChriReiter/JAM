@@ -1,33 +1,42 @@
 <form [formGroup]="vacantPositionFormGroup" (ngSubmit)="createOrUpdateVacantPosition()" class="vacancy_form__form">
-  <mat-form-field>
-    <mat-label>Title</mat-label>
-    <input matInput type="text" placeholder="Title" formControlName="title">
-    <mat-error *ngIf="vacantPositionFormGroup.controls['title'].hasError('required')">
-      Title is required
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Description</mat-label>
-    <textarea matInput type="text" placeholder="Description" formControlName="description"></textarea>
-    <mat-error *ngIf="vacantPositionFormGroup.controls['description'].hasError('required')">
-      Description is required
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field *ngIf="this.pk==null">
-    <mat-label>Company</mat-label>
-    <mat-select placeholder="Company" formControlName="company">
-      <mat-option>
-        <ngx-mat-select-search [formControl]="companySearchFromControl"></ngx-mat-select-search>
-      </mat-option>
-      <mat-option *ngFor="let company of companyOptions"
-                  [value]="company">{{company.name}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-card-actions align="start">
-    <button mat-raised-button color="primary" [disabled]="!vacantPositionFormGroup.valid">
-      <span *ngIf="this.pk===null">Create</span>
-      <span *ngIf="this.pk!==null">Update</span>
-    </button>
-  </mat-card-actions>
+
+  <div style="margin: 35px">
+
+    <h2>Report a Vacancy</h2>
+
+    <mat-form-field appearance="outline" style="display: block; margin-bottom: 10px">
+      <mat-label>Title</mat-label>
+      <input matInput type="text" placeholder="Title" formControlName="title">
+      <mat-error *ngIf="vacantPositionFormGroup.controls['title'].hasError('required')">
+        Title is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field  appearance="outline" style="display: block; margin-bottom: 10px">
+      <mat-label>Description</mat-label>
+      <textarea matInput type="text" placeholder="Description" formControlName="description"></textarea>
+      <mat-error *ngIf="vacantPositionFormGroup.controls['description'].hasError('required')">
+        Description is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="display: block; margin-bottom: 10px" *ngIf="this.pk==null">
+      <mat-label>Company</mat-label>
+      <mat-select placeholder="Company" formControlName="company">
+        <mat-option>
+          <ngx-mat-select-search [formControl]="companySearchFromControl"></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let company of companyOptions"
+                    [value]="company">{{company.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-card-actions align="start">
+      <button mat-raised-button color="primary" [disabled]="!vacantPositionFormGroup.valid">
+        <span *ngIf="this.pk===null">Create</span>
+        <span *ngIf="this.pk!==null">Update</span>
+      </button>
+    </mat-card-actions>
+  </div>
 </form>
