@@ -14,6 +14,8 @@ import {UserService} from "../services/user.service";
       <hr/>
       <h2>Vacancies</h2>
       <app-vacancies-list></app-vacancies-list>
+      <h2>Calendar</h2>
+      <app-calendar></app-calendar>
     </div>
   `,
   styleUrls: ['./student-dashboard.component.scss']

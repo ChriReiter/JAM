@@ -41,6 +41,9 @@ import {LecturerDashboardComponent} from './lecturer-dashboard/lecturer-dashboar
 import {DashboardComponent} from './dashboard/dashboard.component';
 import { StudentDashboardComponent } from './student-dashboard/student-dashboard.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
+import {FullCalendarModule} from "@fullcalendar/angular";
+import { CalendarComponent } from './calendar/calendar.component';
+import {MatDialogModule, MatDialog} from "@angular/material/dialog";
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -62,7 +65,8 @@ export function tokenGetter() {
     StudentDashboardComponent,
     FileUploadComponent,
     LecturerDashboardComponent,
-    DashboardComponent
+    DashboardComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -83,6 +87,7 @@ export function tokenGetter() {
     MatCheckboxModule,
     MatSnackBarModule,
     MatIconModule,
+    MatDialogModule,
     NgxMatSelectSearchModule,
     JwtModule.forRoot({
       config: {
@@ -96,6 +101,7 @@ export function tokenGetter() {
     MatIconModule,
     MatGridListModule,
     MatDividerModule,
+    FullCalendarModule,
     MatExpansionModule,
   ],
   providers: [],
