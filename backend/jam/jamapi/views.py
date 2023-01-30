@@ -196,12 +196,12 @@ class VacantPositionViewSet(viewsets.ViewSet):
         if request.GET.get("lecturer") is not None:
             queryset = models.VacantPosition.objects.filter(currently_open=True)
             queryset = queryset.filter(approval_status="?")
-            lecturer = models.Lecturer.objects.filter(pk=request.GET.get("lecturer"))[0]
+            lecturer = models.User.objects.filter(pk=request.GET.get("lecturer"))[0]
             queryset = queryset.filter(degree_program__user=lecturer)
         if request.GET.get("student") is not None:
             queryset = models.VacantPosition.objects.filter(currently_open=True)
             queryset = queryset.filter(approval_status="y")
-            student = models.Student.objects.filter(pk=request.GET.get("student"))[0]
+            student = models.User.objects.filter(pk=request.GET.get("student"))[0]
             queryset = queryset.filter(degree_program__user=student)
         serializer = serializers.VacantPositionSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
@@ -253,7 +253,7 @@ class FileViewSet(viewsets.ViewSet):
         return Response(serializer.data, status=200)
 
     def create(self, request):
-        student = models.Student.objects.get(pk=request.data["student"])
+        student = models.User.objects.get(pk=request.data["student"])
         file = models.File.objects.create(
             file=request.data["file"],
             student=student

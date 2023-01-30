@@ -58,9 +58,10 @@ export class VacanciesListComponent {
         this.vacancies_list = vacancies.filter(vacancy => vacancy.approval_status == "y").slice(0, 5)
       }
     })
+
   }
 
-  //TODO: Filter for DegreeProgram (waiting for user-service)
+  //no degree-program-specific filtering implemented
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
     this.length = e.length;
@@ -70,7 +71,6 @@ export class VacanciesListComponent {
     this.vacantPositionService.getVacancies().subscribe(vacancies => {
       this.vacancies_list = vacancies
         .filter(vacancy => vacancy.approval_status === this.approval_status && vacancy.currently_open)
-        //.filter(vacancy => vacancy.degree_program.includes(this.degree_program)))
         .slice(this.pageIndex * this.pageSize, (this.pageIndex * this.pageSize) + this.pageSize)
     })
   }

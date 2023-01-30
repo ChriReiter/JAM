@@ -121,8 +121,14 @@ class Internship(models.Model):
 #         return self.firstname + " " + self.lastname
 
 class File(models.Model):
+    REPORT_NO = (
+        ('1', 'Report 1'),
+        ('2', 'Report 2'),
+        ('3', 'Report 3')
+    )
     file = models.FileField(blank=False, null=False, upload_to="files")
     student = models.ForeignKey("userapi.User", on_delete=models.CASCADE)
+    report_no = models.CharField(max_length=1, choices=REPORT_NO)
 
     def __str__(self):
         return self.file.name
