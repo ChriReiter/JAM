@@ -3,7 +3,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .models import Company, Internship, DegreeProgram, VacantPosition, CompanyDetail, AddressDetail, \
-    SocialAccount, File
+    SocialAccount, File, CalEvent
 
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -113,3 +113,10 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+
+
+class CalEventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CalEvent
+        fields = ['title', 'allDay', 'start', 'end', 'editable', 'backgroundColor', 'borderColor',
+                  'textColor', 'extendedProps', 'source', 'className']

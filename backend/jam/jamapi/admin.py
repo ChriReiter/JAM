@@ -5,7 +5,8 @@ from .models import (
     DegreeProgram,
     Internship,
     CompanyDetail,
-    File
+    File,
+    CalEvent
 )
 
 
@@ -43,9 +44,14 @@ class FileAdmin(admin.ModelAdmin):
     list_display = ["file", "student"]
 
 
+class CalEventAdmin(admin.ModelAdmin):
+    list_display = ["title", "start", "end", 'className']
+
+
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(VacantPosition, VacantPositionAdmin)
 admin.site.register(DegreeProgram, DegreeProgramAdmin)
 admin.site.register(Internship, InternshipAdmin)
 admin.site.register(CompanyDetail)
 admin.site.register(File, FileAdmin)
+admin.site.register(CalEvent, CalEventAdmin)

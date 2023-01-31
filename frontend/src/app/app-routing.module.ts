@@ -13,6 +13,7 @@ import {VacanciesViewComponent} from "./vacancies-view/vacancies-view.component"
 import {StudentDashboardComponent} from './student-dashboard/student-dashboard.component';
 import {LecturerDashboardComponent} from "./lecturer-dashboard/lecturer-dashboard.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
+import {CalendarComponent} from "./calendar/calendar.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/company-list', pathMatch: 'full'},
@@ -34,7 +35,8 @@ const routes: Routes = [
   {path: 'vacant-positions/:vacant-position-pk', component: VacanciesViewComponent},
   {path: 'student-dashboard', component: StudentDashboardComponent},
   {path: 'lecturer-dashboard', component: LecturerDashboardComponent},
-  {path: 'dashboard', component: DashboardComponent}
+  {path: 'dashboard', component: DashboardComponent},
+  {path: 'calendar', component: CalendarComponent}
 ];
 
 @NgModule({

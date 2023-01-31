@@ -170,3 +170,15 @@ class CompanyDetail(models.Model):
         return self.name
 
 
+class CalEvent(models.Model):
+    title = models.CharField(max_length=255)
+    allDay = models.BooleanField(default=True)
+    start = models.CharField(max_length=255)
+    end = models.CharField(max_length=255)
+    editable = models.BooleanField(default=False)
+    backgroundColor = models.CharField(max_length=255, null=True, blank=True)
+    borderColor = models.CharField(max_length=255, null=True, blank=True)
+    textColor = models.CharField(max_length=255, null=True, blank=True)
+    extendedProps = models.CharField(max_length=255, null=True, blank=True)
+    source = models.CharField(max_length=255, null=True, blank=True)
+    className = models.ForeignKey(DegreeProgram, null=True, on_delete=models.SET_NULL)

@@ -246,6 +246,7 @@ class EmailViewSet(viewsets.ViewSet):
         )
         return Response(201)
 
+
 class FileViewSet(viewsets.ViewSet):
     def list(self, request):
         queryset = models.File.objects.all()
@@ -261,8 +262,6 @@ class FileViewSet(viewsets.ViewSet):
         file.save()
         serializer = serializers.FileSerializer(file)
         return Response(serializer.data, status=200)
-
-
 
 
 class CompanyDetailViewSet(viewsets.ModelViewSet):
@@ -289,3 +288,14 @@ class CompanyDetailViewSet(viewsets.ModelViewSet):
 
         serializer = serializers.CompanyDetailSerializer(company_detail, many=True)
         return Response(serializer.data, status=200)
+
+
+class EventViewSet(viewsets.ViewSet):
+    def list(self, request):
+        queryset = models.CalEvent.objects.all()
+        serializer = serializers.CalEventSerializer(queryset, many=True)
+        return Response(serializer.data, status=200)
+
+
+
+

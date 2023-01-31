@@ -89,6 +89,11 @@ urlpatterns = [
 
     # files
     path('api/files/', jam_views.FileViewSet.as_view({'get': 'list', 'post': 'create'})),
+
+    # events
+    path('api/events/', jam_views.EventViewSet.as_view({'get': 'list'})),
+    #path('api/events/<events_pk>',
+         #jam_views.EventViewSet.as_view({'get': 'retrieve', 'put': 'update'})),
 ]
 
 
