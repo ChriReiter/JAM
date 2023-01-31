@@ -81,11 +81,11 @@ export class InternshipService {
   mapApprovalStatusToFull(status_string: string): string {
     switch (status_string) {
       case "?":
-        return "tbd"
+        return "Waiting for approval"
       case "y":
         return "Approved"
       case "n":
-        return "Not approved"
+        return "Rejected"
       default:
         return "Other"
     }

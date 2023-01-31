@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Internship, InternshipService} from "../services/internship.service";
 import {Student, UserService} from "../services/user.service";
 import {DegreeProgram} from "../services/degree-program-service";
@@ -6,6 +6,7 @@ import {HttpClient} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ActivatedRoute} from "@angular/router";
 import {JwtHelperService} from "@auth0/angular-jwt";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-internship-list',
@@ -13,7 +14,12 @@ import {JwtHelperService} from "@auth0/angular-jwt";
   styleUrls: ['./internship-list.component.scss']
 })
 export class InternshipListComponent {
+
+  @Input()
+  defaultSize=10;
+
   internships: Internship[] = []
+  paginatedInternships: Internship[] = []
   internshipsByStudent: Internship[] = []
   all_internships: Internship[] = []
   students: Student[] = []
@@ -21,17 +27,23 @@ export class InternshipListComponent {
   is_lecturer: boolean = false;
   degree_program: string | null = null
 
+  length = 100;
+  pageSize = this.defaultSize;
+  pageIndex = 0;
+  pageEvent: PageEvent;
 
   displayedColumns = ['title', 'application_status', 'approval_status', 'company', 'approve', 'reject', 'update']
 
   constructor(private http: HttpClient, public internshipService: InternshipService,
               public userService: UserService, private snackbar: MatSnackBar,
               private route: ActivatedRoute, private jwtHelperService: JwtHelperService) {
+    this.pageEvent = new PageEvent();
   }
 
   readonly accessTokenLocalStorageKey = 'access_token';
 
   ngOnInit(): void {
+    this.pageSize = this.defaultSize
     this.degree_program = this.route.snapshot.paramMap.get('degree-program');
     let username = sessionStorage.getItem("username")
 
@@ -39,20 +51,20 @@ export class InternshipListComponent {
     const decodedToken = this.jwtHelperService.decodeToken(token ? token : '');
     const userId = decodedToken?.user_id;
 
-
     // For Lecturers all internships should be shown, so they can approve/deny them
     if (username != null && !this.userService.isLecturer()) {
       this.internshipService.getInternshipsByStudent().subscribe(internships => {
         this.internships = internships;
-
         for (let i = 0; i < this.internships.length; i++) {
           if (!(this.internships[i].student == userId))
             this.internships.splice(i, 1);
         }
+        this.paginatedInternships = this.internships.slice(this.pageIndex * this.pageSize, (this.pageIndex * this.pageSize) + this.pageSize);
       })
     } else {
       this.internshipService.getInternshipsByStudent().subscribe(internships => {
-        this.internships = internships;
+        this.internships = internships
+        this.paginatedInternships = internships.slice(this.pageIndex * this.pageSize, (this.pageIndex * this.pageSize) + this.pageSize);
       })
     }
   }
@@ -87,5 +99,15 @@ export class InternshipListComponent {
         this.snackbar.open('Rejected Internship ' + internship.title)
       })
     })
+  }
+
+  handlePageEvent(e: PageEvent) {
+    console.log()
+    this.pageEvent = e;
+    this.length = e.length;
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
+
+    this.paginatedInternships = this.internships.slice(this.pageIndex * this.pageSize, (this.pageIndex * this.pageSize) + this.pageSize)
   }
 }

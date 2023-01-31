@@ -23,10 +23,8 @@ export class FileUploadComponent {
 
   readonly accessTokenLocalStorageKey = 'access_token';
   //TODO: Adjust UI Design
-  //TODO: Add FileType (Report 1, 2 or 3) in Backend
   ngOnInit() {
     let username = sessionStorage.getItem("username")
-
     const token = localStorage.getItem(this.accessTokenLocalStorageKey);
     const decodedToken = this.jwtHelperService.decodeToken(token ? token : '');
     const userId = decodedToken?.user_id;

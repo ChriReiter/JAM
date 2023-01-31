@@ -7,13 +7,13 @@ import {UserService} from "../services/user.service";
   template: `
     <div style="margin: 35px">
       <h2>My Applications</h2>
-      <app-internship-list></app-internship-list>
+      <app-internship-list [defaultSize]="5"></app-internship-list>
       <hr/>
       <h2>Companies</h2>
-      <app-company-list></app-company-list>
+      <app-company-list [defaultSize]="5"></app-company-list>
       <hr/>
       <h2>Vacancies</h2>
-      <app-vacancies-list></app-vacancies-list>
+      <app-vacancies-list [defaultSize]="5"></app-vacancies-list>
       <h2>Calendar</h2>
       <app-calendar></app-calendar>
     </div>

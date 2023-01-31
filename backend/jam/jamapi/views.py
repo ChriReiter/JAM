@@ -10,6 +10,8 @@ from rest_framework.serializers import ValidationError
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
 
+from django.contrib.auth.models import User
+
 from . import models
 from . import serializers
 from .models import CompanyDetail
@@ -253,10 +255,11 @@ class FileViewSet(viewsets.ViewSet):
         return Response(serializer.data, status=200)
 
     def create(self, request):
-        student = models.User.objects.get(pk=request.data["student"])
+        student = User.objects.get(pk=request.data["student"])
         file = models.File.objects.create(
             file=request.data["file"],
-            student=student
+            student=student,
+            report_no=request.data["report_no"]
         )
         file.save()
         serializer = serializers.FileSerializer(file)

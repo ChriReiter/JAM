@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Internship2, InternshipService} from "../services/internship.service";
 import {VacantPosition, VacantPositionService} from "../services/vacant-position.service";
 import {Router} from "@angular/router";
@@ -23,6 +23,9 @@ export interface Vacancy {
   styleUrls: ['./vacancies-list.component.scss']
 })
 export class VacanciesListComponent {
+  @Input()
+  defaultSize=10;
+
   onRowClicked(row: any) {
     this.router.navigate([`vacant-positions/${row.pk}`])
   }
@@ -34,7 +37,7 @@ export class VacanciesListComponent {
   approval_status: string = "?"
 
   length = 100;
-  pageSize = 5;
+  pageSize = this.defaultSize;
   pageIndex = 0;
   pageEvent: PageEvent;
 
@@ -48,14 +51,14 @@ export class VacanciesListComponent {
   }
 
   ngOnInit() {
-
+    this.pageSize = this.defaultSize
     this.vacantPositionService.getOpenVacancies().subscribe(vacancies => {
       if (this.userService.isLecturer()) {
         this.approval_status = "?"
-        this.vacancies_list = vacancies.filter(vacancy => vacancy.approval_status == "?").slice(0, 5)
+        this.vacancies_list = vacancies.filter(vacancy => vacancy.approval_status == "?").slice(0, this.pageSize)
       } else {
         this.approval_status = "y"
-        this.vacancies_list = vacancies.filter(vacancy => vacancy.approval_status == "y").slice(0, 5)
+        this.vacancies_list = vacancies.filter(vacancy => vacancy.approval_status == "y").slice(0, this.pageSize)
       }
     })
 

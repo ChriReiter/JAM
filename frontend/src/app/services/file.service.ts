@@ -15,6 +15,7 @@ export class FileService {
     const uploadData = new FormData();
     uploadData.append('file', file, file.name)
     uploadData.append('student', student.toString())
+    uploadData.append('student', student.toString())
     return this.http.post(`${environment.apiBaseUrl}/files/`, uploadData)
   }
 }

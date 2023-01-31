@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {FormControl} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -29,6 +29,10 @@ export interface API_Request {
   styleUrls: ['./company-list.component.scss']
 })
 export class CompanyListComponent implements OnInit {
+
+  @Input()
+  defaultSize=10;
+
   onRowClicked(row: any) {
     this.router.navigate([`company-view/${row.orb_num}`])
     console.log('Row clicked: ', row);
@@ -37,7 +41,7 @@ export class CompanyListComponent implements OnInit {
   dataSource: CompanyDataSource;
   displayedColumns = ['name', 'country', 'city']
   length = 100;
-  pageSize = 10;
+  pageSize = this.defaultSize;
   pageIndex = 0;
   pageEvent: PageEvent;
   filterByName = '';
@@ -54,9 +58,9 @@ export class CompanyListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.pageSize = this.defaultSize
     this.dataSource = new CompanyDataSource(this.companyAPI);
     this.dataSource.loadCompanies(this.filterByName, this.pageSize, this.pageIndex);
-
     this.filterFormControlName.valueChanges.pipe(
       debounceTime(400),
       distinctUntilChanged()
