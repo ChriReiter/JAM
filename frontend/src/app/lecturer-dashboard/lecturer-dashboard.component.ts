@@ -13,6 +13,8 @@ import { Component } from '@angular/core';
       <hr/>
       <h2>Vacancies</h2>
       <app-vacancies-list [defaultSize]="5"></app-vacancies-list>
+      <h2>Calendar</h2>
+      <app-calendar></app-calendar>
     </div>
   `,
   styleUrls: ['./lecturer-dashboard.component.scss']
