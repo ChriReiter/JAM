@@ -13,28 +13,29 @@ import {VacanciesViewComponent} from "./vacancies-view/vacancies-view.component"
 import {StudentDashboardComponent} from './student-dashboard/student-dashboard.component';
 import {LecturerDashboardComponent} from "./lecturer-dashboard/lecturer-dashboard.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
+import {AuthGuard} from "./auth.guard";
 
 const routes: Routes = [
   {path: '', redirectTo: '/company-list', pathMatch: 'full'},
   {path: 'company-form', component: CompanyFormComponent},
   {path: 'company-form/:company-pk', component: CompanyFormComponent},
   {path: 'company-list', component: CompanyListComponent},
-  {path: 'company-list/:degree-program', component: CompanyListComponent},
+  {path: 'company-list/:degree-program', component: CompanyListComponent, canActivate:[AuthGuard]},
   {path: 'company-view/:orb_num', component: CompanyViewComponent},
-  {path: 'degree-program-list', component: DegreeProgramListComponent},
-  {path: 'internship-form', component: InternshipFormComponent},
-  {path: 'internship-form/:internship', component: InternshipFormComponent},
-  {path: 'internship-list', component: InternshipListComponent},
-  {path: 'internship-list/:degree-program', component: InternshipListComponent},
+  {path: 'degree-program-list', component: DegreeProgramListComponent, canActivate:[AuthGuard]},
+  {path: 'internship-form', component: InternshipFormComponent, canActivate:[AuthGuard]},
+  {path: 'internship-form/:internship', component: InternshipFormComponent, canActivate:[AuthGuard]},
+  {path: 'internship-list', component: InternshipListComponent, canActivate:[AuthGuard]},
+  {path: 'internship-list/:degree-program', component: InternshipListComponent, canActivate:[AuthGuard]},
   {path: 'login', component: LoginComponent},
-  {path: 'vacancies-list', component: VacanciesListComponent},
-  {path: 'vacancies-form', component: VacanciesFormComponent},
-  {path: 'vacancies-form/:vacant-position-pk', component: VacanciesFormComponent},
-  {path: 'vacancies-view/:vacant-position-pk', component: VacanciesViewComponent},
-  {path: 'vacant-positions/:vacant-position-pk', component: VacanciesViewComponent},
-  {path: 'student-dashboard', component: StudentDashboardComponent},
-  {path: 'lecturer-dashboard', component: LecturerDashboardComponent},
-  {path: 'dashboard', component: DashboardComponent}
+  {path: 'vacancies-list', component: VacanciesListComponent, canActivate:[AuthGuard]},
+  {path: 'vacancies-form', component: VacanciesFormComponent, canActivate:[AuthGuard]},
+  {path: 'vacancies-form/:vacant-position-pk', component: VacanciesFormComponent, canActivate:[AuthGuard]},
+  {path: 'vacancies-view/:vacant-position-pk', component: VacanciesViewComponent, canActivate:[AuthGuard]},
+  {path: 'vacant-positions/:vacant-position-pk', component: VacanciesViewComponent, canActivate:[AuthGuard]},
+  {path: 'student-dashboard', component: StudentDashboardComponent, canActivate:[AuthGuard]},
+  {path: 'lecturer-dashboard', component: LecturerDashboardComponent, canActivate:[AuthGuard]},
+  {path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuard]}
 ];
 
 @NgModule({
