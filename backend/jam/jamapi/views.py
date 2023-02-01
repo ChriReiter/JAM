@@ -16,6 +16,7 @@ from . import models
 from . import serializers
 from .models import CompanyDetail
 from .serializers import InternshipSerializer, CompanyDetailSerializer
+from userapi import models as user_models
 
 
 # class StudentViewSet(viewsets.ViewSet):
@@ -110,7 +111,7 @@ class InternshipViewSet(viewsets.ViewSet):
         return Response(serializer.data, status=200)
 
     def create(self, request):
-        student = models.User.objects.get(pk=request.data["user"])
+        student = user_models.User.objects.get(pk=request.data["user"])
         company = models.Company.objects.get(pk=request.data["company"])
         internship = models.Internship.objects.create(
             title=request.data["title"],
@@ -255,7 +256,7 @@ class FileViewSet(viewsets.ViewSet):
         return Response(serializer.data, status=200)
 
     def create(self, request):
-        student = User.objects.get(pk=request.data["student"])
+        student = user_models.User.objects.get(pk=request.data["student"])
         file = models.File.objects.create(
             file=request.data["file"],
             student=student,
