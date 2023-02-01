@@ -5,6 +5,7 @@ import {BehaviorSubject} from 'rxjs';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {environment} from "../../environments/environment";
+import {DegreeProgram} from "./degree-program-service";
 
 
 export interface User {
