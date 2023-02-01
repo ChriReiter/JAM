@@ -56,7 +56,7 @@ export class InternshipService {
 
 
   createInternships(internship: Internship2) {
-    return this.http.post(`${environment.apiBaseUrl} / internships / `, internship)
+    return this.http.post(`${environment.apiBaseUrl}/internships/`, internship)
   }
 
   updateInternships(internship: Internship) {
