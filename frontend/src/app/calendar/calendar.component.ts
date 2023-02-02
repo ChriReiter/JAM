@@ -22,7 +22,7 @@ export class CalendarComponent {
   tempEvent: any[] =[]
   dialogRef!: MatDialogRef<DialogComponent>
   config: MatDialogConfig = {
-    height: '280px',
+    height: '300px',
     width: '400px',
     data: {
       event: [],

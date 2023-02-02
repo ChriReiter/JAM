@@ -1,10 +1,10 @@
-<h4 class="m-t-0">{{ data?.date }}</h4>
+<br/>
 <div id='bereich' style='margin-bottom: 20px;color:#F87060; font-weight:bold; font-size:20pt' >
-  Event: {{ data?.event }}
-</div><hr/><br/>
-<div id='bereich' style='margin-bottom: 20px'>
-<app-file-upload></app-file-upload>
+    Event: {{ data?.event }}
+</div><hr *ngIf="!this.userService.isLecturer()"/><br/>
+<div *ngIf="!this.userService.isLecturer()" id='bereich' style='margin-bottom: 20px'>
+  <app-file-upload></app-file-upload>
 </div><hr/><br/>
 <div id='bereich'>
-<button mat-raised-button color="primary"  (click)="dialogRef.close()">Close</button>
+  <button mat-raised-button color="primary"  (click)="dialogRef.close()">Close</button>
 </div>

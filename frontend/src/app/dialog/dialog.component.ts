@@ -1,6 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {CalendarComponent} from "../calendar/calendar.component";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-dialog',
@@ -9,5 +10,5 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 })
 export class DialogComponent {
   constructor(public dialogRef: MatDialogRef<DialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any){}
+              @Inject(MAT_DIALOG_DATA) public data: any, public userService: UserService){}
 }
