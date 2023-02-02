@@ -22,7 +22,6 @@
       | <a [ngStyle]="{'font-size': '14px'}">Hello, {{getUsername()}}!</a>
     </ng-template>
   </ng-template>
-
   <span class="example-spacer"></span>
 
   <ng-container
@@ -37,14 +36,27 @@
 </div>
 
 <div class="second-row" *ngIf="this.userService.isLoggedIn$ | async">
-  <button *ngIf="!(this.userService.isLecturer())" mat-button class="custom-button" [routerLink]="['/internship-list']">My Internships</button>
-  <button mat-button class="custom-button" [routerLink]="['/degree-program-list']">List Degree Programs</button>
-  <button *ngIf="this.userService.isLecturer()" mat-button class="custom-button" [routerLink]="['/internship-list']">List Internships</button>
-  <button mat-button class="custom-button" [routerLink]="['/company-list']">List Companies</button>
-  <button mat-button class="custom-button" [routerLink]="['/vacancies-list']">List Vacancies</button>
+  <button mat-button class="custom-button" [ngClass]="{'custom-button-active': router.url ==='/dashboard'}"
+          [routerLink]="['/dashboard']">Dashboard
+  </button>
+  <button *ngIf="!(this.userService.isLecturer())" mat-button class="custom-button"
+          [ngClass]="{'custom-button-active': router.url ==='/internship-list'}" [routerLink]="['/internship-list']">
+    My Internships
+  </button>
+  <button mat-button class="custom-button" [ngClass]="{'custom-button-active': router.url ==='/degree-program-list'}"
+          [routerLink]="['/degree-program-list']">List Degree Programs
+  </button>
+  <button *ngIf="this.userService.isLecturer()" mat-button class="custom-button"
+          [ngClass]="{'custom-button-active': router.url ==='/internship-list'}" [routerLink]="['/internship-list']">
+    List Internships
+  </button>
+  <button mat-button class="custom-button" [ngClass]="{'custom-button-active': router.url ==='/company-list'}"
+          [routerLink]="['/company-list']">List Companies
+  </button>
+  <button mat-button class="custom-button" [ngClass]="{'custom-button-active': router.url ==='/vacancies-list'}"
+          [routerLink]="['/vacancies-list']">List Vacancies
+  </button>
 </div>
 
 
 <router-outlet></router-outlet>
-
-

@@ -42,7 +42,7 @@
     </tr>
 
   </table>
-  <div *ngIf="!this.userService.isLoggedIn$">
+  <div *ngIf="this.userService.isLoggedIn$">
     <a mat-raised-button class="button-new" [routerLink]="['/company-form']">Add Company</a>
   </div>
   <mat-paginator [length]="length"

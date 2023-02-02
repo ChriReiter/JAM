@@ -1,6 +1,6 @@
 <div style="margin: 35px">
   <div style="margin-bottom: 10px">
-    <a mat-raised-button [routerLink]="['/dashboard']">Back</a>
+    <a mat-raised-button [routerLink]="['/company-list']">Back</a>
   </div>
 
   <mat-card class="card-info">
@@ -101,10 +101,8 @@
     <ng-template #showLectButton style="margin-top: 10px">
       <a mat-raised-button style="margin-right: 10px; margin-top: 10px" color="primary" (click)="approve(company.orb_num)" [routerLink]="['/company-list']">Approve</a>
       <a mat-raised-button style="margin-right: 10px; margin-top: 10px" color="warn" (click)="reject(company.orb_num)" [routerLink]="['/company-list']">Deny</a>
-      <a mat-raised-button style="margin-right: 10px; margin-top: 10px" [routerLink]="['/company-form/' + company.orb_num]">Edit</a>
     </ng-template>
     <ng-template #showStudButton>
-      <a mat-raised-button style="margin-right: 10px; margin-top: 10px" [routerLink]="['/company-form/' + company.orb_num]">Edit</a>
     </ng-template>
   </ng-template>
 </div>
