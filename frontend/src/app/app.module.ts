@@ -95,7 +95,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ['localhost:8000']
+        allowedDomains: ['localhost:8000', 'djangojam.matthiaswindisch.eu:8000']
       }
     }),
     MatPaginatorModule,

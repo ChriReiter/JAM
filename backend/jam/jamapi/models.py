@@ -130,6 +130,7 @@ class File(models.Model):
     file = models.FileField(blank=False, null=False, upload_to="files")
     student = models.ForeignKey("userapi.User", on_delete=models.CASCADE)
     report_no = models.CharField(max_length=1, choices=REPORT_NO)
+    degree_program = models.ForeignKey(DegreeProgram, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.file.name

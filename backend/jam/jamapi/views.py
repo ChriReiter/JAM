@@ -28,6 +28,17 @@ class DegreeProgramViewSet(viewsets.ViewSet):
         serializer = serializers.DegreeProgramSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
 
+    def checkFileUpload(self, request, dp_pk=None, report=None):
+        ok = False
+        if self.request.user.pk is None:
+            return Response(status=401)
+
+        count = models.File.objects.filter(student=self.request.user.pk).filter(report_no=report).filter(degree_program=dp_pk).count()
+        if count > 0:
+            ok = True
+
+        return Response(ok, status=200)
+
     def create(self, request):
         degree_program = models.DegreeProgram.objects.create(
             name=request.data["name"],
@@ -232,10 +243,12 @@ class FileViewSet(viewsets.ViewSet):
 
     def create(self, request):
         student = user_models.User.objects.get(pk=request.data["student"])
+        degree_program = models.DegreeProgram.objects.get(pk=request.data["degree_program"])
         file = models.File.objects.create(
             file=request.data["file"],
             student=student,
-            report_no=request.data["report_no"]
+            report_no=request.data["report_no"],
+            degree_program=degree_program
         )
         file.save()
         serializer = serializers.FileSerializer(file)

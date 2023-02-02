@@ -6,31 +6,50 @@ import {FileService} from "../services/file.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Student, UserService} from "../services/user.service";
 import {D} from "@angular/cdk/keycodes";
+import {DialogComponent} from "../dialog/dialog.component";
+import {MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
+
+export interface ReportOk{
+  ok: boolean;
+  dp_pk: number;
+  report:number;
+}
 
 @Component({
   selector: 'app-degree-program-list',
   templateUrl: './degree-program-list.component.html',
   styleUrls: ['./degree-program-list.component.scss']
 })
+
 export class DegreeProgramListComponent {
   degree_programs: DegreeProgram[] = []
   degProgramFormGroup: FormGroup;
     displayedColumns = ['name', 'abbreviation', 'current_class',
     'deadline_application', 'internship_start', 'internship_end',
-    'deadline_report1', 'deadline_report2', 'deadline_report3', 'edit']
+    'deadline_report1', 'edit']
   formGroup: FormGroup;
   file: File | undefined;
   editId: number | null = 0;
   student: Student | null = null;
   initDate: Date;
-
-
+  dialogRef!: MatDialogRef<DialogComponent>
+  fileUploadConfig: MatDialogConfig = {
+    height: '300px',
+    width: '400px',
+    data: {
+      event: [],
+      date: []
+    }
+  }
+  reports: ReportOk[] | null
   constructor(private http: HttpClient,
-              private fileService: FileService,
-              private userService: UserService,
-              private degreeProgramService: DegreeProgramService) {
+              public fileService: FileService,
+              public userService: UserService,
+              private degreeProgramService: DegreeProgramService,
+              private dialog: MatDialog) {
     this.formGroup = new FormGroup({
       fileUpload: new FormControl([])
+
     })
 
     this.degProgramFormGroup = new FormGroup({
@@ -44,13 +63,44 @@ export class DegreeProgramListComponent {
       deadline_report2: new FormControl('',[Validators.required]),
       deadline_report3: new FormControl('',[Validators.required])
     })
-      this.initDate = new Date()
+    this.reports = null
+    this.initDate = new Date()
   }
   ngOnInit(): void {
     this.degreeProgramService.getDegreePrograms().subscribe(degree_programs => {
       this.degree_programs = degree_programs
+      degree_programs.forEach(dp=>{
+        if (dp.pk){
+          for (let i = 1; i <= 3; i++) {
+            this.fileService.checkReport(dp.pk!,i).subscribe(r=>{
+              if (this.reports !== null){
+                this.reports.push({report:i,dp_pk:dp.pk!,ok:r})
+                console.log(this.reports)
+              }else{
+                this.reports = [{report:i,dp_pk:dp.pk!,ok:r}]
+                console.log(this.reports)
+              }
+            })
+          }
+        }
+      })
     })
+  }
 
+  reportIsUploaded(report: number, dp_pk:number):boolean{
+    let result = false
+    let okList = this.reports?.filter(r => r.report === report && r.dp_pk === dp_pk)
+    if(okList != undefined && okList?.length > 0){
+      result = okList[0].ok
+    }
+    return result
+  }
+
+  handleReportClick(dp_pk: number, report: number) {
+    this.fileUploadConfig.data = {event: 'Report ' + dp_pk}
+    this.dialogRef = this.dialog.open(DialogComponent, this.fileUploadConfig);
+    this.dialogRef.componentInstance.degree_program = dp_pk
+    this.dialogRef.componentInstance.report_no = report
   }
 
   cancel(){

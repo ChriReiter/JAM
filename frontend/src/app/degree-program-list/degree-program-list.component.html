@@ -124,10 +124,17 @@
 
   <!-- Approval Status -->
   <ng-container matColumnDef="deadline_report1">
-    <th mat-header-cell *matHeaderCellDef>Report 1</th>
+    <th mat-header-cell *matHeaderCellDef>Reports</th>
     <td mat-cell *matCellDef="let element">
-      <div *ngIf="editId !== element.pk">
-      {{element.deadline_report1}}
+      <div *ngIf="editId !== element.pk && !reportIsUploaded(1,element.pk)">
+        <button mat-button color="primary" (click)="this.handleReportClick(element.pk, 1)">
+         {{element.deadline_report1}}
+        </button>
+      </div>
+      <div *ngIf="editId !== element.pk && reportIsUploaded(1,element.pk)">
+        <button mat-button color="primary" (click)="this.handleReportClick(element.pk, 1)">
+          {{element.deadline_report1}}<mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="check"></mat-icon>
+        </button>
       </div>
       <div *ngIf="editId === element.pk">
         <mat-form-field appearance="outline">
@@ -139,15 +146,17 @@
           </div>
         </mat-form-field>
       </div>
-    </td>
-  </ng-container>
 
-  <!-- Approval Status -->
-  <ng-container matColumnDef="deadline_report2">
-    <th mat-header-cell *matHeaderCellDef>Report 2</th>
-    <td mat-cell *matCellDef="let element">
-      <div *ngIf="editId !== element.pk">
-      {{element.deadline_report2}}
+
+      <div *ngIf="editId !== element.pk && !reportIsUploaded(2,element.pk)">
+        <button mat-button color="primary" (click)="this.handleReportClick(element.pk, 2)" >
+          {{element.deadline_report2}}
+        </button>
+      </div>
+      <div *ngIf="editId !== element.pk && reportIsUploaded(2,element.pk)">
+        <button mat-button color="primary" (click)="this.handleReportClick(element.pk, 2)">
+          {{element.deadline_report1}}<mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="check"></mat-icon>
+        </button>
       </div>
       <div *ngIf="editId === element.pk">
         <mat-form-field appearance="outline">
@@ -159,15 +168,17 @@
           </div>
         </mat-form-field>
       </div>
-    </td>
-  </ng-container>
 
-  <!-- Approval Status -->
-  <ng-container matColumnDef="deadline_report3">
-    <th mat-header-cell *matHeaderCellDef>Report 3</th>
-    <td mat-cell *matCellDef="let element">
-      <div *ngIf="editId !== element.pk">
-      {{element.deadline_report3}}
+
+      <div *ngIf="editId !== element.pk && !reportIsUploaded(3,element.pk)">
+        <button mat-button color="primary" (click)="this.handleReportClick(element.pk, 3)" >
+          {{element.deadline_report3}}
+        </button>
+      </div>
+      <div *ngIf="editId !== element.pk && reportIsUploaded(3,element.pk)">
+        <button mat-button color="primary" (click)="this.handleReportClick(element.pk, 3)">
+          {{element.deadline_report1}}<mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="check"></mat-icon>
+        </button>
       </div>
       <div *ngIf="editId === element.pk">
         <mat-form-field appearance="outline">
@@ -211,8 +222,7 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<button mat-button class="button-new" (click)="this.newDegPro()">Add Degree Program</button>
-  <a mat-raised-button class="button-new" [routerLink]="['/internship-form']">New Internship</a>
-<app-file-upload></app-file-upload>
+  <button *ngIf="this.userService.isLecturer()" mat-button class="button-new" (click)="this.newDegPro()">Add Degree Program</button>
 
+  <a mat-raised-button class="button-new" [routerLink]="['/internship-form']">New Internship</a>
 </div>

@@ -42,7 +42,7 @@ class ApiView(viewsets.ViewSet):
             endpoint = str(pattern.pattern)
             # Include only api/ views and include only top-level endpoints:
             if "api/" in endpoint and re.search("<.*>",endpoint) is None:
-                endpoints.append("http://localhost:8000/%s" % endpoint)
+                endpoints.append("http://djangojam.matthiaswindisch.eu:8000/%s" % endpoint)
         return Response(endpoints)
 
 class UserViewSet(viewsets.ViewSet):

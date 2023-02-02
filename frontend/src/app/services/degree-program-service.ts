@@ -33,8 +33,8 @@ export class DegreeProgramService {
         return this.http.get<DegreeProgram>(`${environment.apiBaseUrl}/degree-programmes/` + pk);
     }
 
-    getDegreeProgramByUsername(username: string) {
-        return this.http.get<DegreeProgram[]>(`${environment.apiBaseUrl}/degree-programmes/?username=` + username)
+    getDegreeProgramByPk(dp_pk: number) {
+        return this.http.get<DegreeProgram[]>(`${environment.apiBaseUrl}/degree-programmes/?dp_pk=` + dp_pk)
     }
 
 
@@ -49,4 +49,5 @@ export class DegreeProgramService {
     createDegreeProgram(degreeProgram: DegreeProgram) {
       return this.http.post<DegreeProgram>(`${environment.apiBaseUrl}/degree-programmes/`, degreeProgram)
     }
+
 }

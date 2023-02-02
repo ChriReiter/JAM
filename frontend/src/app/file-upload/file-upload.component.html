@@ -1,5 +1,17 @@
 <form [formGroup]="formGroup">
-  <input type="file" name="fileInput" (change)="onChange($event)"/>
+<!--  <input type="file" name="fileInput" (change)="onChange($event)"/>-->
+  <input type="file" class="file-input"
+         (change)="onChange($event)" #fileUpload>
+
+  <div class="file-upload">
+
+    {{fileName || "No file uploaded yet."}}
+
+    <button mat-mini-fab color="primary" class="upload-btn"
+            (click)="fileUpload.click()">
+      <mat-icon>attach_file</mat-icon>
+    </button>
+  </div>
 </form>
 <div style='margin-top: 10px'>
 <button mat-raised-button color="primary" (click)="upload()">Upload</button>

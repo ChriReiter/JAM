@@ -51,21 +51,22 @@ export class CalendarComponent {
    // alert(arg.event._def.title)
     this.config.data = {event: arg.event._def.title, date: arg.event._def.end}
     this.dialogRef = this.dialog.open(DialogComponent, this.config);
+    this.dialogRef.componentInstance.degree_program = arg.event._def.extendedProps.dp_pk
+    this.dialogRef.componentInstance.report_no = arg.event._def.extendedProps.report
   }
 
   getAllEvents(){
-    this.degreeProgramService.getDegreeProgramByUsername(this.userService.getUsername()).subscribe(degree_programs => {
+    this.degreeProgramService.getDegreeProgramByPk(this.userService.getUserPk()).subscribe(degree_programs => {
       for (let degree_program of degree_programs){
         this.tempEvent =  [
        // this.calendarOptions.events =[
           {title: 'Deadline application - '+degree_program.name,start: degree_program.deadline_report1.toString(), end: degree_program.deadline_report1.toString(), backgroundColor: degree_program.backgroundColor},
           {title: 'Internship start - '+degree_program.name,start: degree_program.internship_start.toString(), end: degree_program.internship_start.toString(), backgroundColor: degree_program.backgroundColor},
           {title: 'Internship end - '+degree_program.name,start: degree_program.internship_end.toString(), end: degree_program.internship_end.toString(), backgroundColor: degree_program.backgroundColor},
-          {title: 'Deadline report1 - '+degree_program.name,start: degree_program.deadline_report1.toString(), end: degree_program.deadline_report1.toString(), backgroundColor: degree_program.backgroundColor},
-          {title: 'Deadline report2 - '+degree_program.name,start: degree_program.deadline_report2.toString(), end: degree_program.deadline_report2.toString(), backgroundColor: degree_program.backgroundColor},
-          {title: 'Deadline report3 - '+degree_program.name,start: degree_program.deadline_report3.toString(), end: degree_program.deadline_report3.toString(), backgroundColor: degree_program.backgroundColor}
+          {title: 'Deadline report1 - '+degree_program.name,start: degree_program.deadline_report1.toString(), end: degree_program.deadline_report1.toString(), backgroundColor: degree_program.backgroundColor, report: 1, dp_pk:degree_program.pk},
+          {title: 'Deadline report2 - '+degree_program.name,start: degree_program.deadline_report2.toString(), end: degree_program.deadline_report2.toString(), backgroundColor: degree_program.backgroundColor, report: 2, dp_pk:degree_program.pk},
+          {title: 'Deadline report3 - '+degree_program.name,start: degree_program.deadline_report3.toString(), end: degree_program.deadline_report3.toString(), backgroundColor: degree_program.backgroundColor, report: 3, dp_pk:degree_program.pk}
         ]
-        console.log(degree_program.backgroundColor, this.tempEvent)
         this.eventsNew = this.eventsNew.concat(this.tempEvent)
         this.calendarOptions.events = this.eventsNew;
       }
