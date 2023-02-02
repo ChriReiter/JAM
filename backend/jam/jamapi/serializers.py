@@ -16,7 +16,7 @@ class DegreeProgramSerializer(serializers.ModelSerializer):
     class Meta:
         model = DegreeProgram
         fields = ['pk', 'name', 'abbreviation', 'current_class', 'deadline_application', 'internship_start',
-                  'internship_end', 'deadline_report1', 'deadline_report2', 'deadline_report3']
+                  'internship_end', 'deadline_report1', 'deadline_report2', 'deadline_report3', 'backgroundColor']
 
 
 # class StudentSerializer(serializers.ModelSerializer):

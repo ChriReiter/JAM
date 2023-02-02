@@ -45,6 +45,7 @@ import {FullCalendarModule} from "@fullcalendar/angular";
 import { CalendarComponent } from './calendar/calendar.component';
 import {MatDialogModule, MatDialog} from "@angular/material/dialog";
 import { ApplicationStatusDialogComponent } from './application-status-dialog/application-status-dialog.component';
+import { DialogComponent } from './dialog/dialog.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -68,6 +69,7 @@ export function tokenGetter() {
     LecturerDashboardComponent,
     DashboardComponent,
     CalendarComponent,
+    DialogComponent,
     ApplicationStatusDialogComponent
   ],
   imports: [

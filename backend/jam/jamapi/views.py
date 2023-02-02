@@ -86,7 +86,8 @@ class DegreeProgramViewSet(viewsets.ViewSet):
             internship_end=request.data["internship_end"],
             deadline_report1=request.data["deadline_report1"],
             deadline_report2=request.data["deadline_report2"],
-            deadline_report3=request.data["deadline_report3"]
+            deadline_report3=request.data["deadline_report3"],
+            backgroundColor=request.data["backgroundColor"]
         )
         degree_program.save()
         serializer = serializers.DegreeProgramSerializer(degree_program)
