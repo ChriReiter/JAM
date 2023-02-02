@@ -12,7 +12,7 @@ JAM is a single page application built with Angular for the frontend, and Django
 
 ## Project Team
 
-* REITER Christian ([@ChriReiter](https::/github.com/ChriReiter))
+* REITER Christian ([@ChriReiter](https://github.com/ChriReiter))
 * ROTH Matthias ([@Matrot12](https://github.com/Matrot12))
 * TILL Tristan ([@tristantill](https://github.com/tristantill))
 * WINDISCH Matthias ([@hIASL99](https://github.com/hIASL99))
