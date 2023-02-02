@@ -17,6 +17,7 @@ import {UserService} from "../services/user.service";
       <hr/>
       <h2>Calendar</h2>
       <app-calendar></app-calendar>
+      <hr/>
     </div>
   `,
   styleUrls: ['./student-dashboard.component.scss']

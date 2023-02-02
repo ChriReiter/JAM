@@ -28,11 +28,13 @@
       <td mat-cell class="duration-cell"
           *matCellDef="let Company_API_All">{{Company_API_All.country}}</td>
     </ng-container>
+
     <ng-container matColumnDef="city">
       <th mat-header-cell *matHeaderCellDef>City</th>
       <td mat-cell class="duration-cell"
           *matCellDef="let Company_API_All">{{Company_API_All.city}}</td>
     </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
     <tr mat-row *matRowDef="let row; columns: displayedColumns"

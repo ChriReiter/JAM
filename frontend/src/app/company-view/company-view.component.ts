@@ -105,7 +105,7 @@ export class CompanyViewComponent implements OnInit {
 
   constructor(private http: HttpClient, private route: ActivatedRoute,
               private router: RouterModule,
-              private companyAPIService: CompanyAPIService,
+              public companyAPIService: CompanyAPIService,
               private companyDbService: CompanyDbService) {
 
   }

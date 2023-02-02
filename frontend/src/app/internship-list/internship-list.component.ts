@@ -53,11 +53,12 @@ export class InternshipListComponent {
 
     // For Lecturers all internships should be shown, so they can approve/deny them
     if (username != null && !this.userService.isLecturer()) {
-      this.internshipService.getInternshipsByStudent().subscribe(internships => {
+      this.internshipService.getInternships().subscribe(internships => {
         this.internships = internships;
         for (let i = 0; i < this.internships.length; i++) {
-          if (!(this.internships[i].student == userId))
+          if ( !(this.internships[i].student == userId) ) {
             this.internships.splice(i, 1);
+          }
         }
         this.paginatedInternships = this.internships.slice(this.pageIndex * this.pageSize, (this.pageIndex * this.pageSize) + this.pageSize);
       })

@@ -16,6 +16,7 @@ import { Component } from '@angular/core';
       <hr/>
       <h2>Calendar</h2>
       <app-calendar></app-calendar>
+      <hr/>
     </div>
   `,
   styleUrls: ['./lecturer-dashboard.component.scss']
