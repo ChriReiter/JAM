@@ -53,6 +53,13 @@ export class DegreeProgramListComponent {
 
   }
 
+  cancel(){
+    this.editId = 0;
+    this.degreeProgramService.getDegreePrograms().subscribe(degree_programs => {
+      this.degree_programs = degree_programs
+    })
+  }
+
   setEdit(userId: number){
     this.editId = userId;
     let toEdit = this.degree_programs.filter(p=>p.pk === userId)
@@ -83,6 +90,7 @@ export class DegreeProgramListComponent {
       deadline_report1: this.initDate,
       deadline_report2: this.initDate,
       deadline_report3: this.initDate,
+      backgroundColor:""
     }
     this.degreeProgramService.getDegreePrograms().subscribe(degree_programs => {
       degree_programs.push(newDegPro)
@@ -108,6 +116,7 @@ export class DegreeProgramListComponent {
       deadline_report1: this.degProgramFormGroup.get('deadline_report1')?.value,
       deadline_report2: this.degProgramFormGroup.get('deadline_report2')?.value,
       deadline_report3: this.degProgramFormGroup.get('deadline_report3')?.value,
+      backgroundColor: "",
     }
     this.degreeProgramService.createDegreeProgram(toAdd).subscribe(e=>{
       this.editId = 0;
@@ -130,6 +139,7 @@ export class DegreeProgramListComponent {
       deadline_report1: this.degProgramFormGroup.get('deadline_report1')?.value,
       deadline_report2: this.degProgramFormGroup.get('deadline_report2')?.value,
       deadline_report3: this.degProgramFormGroup.get('deadline_report3')?.value,
+      backgroundColor:""
     }
     this.degreeProgramService.updateDegreeProgram(toUpdate).subscribe(e=>{
       this.editId = 0;

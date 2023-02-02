@@ -192,12 +192,12 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
     <td *matCellDef="let element">
       <div *ngIf="editId === element.pk && editId !== 0">
-        <button mat-button color="primary" (click)="editId = null" >cancel</button>
+        <button mat-button color="primary" (click)="this.cancel()" >cancel</button>
         <button mat-button color="primary" (click)="this.updateDegPro(element.pk)" >save</button>
         <button mat-button color="primary" (click)="this.deleteDegPro(element.pk)" >delete</button>
       </div>
       <div *ngIf="editId === element.pk && editId === 0">
-        <button mat-button color="primary" (click)="editId = null" >cancel</button>
+        <button mat-button color="primary" (click)="this.cancel()" >cancel</button>
         <button mat-button color="primary" (click)="this.createDegPro()" >create</button>
       </div>
       <div *ngIf="editId !== element.pk">
@@ -210,7 +210,8 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<button mat-button (click)="this.newDegPro()">New Internship</button>
+<button mat-button class="button-new" (click)="this.newDegPro()">Add Degree Program</button>
+  <a mat-raised-button class="button-new" [routerLink]="['/internship-form']">New Internship</a>
 <app-file-upload></app-file-upload>
 
 </div>
