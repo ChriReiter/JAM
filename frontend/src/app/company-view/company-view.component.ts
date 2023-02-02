@@ -160,7 +160,6 @@ export class CompanyViewComponent implements OnInit {
 
   //TODO: Optimize approve method
   approve(company_orb: number) {
-    console.log("pk: " + company_orb);
     this.companyDbService.getCompanyDBByOrbNum(company_orb.toString()).subscribe(company => {
       company[0].approval_status = 'y'
       this.companyDbService.updateCompany(company[0].pk!, company[0]).subscribe(() => {
@@ -172,7 +171,6 @@ export class CompanyViewComponent implements OnInit {
 
   //TODO: Optimize reject method
   reject(company_orb: number) {
-    console.log("pk: " + company_orb);
     this.companyDbService.getCompanyDBByOrbNum(company_orb.toString()).subscribe(company => {
       company[0].approval_status = 'n'
       this.companyDbService.updateCompany(company[0].pk!, company[0]).subscribe(() => {

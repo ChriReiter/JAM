@@ -104,7 +104,7 @@ export class InternshipListComponent {
           this.mailRecipients
         )).subscribe()
         this.ngOnInit()
-        this.snackbar.open('Approved Internship: ' + internship.title)
+        this.snackbar.open('Approved Internship: ' + internship.title, 'OK', {duration: 3000})
       })
     })
   }
@@ -114,7 +114,7 @@ export class InternshipListComponent {
       internship.approval_status = 'n'
       this.internshipService.updateInternships(internship).subscribe(() => {
         this.ngOnInit()
-        this.snackbar.open('Rejected Internship ' + internship.title)
+        this.snackbar.open('Rejected Internship ' + internship.title, 'OK', {duration: 3000})
       })
     })
   }
