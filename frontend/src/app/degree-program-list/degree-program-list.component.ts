@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {DegreeProgram} from "../services/degree-program-service";
+import {DegreeProgram, DegreeProgramService} from "../services/degree-program-service";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {FileService} from "../services/file.service";
@@ -24,26 +24,14 @@ export class DegreeProgramListComponent {
 
 
   constructor(private http: HttpClient, private fileService: FileService,
-              private userService: UserService) {
+              private userService: UserService, private degreeProgramService: DegreeProgramService) {
     this.formGroup = new FormGroup({
       fileUpload: new FormControl([])
     })
   }
   ngOnInit(): void {
-    this.http.get<DegreeProgram[]>(`${environment.apiBaseUrl}/degree-programmes/`).subscribe(degree_programs => {
-      this.degree_programs = degree_programs
+    this.degreeProgramService.getDegreeProgramByUsername(sessionStorage.getItem("username")!).subscribe( dp => {
+      this.degree_programs = dp
     })
-  }
-
-  onChange(event: any) {
-    /*
-    this.file = event.target.files[0]
-    console.log(this.file)
-    if (this.student != null && this.file != undefined) {
-      this.fileService.uploadFile(this.file, this.student).subscribe( response => {
-        console.log(response)
-      })
-    }
-     */
   }
 }

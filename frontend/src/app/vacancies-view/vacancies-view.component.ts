@@ -76,7 +76,7 @@ export class VacanciesViewComponent {
         description: vacantPosition.description,
         application_status: "o",
         approval_status: vacancy.approval_status,
-        student: this.student_id!,
+        user: this.student_id!,
         company: vacantPosition.company.pk!
       }
       this.internshipService.createInternships(internship).subscribe(response => {

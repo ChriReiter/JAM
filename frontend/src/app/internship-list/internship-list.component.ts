@@ -7,6 +7,9 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {ActivatedRoute} from "@angular/router";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {PageEvent} from "@angular/material/paginator";
+import {CompanyFormComponent} from "../company-form/company-form.component";
+import {MatDialog} from "@angular/material/dialog";
+import {ApplicationStatusDialogComponent} from "../application-status-dialog/application-status-dialog.component";
 
 @Component({
   selector: 'app-internship-list',
@@ -32,11 +35,14 @@ export class InternshipListComponent {
   pageIndex = 0;
   pageEvent: PageEvent;
 
+  editMode = false;
+
   displayedColumns = ['title', 'application_status', 'approval_status', 'company', 'approve', 'reject', 'update']
 
   constructor(private http: HttpClient, public internshipService: InternshipService,
               public userService: UserService, private snackbar: MatSnackBar,
-              private route: ActivatedRoute, private jwtHelperService: JwtHelperService) {
+              private route: ActivatedRoute, private jwtHelperService: JwtHelperService,
+              public dialog: MatDialog) {
     this.pageEvent = new PageEvent();
   }
 
@@ -101,6 +107,22 @@ export class InternshipListComponent {
       })
     })
   }
+
+  openDialog(internship_pk: number) {
+    let dialogRef = this.dialog.open(ApplicationStatusDialogComponent, {
+      data: {
+        internship_pk: internship_pk,
+      },
+    })
+    dialogRef.afterClosed().subscribe( () => {
+      this.ngOnInit()
+    })
+  }
+
+  selectOption(abb: string): string {
+    return this.internshipService.mapAbbToFull(abb)
+  }
+
 
   handlePageEvent(e: PageEvent) {
     console.log()

@@ -1,0 +1,16 @@
+<form [formGroup]="applicationStatusFormGroup" class="vacancy_form__form">
+  <mat-form-field appearance="outline" style="display: block; margin-bottom: 10px">
+    <mat-label>Application Status</mat-label>
+    <mat-select placeholder="Application Status" formControlName="application_status">
+      <mat-option value="1">Applied</mat-option>
+      <mat-option value="2">Talks Ongoing</mat-option>
+      <mat-option value="3">Accepted</mat-option>
+      <mat-option value="4">Rejected</mat-option>
+      <mat-option value="5">Other</mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
+<button mat-raised-button color="primary" (click)="update()" mat-dialog-close>Update
+</button>
+<button mat-button mat-dialog-close>Cancel
+</button>

@@ -89,9 +89,20 @@ export class UserService {
       return ""
     }
   }
-
+/*
   getStudentByUsername(username: string) {
-    return this.http.get<Student[]>(`${environment.apiBaseUrl}/students/?username=` + username)
+    const token = localStorage.getItem(this.accessTokenLocalStorageKey);
+    const decodedToken = this.jwtHelperService.decodeToken(token ? token : '');
+    console.log(decodedToken, token)
+    return this.http.get(`${environment.apiBaseUrl}/users/2`)
+  }
+
+ */
+
+  getUserPk(): number {
+    const token = localStorage.getItem(this.accessTokenLocalStorageKey);
+    const decodedToken = this.jwtHelperService.decodeToken(token ? token : '');
+    return decodedToken.user_id
   }
 
   isLecturer(): boolean {

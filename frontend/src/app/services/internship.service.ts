@@ -22,7 +22,7 @@ export interface Internship2 {
   description: string;
   application_status: string;
   approval_status: string;
-  student: number;
+  user: number;
   company: number | null;
 }
 
@@ -44,6 +44,10 @@ export class InternshipService {
 
   getInternship(id: string) {
     return this.http.get<Internship>(`${environment.apiBaseUrl}/internships/${id}`);
+  }
+
+  getInternship2(id: string) {
+    return this.http.get<Internship2>(`${environment.apiBaseUrl}/internships/${id}`);
   }
 
   getInternshipsByDP(degree_program: string) {
@@ -92,17 +96,30 @@ export class InternshipService {
   }
 
   mapFullToAbb(status_num: number): string {
-    switch (status_num) {
-      case 1:
-        return "a"
-      case 2:
-        return "t"
-      case 3:
-        return "y"
-      case 4:
-        return "n"
-      default:
-        return "o"
+    if (status_num == 1) {
+      return "a"
+    } else if (status_num == 2) {
+      return "t"
+    } else if (status_num == 3) {
+      return "y"
+    } else if (status_num == 4) {
+      return "n"
+    } else {
+      return "o"
+    }
+  }
+
+  mapAbbToFull(abb: string): string {
+    if (abb == "a") {
+      return "1"
+    } else if (abb == "t") {
+      return "2"
+    } else if (abb == "y") {
+      return "3"
+    } else if (abb == "n") {
+      return "4"
+    } else {
+      return "5"
     }
   }
 }
