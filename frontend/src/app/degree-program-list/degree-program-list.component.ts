@@ -15,7 +15,7 @@ import {D} from "@angular/cdk/keycodes";
 export class DegreeProgramListComponent {
   degree_programs: DegreeProgram[] = []
   degProgramFormGroup: FormGroup;
-  displayedColumns = ['name', 'abbreviation', 'current_class', 'internships',
+    displayedColumns = ['name', 'abbreviation', 'current_class',
     'deadline_application', 'internship_start', 'internship_end',
     'deadline_report1', 'deadline_report2', 'deadline_report3', 'edit']
   formGroup: FormGroup;

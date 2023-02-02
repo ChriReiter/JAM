@@ -5,7 +5,7 @@
             routerLink="dashboard">
       <mat-icon>home</mat-icon>
     </button>
-    <a href="dashboard" style="text-decoration: none">Job Application Manager</a>
+    <a [routerLink]="['/dashboard']" style="text-decoration: none">Job Application Manager</a>
     <div *ngIf="userService.isLoggedIn$ | async; then showHello;"></div>
     <ng-template #showHello>
       | <a [ngStyle]="{'font-size': '14px'}">Hello, {{getUsername()}}!</a>
@@ -16,7 +16,7 @@
             routerLink="company-list">
       <mat-icon>home</mat-icon>
     </button>
-    <a href="company-list" style="text-decoration: none">Job Application Manager</a>
+    <a [routerLink]="['/company-list']" style="text-decoration: none">Job Application Manager</a>
     <div *ngIf="userService.isLoggedIn$ | async; then showHello;"></div>
     <ng-template #showHello>
       | <a [ngStyle]="{'font-size': '14px'}">Hello, {{getUsername()}}!</a>

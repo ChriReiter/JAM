@@ -1,44 +1,48 @@
 <form [formGroup]="internshipFormGroup" (ngSubmit)="createInternship()" class="internship_form__form">
-  <mat-form-field appearance="outline" style="display: block; margin-bottom: 10px">
-    <mat-label>Title</mat-label>
-    <input matInput type="text" placeholder="Title" formControlName="title">
-    <mat-error *ngIf="internshipFormGroup.controls['title'].hasError('required')">
-      Title is required
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field appearance="outline" style="display: block; margin-bottom: 10px">
-    <mat-label>Description</mat-label>
-    <textarea matInput type="text" placeholder="Description" formControlName="description"></textarea>
-    <mat-error *ngIf="internshipFormGroup.controls['description'].hasError('required')">
-      Description is required
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field appearance="outline" style="display: block; margin-bottom: 10px">
-    <mat-label>Company</mat-label>
-    <mat-select placeholder="Company" formControlName="company">
-      <mat-option>
-        <ngx-mat-select-search [formControl]="companySearchFromControl"></ngx-mat-select-search>
-      </mat-option>
-      <mat-option *ngFor="let company of companyOptions"
-                  [value]="company">{{company.name}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field appearance="outline" style="display: block; margin-bottom: 10px">
-    <mat-label>Application Status</mat-label>
-    <mat-select placeholder="Application Status" formControlName="application_status">
-      <mat-option value="1">Applied</mat-option>
-      <mat-option value="2">Talks Ongoing</mat-option>
-      <mat-option value="3">Accepted</mat-option>
-      <mat-option value="4">Rejected</mat-option>
-      <mat-option value="5">Other</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-card-actions align="start">
-    <button mat-raised-button color="primary" [disabled]="!internshipFormGroup.valid">
-      <span *ngIf="param==null">Create</span>
-      <span *ngIf="param!=null">Update</span>
-    </button>
-  </mat-card-actions>
+
+  <div style="margin: 35px">
+    <mat-form-field appearance="outline" style="display: block; margin-bottom: 10px">
+      <mat-label>Title</mat-label>
+      <input matInput type="text" placeholder="Title" formControlName="title">
+      <mat-error *ngIf="internshipFormGroup.controls['title'].hasError('required')">
+        Title is required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="display: block; margin-bottom: 10px">
+      <mat-label>Description</mat-label>
+      <textarea matInput type="text" placeholder="Description" formControlName="description"></textarea>
+      <mat-error *ngIf="internshipFormGroup.controls['description'].hasError('required')">
+        Description is required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="display: block; margin-bottom: 10px">
+      <mat-label>Company</mat-label>
+      <mat-select placeholder="Company" formControlName="company">
+        <mat-option>
+          <ngx-mat-select-search [formControl]="companySearchFromControl"></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let company of companyOptions"
+                    [value]="company">{{company.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="display: block; margin-bottom: 10px">
+      <mat-label>Application Status</mat-label>
+      <mat-select placeholder="Application Status" formControlName="application_status">
+        <mat-option value="1">Applied</mat-option>
+        <mat-option value="2">Talks Ongoing</mat-option>
+        <mat-option value="3">Accepted</mat-option>
+        <mat-option value="4">Rejected</mat-option>
+        <mat-option value="5">Other</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-card-actions align="start">
+      <button mat-raised-button color="primary" [disabled]="!internshipFormGroup.valid">
+        <span *ngIf="param==null">Create</span>
+        <span *ngIf="param!=null">Update</span>
+      </button>
+    </mat-card-actions>
+  </div>
+
 </form>
 
