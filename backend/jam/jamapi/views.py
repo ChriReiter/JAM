@@ -19,54 +19,6 @@ from .serializers import InternshipSerializer, CompanyDetailSerializer
 from userapi import models as user_models
 
 
-# class StudentViewSet(viewsets.ViewSet):
-#
-#     def list(self, request):
-#         queryset = models.Student.objects.all()
-#         if request.GET.get("username") is not None:
-#             queryset = models.Student.objects.filter(username=request.GET.get("username"))
-#         serializer = serializers.StudentSerializer(queryset, many=True)
-#         return Response(serializer.data, status=200)
-#
-#     def create(self, request):
-#         degree_program = models.DegreeProgram.objects.get(pk=request.data["degree_program"])
-#         student = models.Student.objects.create(
-#             firstname=request.data["firstname"],
-#             lastname=request.data["lastname"],
-#             email=request.data["email"],
-#             username=request.data["username"],
-#             matriculation_no=request.data["matriculation_no"],
-#             degree_program=degree_program
-#         )
-#         student.save()
-#         serializer = serializers.StudentSerializer(student)
-#         return Response(serializer.data, status=201)
-#
-#     def retrieve(self, request, student_pk=None):
-#         student = models.Student.objects.get(pk=student_pk)
-#         serializer = serializers.StudentSerializer(student)
-#         return Response(serializer.data, status=200)
-#
-#
-# class LecturerViewSet(viewsets.ViewSet):
-#
-#     def list(self, request):
-#         queryset = models.Lecturer.objects.all()
-#         serializer = serializers.LecturerSerializer(queryset, many=True)
-#         return Response(serializer.data, status=200)
-#
-#     def create(self, request):
-#         lecturer = models.Lecturer.objects.create(
-#             firstname=request.data["firstname"],
-#             lastname=request.data["lastname"],
-#             email=request.data["email"]
-#         )
-#         lecturer.degree_program.add(request.data["degree_program"])
-#         lecturer.save()
-#         serializer = serializers.LecturerSerializer(lecturer)
-#         return Response(serializer.data, status=201)
-
-
 class DegreeProgramViewSet(viewsets.ViewSet):
 
     def list(self, request):
@@ -92,10 +44,31 @@ class DegreeProgramViewSet(viewsets.ViewSet):
         serializer = serializers.DegreeProgramSerializer(degree_program)
         return Response(serializer.data, status=201)
 
+    def update(self, request, dp_pk=None):
+        degree_program = models.DegreeProgram.objects.get(pk=dp_pk)
+        degree_program.name=request.data["name"]
+        degree_program.abbreviation=request.data["abbreviation"]
+        degree_program.current_class=request.data["current_class"]
+        degree_program.deadline_application=request.data["deadline_application"]
+        degree_program.internship_start=request.data["internship_start"]
+        degree_program.internship_end=request.data["internship_end"]
+        degree_program.deadline_report1=request.data["deadline_report1"]
+        degree_program.deadline_report2=request.data["deadline_report2"]
+        degree_program.deadline_report3=request.data["deadline_report3"]
+
+        degree_program.save()
+        serializer = serializers.DegreeProgramSerializer(degree_program)
+        return Response(serializer.data, status=201)
+
     def retrieve(self, request, dp_pk=None):
         degree_program = models.DegreeProgram.objects.get(pk=dp_pk)
         serializer = serializers.DegreeProgramSerializer(degree_program)
         return Response(serializer.data, status=200)
+
+    def delete(self, request, dp_pk=None):
+        degree_program = models.DegreeProgram.objects.get(pk=dp_pk)
+        degree_program.delete()
+        return Response(status=200)
 
 
 class InternshipViewSet(viewsets.ViewSet):

@@ -1,0 +1,17 @@
+
+.mat-mdc-form-field{
+  font-size: 12px;
+  width: 70%;
+  padding: 0px;
+  margin: 0px;
+}
+
+.mat-footer-row,
+.mat-header-row,
+.mat-row {
+  display: inline-flex;
+  min-width: 100%;
+}
+.mdc-data-table__cell, .mdc-data-table__header-cell {
+  padding: 0 4px 0 4px;
+}

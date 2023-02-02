@@ -61,7 +61,7 @@ urlpatterns = [
 
     # degree_programmes
     path('api/degree-programmes/', jam_views.DegreeProgramViewSet.as_view({'get': 'list', 'post': 'create'})),
-    path('api/degree-programmes/<dp_pk>', jam_views.DegreeProgramViewSet.as_view({'get': 'retrieve'})),
+    path('api/degree-programmes/<dp_pk>', jam_views.DegreeProgramViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'delete'})),
 
     # internships
     path('api/internships/', jam_views.InternshipViewSet.as_view({'get': 'list', 'post': 'create'})),

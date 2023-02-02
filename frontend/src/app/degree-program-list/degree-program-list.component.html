@@ -1,57 +1,184 @@
+<div style="margin: 35px">
 <table mat-table style="width: 100%" [dataSource]="degree_programs" matSort class="mat-elevation-z8">
 
   <!-- Title Column -->
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    <td mat-cell *matCellDef="let element">
+      <div *ngIf="editId !== element.pk">
+        {{element.name}}
+      </div>
+      <div *ngIf="editId === element.pk">
+        <mat-form-field appearance="outline">
+          <div [formGroup]="degProgramFormGroup">
+            <input matInput type="text" placeholder="" formControlName="name">
+            <!--            <mat-error *ngIf="degProgramFormGroup.controls['name']">-->
+            <!--              Name is required-->
+            <!--            </mat-error>-->
+          </div>
+        </mat-form-field>
+      </div>
+    </td>
   </ng-container>
 
   <!-- Application Status -->
   <ng-container matColumnDef="abbreviation">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Abbreviation</th>
-    <td mat-cell *matCellDef="let element"> {{element.abbreviation}} </td>
+    <td mat-cell *matCellDef="let element">
+      <div *ngIf="editId !== element.pk">
+      {{element.abbreviation}}
+      </div>
+      <div *ngIf="editId === element.pk">
+        <mat-form-field appearance="outline" >
+          <div [formGroup]="degProgramFormGroup">
+            <input matInput type="text" placeholder="" formControlName="abbreviation">
+            <!--            <mat-error *ngIf="degProgramFormGroup.controls['name']">-->
+            <!--              Name is required-->
+            <!--            </mat-error>-->
+          </div>
+        </mat-form-field>
+      </div>
+    </td>
   </ng-container>
 
   <!-- Approval Status -->
   <ng-container matColumnDef="current_class">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Class</th>
-    <td mat-cell *matCellDef="let element">{{element.current_class}}</td>
+    <td mat-cell *matCellDef="let element">
+      <div *ngIf="editId !== element.pk">
+      {{element.current_class}}
+      </div>
+      <div *ngIf="editId === element.pk">
+        <mat-form-field appearance="outline">
+          <div [formGroup]="degProgramFormGroup">
+            <input matInput type="text" placeholder="" formControlName="current_class">
+            <!--            <mat-error *ngIf="degProgramFormGroup.controls['name']">-->
+            <!--              Name is required-->
+            <!--            </mat-error>-->
+          </div>
+        </mat-form-field>
+      </div>
+    </td>
   </ng-container>
 
   <!-- Approval Status -->
   <ng-container matColumnDef="deadline_application">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Application Deadline</th>
-    <td mat-cell *matCellDef="let element">{{element.deadline_application}}</td>
+    <td mat-cell *matCellDef="let element">
+      <div *ngIf="editId !== element.pk">
+      {{element.deadline_application}}
+      </div>
+      <div *ngIf="editId === element.pk">
+        <mat-form-field appearance="outline">
+          <div [formGroup]="degProgramFormGroup">
+            <input matInput type="date" placeholder="" formControlName="deadline_application">
+            <!--            <mat-error *ngIf="degProgramFormGroup.controls['name']">-->
+            <!--              Name is required-->
+            <!--            </mat-error>-->
+          </div>
+        </mat-form-field>
+      </div>
+    </td>
   </ng-container>
 
   <!-- Approval Status -->
   <ng-container matColumnDef="internship_start">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Start of Internship</th>
-    <td mat-cell *matCellDef="let element">{{element.internship_start}}</td>
+    <td mat-cell *matCellDef="let element">
+      <div *ngIf="editId !== element.pk">
+      {{element.internship_start}}
+      </div>
+      <div *ngIf="editId === element.pk">
+        <mat-form-field appearance="outline">
+          <div [formGroup]="degProgramFormGroup">
+            <input matInput type="date" placeholder="" formControlName="internship_start">
+            <!--            <mat-error *ngIf="degProgramFormGroup.controls['name']">-->
+            <!--              Name is required-->
+            <!--            </mat-error>-->
+          </div>
+        </mat-form-field>
+      </div>
+    </td>
   </ng-container>
 
   <!-- Approval Status -->
   <ng-container matColumnDef="internship_end">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>End of Internship</th>
-    <td mat-cell *matCellDef="let element">{{element.internship_end}}</td>
+    <td mat-cell *matCellDef="let element">
+      <div *ngIf="editId !== element.pk">
+      {{element.internship_end}}
+      </div>
+      <div *ngIf="editId === element.pk">
+        <mat-form-field appearance="outline">
+          <div [formGroup]="degProgramFormGroup">
+            <input matInput type="date" placeholder="" formControlName="internship_end">
+            <!--            <mat-error *ngIf="degProgramFormGroup.controls['name']">-->
+            <!--              Name is required-->
+            <!--            </mat-error>-->
+          </div>
+        </mat-form-field>
+      </div>
+    </td>
   </ng-container>
 
   <!-- Approval Status -->
   <ng-container matColumnDef="deadline_report1">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Class</th>
-    <td mat-cell *matCellDef="let element">{{element.deadline_report1}}</td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Report 1</th>
+    <td mat-cell *matCellDef="let element">
+      <div *ngIf="editId !== element.pk">
+      {{element.deadline_report1}}
+      </div>
+      <div *ngIf="editId === element.pk">
+        <mat-form-field appearance="outline">
+          <div [formGroup]="degProgramFormGroup">
+            <input matInput type="date" placeholder="" formControlName="deadline_report1">
+            <!--            <mat-error *ngIf="degProgramFormGroup.controls['name']">-->
+            <!--              Name is required-->
+            <!--            </mat-error>-->
+          </div>
+        </mat-form-field>
+      </div>
+    </td>
   </ng-container>
 
   <!-- Approval Status -->
   <ng-container matColumnDef="deadline_report2">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Class</th>
-    <td mat-cell *matCellDef="let element">{{element.deadline_report2}}</td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Report 2</th>
+    <td mat-cell *matCellDef="let element">
+      <div *ngIf="editId !== element.pk">
+      {{element.deadline_report2}}
+      </div>
+      <div *ngIf="editId === element.pk">
+        <mat-form-field appearance="outline">
+          <div [formGroup]="degProgramFormGroup">
+            <input matInput type="date" placeholder="" formControlName="deadline_report2">
+            <!--            <mat-error *ngIf="degProgramFormGroup.controls['name']">-->
+            <!--              Name is required-->
+            <!--            </mat-error>-->
+          </div>
+        </mat-form-field>
+      </div>
+    </td>
   </ng-container>
 
   <!-- Approval Status -->
   <ng-container matColumnDef="deadline_report3">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Class</th>
-    <td mat-cell *matCellDef="let element">{{element.deadline_report3}}</td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Report 3</th>
+    <td mat-cell *matCellDef="let element">
+      <div *ngIf="editId !== element.pk">
+      {{element.deadline_report3}}
+      </div>
+      <div *ngIf="editId === element.pk">
+        <mat-form-field appearance="outline">
+          <div [formGroup]="degProgramFormGroup">
+            <input matInput type="date" placeholder="" formControlName="deadline_report3">
+            <!--            <mat-error *ngIf="degProgramFormGroup.controls['name']">-->
+            <!--              Name is required-->
+            <!--            </mat-error>-->
+          </div>
+        </mat-form-field>
+      </div>
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="internships">
@@ -61,10 +188,29 @@
     </td>
   </ng-container>
 
+  <ng-container matColumnDef="edit">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+    <td *matCellDef="let element">
+      <div *ngIf="editId === element.pk && editId !== 0">
+        <button mat-button color="primary" (click)="editId = null" >cancel</button>
+        <button mat-button color="primary" (click)="this.updateDegPro(element.pk)" >save</button>
+        <button mat-button color="primary" (click)="this.deleteDegPro(element.pk)" >delete</button>
+      </div>
+      <div *ngIf="editId === element.pk && editId === 0">
+        <button mat-button color="primary" (click)="editId = null" >cancel</button>
+        <button mat-button color="primary" (click)="this.createDegPro()" >create</button>
+      </div>
+      <div *ngIf="editId !== element.pk">
+        <button mat-button color="primary" (click)="this.setEdit(element.pk)" >edit</button>
+      </div>
+
+    </td>
+  </ng-container>
+
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<button mat-button routerLink="/internship-form">New Internship</button>
+<button mat-button (click)="this.newDegPro()">New Internship</button>
 <app-file-upload></app-file-upload>
 
-
+</div>
