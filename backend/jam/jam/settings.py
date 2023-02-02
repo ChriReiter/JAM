@@ -31,7 +31,8 @@ ALLOWED_HOSTS = ['djangojam.matthiaswindisch.eu', '127.0.0.1', 'localhost']
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost:4200'
                         'http://192.168.0.239:8000',
-                        'http://djangojam.matthiaswindisch.eu:8000']
+                        'http://djangojam.matthiaswindisch.eu:8000',
+                        'http://jam.matthiaswindisch.eu']
 
 # Application definition
 
@@ -161,6 +162,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:4200',
     'http://192.168.0.239:8000',
-    'http://djangojam.matthiaswindisch.eu:8000'
+    'http://djangojam.matthiaswindisch.eu:8000',
+    'http://jam.matthiaswindisch.eu'
 ]
 
