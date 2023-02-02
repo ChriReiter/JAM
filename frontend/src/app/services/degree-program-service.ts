@@ -15,6 +15,7 @@ export interface DegreeProgram {
     deadline_report1: Date;
     deadline_report2: Date;
     deadline_report3: Date;
+    backgroundColor: string;
 }
 
 @Injectable({
