@@ -31,7 +31,7 @@
     <ng-container matColumnDef="approve">
       <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
       <td mat-cell *matCellDef="let element">
-        <button mat-button color="primary" (click)="this.approve(element.pk)" *ngIf="this.userService.isLecturer() && element.approval_status=='n'">
+        <button mat-button color="primary" (click)="this.approve(element.pk)" *ngIf="this.userService.isLecturer() &&(element.approval_status=='n' || element.approval_status == '?')">
           Approve
         </button>
       </td>
