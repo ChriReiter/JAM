@@ -18,7 +18,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import {MatNativeDateModule} from "@angular/material/core";
+import {MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 import {MatInputModule} from "@angular/material/input";
 import {CompanyFormComponent} from './company-form/company-form.component';
 import {DegreeProgramListComponent} from './degree-program-list/degree-program-list.component';
@@ -108,7 +108,8 @@ export function tokenGetter() {
     FullCalendarModule,
     MatExpansionModule,
   ],
-  providers: [],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
+    { provide: MAT_DATE_FORMATS, useValue: 'de-DE' }],
   bootstrap: [AppComponent]
 })
 export class AppModule {
