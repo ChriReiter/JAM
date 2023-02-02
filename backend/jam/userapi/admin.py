@@ -9,7 +9,7 @@ from .models import User
 
 class UserAdminConfig(UserAdmin):
     # Fields that are shown in the list
-    list_display=['pk','email','username','matriculation_no','first_name','last_name','gender','degree_program']
+    list_display=['pk','email','username','matriculation_no','first_name','last_name','gender']
     # Searchable fields
     search_fields=['email','username']
     readonly_fields=['date_joined','last_login']

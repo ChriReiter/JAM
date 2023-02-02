@@ -47,6 +47,7 @@ class DegreeProgram(models.Model):
     deadline_report1 = models.DateField()
     deadline_report2 = models.DateField()
     deadline_report3 = models.DateField()
+    backgroundColor = models.CharField(max_length=10, null='true')
 
     def __str__(self):
         return self.name + " (" + self.abbreviation + ") " + self.current_class
