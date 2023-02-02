@@ -11,6 +11,8 @@ import {JwtHelperService} from "@auth0/angular-jwt";
   styleUrls: ['./file-upload.component.scss']
 })
 export class FileUploadComponent {
+  report_no: string = "1"
+
   formGroup: FormGroup;
   file: File | null = null;
   student: number = -1;
@@ -28,6 +30,7 @@ export class FileUploadComponent {
     const token = localStorage.getItem(this.accessTokenLocalStorageKey);
     const decodedToken = this.jwtHelperService.decodeToken(token ? token : '');
     const userId = decodedToken?.user_id;
+    this.student = userId;
   }
 
   onChange(event: any) {
@@ -36,7 +39,7 @@ export class FileUploadComponent {
 
   upload() {
     if (this.file != null) {
-      this.fileService.uploadFile(this.file!, this.student).subscribe()
+      this.fileService.uploadFile(this.file!, this.student, this.report_no).subscribe()
     } else {
       this.snackBar.open("Please select a file first!")
     }

@@ -10,12 +10,11 @@ export class FileService {
   constructor(private http: HttpClient) {
 
   }
-  //TODO: Replace models.Students. with models.Users. in API, change number to User (only for compilation)
-  uploadFile(file: File, student: number) {
+  uploadFile(file: File, student: number, report_no: string) {
     const uploadData = new FormData();
     uploadData.append('file', file, file.name)
     uploadData.append('student', student.toString())
-    uploadData.append('student', student.toString())
+    uploadData.append('report_no', report_no)
     return this.http.post(`${environment.apiBaseUrl}/files/`, uploadData)
   }
 }
