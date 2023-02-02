@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {AppRoutingModule} from "../app-routing.module";
 import {ActivatedRoute, RouterModule} from "@angular/router";
-import { API_Request} from "../company-list/company-list.component";
 import {CompanyAPIService} from "../services/company-api.service";
-import {Company_DB, CompanyDbService} from "../services/company.service";
+import {CompanyDbService} from "../services/company.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {UserService} from "../services/user.service";
+
 export interface Address {
   address1: string;
   address2: string;
@@ -13,6 +14,7 @@ export interface Address {
   zip: string;
   city: string;
 }
+
 export interface Company_API_All {
   orb_num: number;
   name: string;
@@ -36,9 +38,11 @@ export interface Company_API_All {
   latitude: string;
   longitude: string;
 }
+
 export interface SocialAccount {
   url: string
 }
+
 export interface Technology {
   name: string;
 }
@@ -46,6 +50,14 @@ export interface Technology {
 export interface Ranking {
   position: number;
   ranking: string;
+}
+
+export interface Company_DB {
+  pk: number | null;
+  name: string;
+  orb_num: string | null;
+  custom_companies: string | null;
+  approval_status: string;
 }
 
 @Component({
@@ -103,30 +115,70 @@ export class CompanyViewComponent implements OnInit {
     longitude: ""
   }
 
+  companyDB: Company_DB = {
+    pk: null,
+    name: "",
+    orb_num: null,
+    custom_companies: null,
+    approval_status: ""
+  }
+
+  companyFromDB: Company_DB[] = []
+
   constructor(private http: HttpClient, private route: ActivatedRoute,
               private router: RouterModule,
               public companyAPIService: CompanyAPIService,
-              private companyDbService: CompanyDbService) {
+              public companyDbService: CompanyDbService,
+              private snackbar: MatSnackBar,
+              public userService: UserService) {
 
   }
+
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('orb_num');
-    if(id){
-      this.companyAPIService.getCompanyDetails(id).subscribe((details:Company_API_All) => this.company = details);
-      let companyDB: Company_DB = {
-        name: this.company.name,
-        orb_num: this.company.orb_num.toString(),
-        custom_companies: null,
-        approval_status: '?',
-        pk: null
-      }
-      this.companyDbService.createCompany(companyDB).subscribe()
-    }
 
+    if (id) {
+      this.companyAPIService.getCompanyDetails(id).subscribe(company => {
+        this.company = company
+
+        let companyDB: Company_DB = {
+          name: this.company.name,
+          orb_num: this.company.orb_num.toString(),
+          custom_companies: null,
+          approval_status: '?',
+          pk: null
+        }
+        this.companyDbService.createCompany(companyDB).subscribe();
+      });
+
+      this.companyDbService.getCompanyDBByOrbNum(id.toString()).subscribe(company => {
+        this.companyFromDB = company
+      })
+    }
   }
 
-  //TODO: Add approve method
+  //TODO: Optimize approve method
+  approve(company_orb: number) {
+    console.log("pk: " + company_orb);
+    this.companyDbService.getCompanyDBByOrbNum(company_orb.toString()).subscribe(company => {
+      company[0].approval_status = 'y'
+      this.companyDbService.updateCompany(company[0].pk!, company[0]).subscribe(() => {
+        this.ngOnInit()
+        this.snackbar.open('Approved Company: ' + company[0].name, 'OK', {duration: 3000})
+      });
+    });
+  }
 
-  //TODO: Add reject method
+  //TODO: Optimize reject method
+  reject(company_orb: number) {
+    console.log("pk: " + company_orb);
+    this.companyDbService.getCompanyDBByOrbNum(company_orb.toString()).subscribe(company => {
+      company[0].approval_status = 'n'
+      this.companyDbService.updateCompany(company[0].pk!, company[0]).subscribe(() => {
+        this.ngOnInit()
+        this.snackbar.open('Rejected Company: ' + company[0].name, 'OK', {duration: 3000})
+      });
+    });
+  }
 }

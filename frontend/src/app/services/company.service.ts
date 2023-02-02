@@ -50,4 +50,17 @@ export class CompanyDbService {
     return this.http.put<Company_DB>(`${environment.apiBaseUrl}/companies/` + pk, company)
   }
 
+  mapApprovalStatusToFull(status_string: string): string {
+    switch (status_string) {
+      case "?":
+        return "Waiting for approval"
+      case "y":
+        return "Approved"
+      case "n":
+        return "Rejected"
+      default:
+        return "Other"
+    }
+  }
+
 }
