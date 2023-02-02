@@ -58,12 +58,12 @@ export class CalendarComponent {
       for (let degree_program of degree_programs){
         this.tempEvent =  [
        // this.calendarOptions.events =[
-          {title: 'Deadline application',start: degree_program.deadline_report1.toString(), end: degree_program.deadline_report1.toString(), backgroundColor: degree_program.backgroundColor},
-          {title: 'Internship start',start: degree_program.internship_start.toString(), end: degree_program.internship_start.toString(), backgroundColor: degree_program.backgroundColor},
-          {title: 'Internship end',start: degree_program.internship_end.toString(), end: degree_program.internship_end.toString(), backgroundColor: degree_program.backgroundColor},
-          {title: 'Deadline report1',start: degree_program.deadline_report1.toString(), end: degree_program.deadline_report1.toString(), backgroundColor: degree_program.backgroundColor},
-          {title: 'Deadline report2',start: degree_program.deadline_report2.toString(), end: degree_program.deadline_report2.toString(), backgroundColor: degree_program.backgroundColor},
-          {title: 'Deadline report3',start: degree_program.deadline_report3.toString(), end: degree_program.deadline_report3.toString(), backgroundColor: degree_program.backgroundColor}
+          {title: 'Deadline application - '+degree_program.name,start: degree_program.deadline_report1.toString(), end: degree_program.deadline_report1.toString(), backgroundColor: degree_program.backgroundColor},
+          {title: 'Internship start - '+degree_program.name,start: degree_program.internship_start.toString(), end: degree_program.internship_start.toString(), backgroundColor: degree_program.backgroundColor},
+          {title: 'Internship end - '+degree_program.name,start: degree_program.internship_end.toString(), end: degree_program.internship_end.toString(), backgroundColor: degree_program.backgroundColor},
+          {title: 'Deadline report1 - '+degree_program.name,start: degree_program.deadline_report1.toString(), end: degree_program.deadline_report1.toString(), backgroundColor: degree_program.backgroundColor},
+          {title: 'Deadline report2 - '+degree_program.name,start: degree_program.deadline_report2.toString(), end: degree_program.deadline_report2.toString(), backgroundColor: degree_program.backgroundColor},
+          {title: 'Deadline report3 - '+degree_program.name,start: degree_program.deadline_report3.toString(), end: degree_program.deadline_report3.toString(), backgroundColor: degree_program.backgroundColor}
         ]
         console.log(degree_program.backgroundColor, this.tempEvent)
         this.eventsNew = this.eventsNew.concat(this.tempEvent)
