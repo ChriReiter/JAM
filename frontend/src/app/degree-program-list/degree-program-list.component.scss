@@ -1,9 +1,26 @@
 .button-new {
-  margin-top: 10px;
+  margin: 10px;
   border: 1px solid black;
   background-color: #a6d8d4;
   color: black;
   padding: 14px 28px;
   font-size: 14px;
   cursor: pointer;
+}
+
+.mat-mdc-form-field{
+  font-size: 12px;
+  width: 70%;
+  padding: 0px;
+  margin: 0px;
+}
+
+.mat-footer-row,
+.mat-header-row,
+.mat-row {
+  display: inline-flex;
+  min-width: 100%;
+}
+.mdc-data-table__cell, .mdc-data-table__header-cell {
+  padding: 0 4px 0 4px;
 }

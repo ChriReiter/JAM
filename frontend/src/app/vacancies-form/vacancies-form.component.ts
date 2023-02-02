@@ -9,6 +9,7 @@ import {CompanyAPIService} from "../services/company-api.service";
 import {Company_API_All} from "../company-view/company-view.component";
 import {CompanyDataSource} from "../services/company-data-source.service";
 import {EmailService} from "../services/email-service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-vacancies-form',
@@ -35,7 +36,8 @@ export class VacanciesFormComponent {
               private userService: UserService,
               private companyApiService: CompanyAPIService,
               private companyDataSourceService: CompanyDataSource,
-              private emailService: EmailService) {
+              private emailService: EmailService,
+              private snackBar: MatSnackBar) {
     this.vacantPositionFormGroup = new FormGroup({
       pk: new FormControl(null),
       title: new FormControl('', [Validators.required]),
@@ -52,6 +54,8 @@ export class VacanciesFormComponent {
     if (this.userService.isLecturer()) {
       this.approval_status = 'y'
     }
+
+    this.mailRecipients = this.emailService.getMailReceivers()
 
     this.vacantPositionFormGroup.get("company")?.valueChanges.subscribe(company => {
       this.companyDbService.getCompanyDBByOrbNum(company.orb_num.toString()).subscribe(companyDB => {
@@ -86,27 +90,27 @@ export class VacanciesFormComponent {
         degree_program: this.degree_program_pk
       }
       this.vacantPosition = vacant_position
-      //TODO: Add correct recipients
+
       if (this.isLecturer) {
         this.emailService.sendEmail(this.emailService.mailBuilder(
           "New Vacancy Added",
           "Hi " + this.username + "!\n\n The vacancy \"" + this.vacantPosition!!.title + "\" was just added to the database!\n\n" +
           "Apply quickly before its too late!\n\n" +
           "Best regards, your JAM-Team",
-          ["jam.wapdev@gmail.com"]
+          this.mailRecipients
         )).subscribe()
       } else {
         this.emailService.sendEmail(this.emailService.mailBuilder(
-          "New Vacancy Added",
-          "Hi " + this.username + "!\n\n The vacancy \"" + this.vacantPosition!!.title + "\" was just added to the database!\n\n" +
-          "Please accept or reject the request for students to see!" +
-          "Click here to view the request: \nhttp://localhost:4200/vacancies-view/" + this.vacantPosition!!.pk +
+          "New vacancy waiting for approval",
+          "Hi!\n\nThe vacancy \"" + this.vacantPosition!!.title + "\" was just added to the database!\n\n" +
+          "Please accept or reject the request for students to see it!" +
           "\n\nKind Greetings, your JAM-Team",
-          ["jam.wapdev@gmail.com"]
+          this.mailRecipients
         )).subscribe()
       }
       this.vacantPositionService.createVacancy(vacant_position).subscribe(response => {
         this.router.navigate(['vacancies-list'])
+        this.snackBar.open("Successfully created vacancy, a lecturer will review it shows up here!")
       })
     })
   }

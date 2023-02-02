@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CompanyAPIService} from "../services/company-api.service";
 import {Company_API_All} from "../company-view/company-view.component";
+import {EmailService} from "../services/email-service";
 
 @Component({
   selector: 'app-internship-form',
@@ -25,6 +26,8 @@ export class InternshipFormComponent {
 
   param: string | null = null
 
+  mailRecipients: string[] = []
+
   public companySearchFromControl: FormControl = new FormControl();
 
   constructor(private http: HttpClient,
@@ -33,7 +36,8 @@ export class InternshipFormComponent {
               private internshipService: InternshipService,
               private companyApiService: CompanyAPIService,
               private companyDbService: CompanyDbService,
-              private userService: UserService) {
+              private userService: UserService,
+              private emailService: EmailService) {
     this.internshipFormGroup = new FormGroup({
       pk: new FormControl(null),
       title: new FormControl('', [Validators.required]),
@@ -83,6 +87,7 @@ export class InternshipFormComponent {
         }
       })
     })
+    this.mailRecipients = this.emailService.getMailReceivers()
   }
   createInternship() {
     this.internship = {
@@ -95,7 +100,14 @@ export class InternshipFormComponent {
       user: this.student_pk
     }
     this.internshipService.createInternships(this.internship).subscribe( () => {
-      this.router.navigate(['internships-list'])
+      this.emailService.sendEmail(this.emailService.mailBuilder(
+        "New internship waiting for approval",
+        "Hi!\n\nThe internship \"" + this.internship!!.title + "\" was just added to the database!\n\n" +
+        "Please accept or reject the request!" +
+        "\n\nKind Greetings, your JAM-Team",
+        this.mailRecipients
+      )).subscribe()
+      this.router.navigate(['internship-list'])
     })
   }
 

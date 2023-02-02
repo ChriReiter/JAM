@@ -13,6 +13,10 @@ export interface User {
   username: string;
 }
 
+export interface Refresh {
+  refresh: string;
+}
+
 export interface Student {
   pk: number;
   matriculation_no: string;
@@ -37,6 +41,7 @@ export interface Lecturer {
 export class UserService {
 
   readonly accessTokenLocalStorageKey = 'access_token';
+  readonly refreshTokenLocalStorageKey = 'refresh_token';
   isLoggedIn$ = new BehaviorSubject(false);
   isLecturer$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -46,7 +51,22 @@ export class UserService {
     if (token) {
       console.log('Token expiration date: ' + this.jwtHelperService.getTokenExpirationDate(token));
       const tokenValid = !this.jwtHelperService.isTokenExpired(token);
-      this.isLoggedIn$.next(tokenValid);
+      const refreshToken = localStorage.getItem(this.refreshTokenLocalStorageKey);
+      if(!tokenValid && refreshToken){
+        let refresh: Refresh = {refresh: refreshToken}
+        this.http.post(`${environment.apiBaseUrl}/token/refresh/`, refresh).subscribe({
+          next: (res: any) => {
+            this.isLoggedIn$.next(true);
+            localStorage.setItem('access_token', res.access);
+          },
+          error: () => {
+            this.snackbar.open('Login expired', 'OK', {duration: 3000});
+            this.router.navigate(['/login']);
+          }
+        });
+      }else{
+        this.isLoggedIn$.next(tokenValid);
+      }
     }
   }
 
@@ -56,6 +76,7 @@ export class UserService {
         next: (res: any) => {
           this.isLoggedIn$.next(true);
           localStorage.setItem('access_token', res.access);
+          localStorage.setItem('refresh_token', res.refresh);
           this.router.navigate(['/dashboard']);
           this.snackbar.open('Successfully logged in', 'OK', {duration: 3000});
           sessionStorage.setItem('username', userData.username);

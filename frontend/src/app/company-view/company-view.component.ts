@@ -121,8 +121,12 @@ export class CompanyViewComponent implements OnInit {
         approval_status: '?',
         pk: null
       }
-      this.companyDbService.createCompany(companyDB)
+      this.companyDbService.createCompany(companyDB).subscribe()
     }
 
   }
+
+  //TODO: Add approve method
+
+  //TODO: Add reject method
 }

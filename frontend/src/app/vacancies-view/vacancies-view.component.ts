@@ -6,6 +6,7 @@ import {Company_DB} from "../services/company.service";
 import {Internship2, InternshipService} from "../services/internship.service";
 import {Student, UserService} from "../services/user.service";
 import {JwtHelperService} from "@auth0/angular-jwt";
+import {EmailService} from "../services/email-service";
 
 @Component({
   selector: 'app-vacancies-view',
@@ -37,12 +38,14 @@ export class VacanciesViewComponent {
 
   isLecturer: boolean = false
 
+  mailRecipients: string[] = []
+
   vacancy_status_ui: String = ""
 
   constructor(private http: HttpClient, private route: ActivatedRoute,
               private router: Router, private vacantPositionService: VacantPositionService,
               private internshipService: InternshipService, public userService: UserService,
-              private jwtHelperService: JwtHelperService) {
+              private jwtHelperService: JwtHelperService, private emailService: EmailService) {
 
   }
 
@@ -62,7 +65,8 @@ export class VacanciesViewComponent {
     const token = localStorage.getItem(this.accessTokenLocalStorageKey);
     const decodedToken = this.jwtHelperService.decodeToken(token ? token : '');
     const userId = decodedToken?.user_id;
-
+    this.student_id = userId
+    this.mailRecipients = this.emailService.getMailReceivers()
   }
 
   //TODO: Creating internship does not work yet, API error
@@ -74,7 +78,7 @@ export class VacanciesViewComponent {
         pk: 0,
         title: vacantPosition.title,
         description: vacantPosition.description,
-        application_status: "o",
+        application_status: "a",
         approval_status: vacancy.approval_status,
         user: this.student_id!,
         company: vacantPosition.company.pk!
@@ -89,6 +93,14 @@ export class VacanciesViewComponent {
   approve() {
     this.vacancy.approval_status = "y"
     this.vacantPositionService.updateVacancy(this.vacancy).subscribe(() => {
+      this.emailService.sendEmail(this.emailService.mailBuilder(
+        "New Vacancy Added",
+        "Hi!\n\n The vacancy \"" + this.vacancy!.title + "\" was just added to the database!\n\n" +
+        "Apply quickly before its too late!\n\n" +
+        "Best regards, \nyour JAM-Team",
+        this.mailRecipients
+      )).subscribe()
+      this.router.navigate(["vacancies-list"])
       this.ngOnInit()
     })
   }

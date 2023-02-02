@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {CompanyListComponent} from './company-list/company-list.component';
@@ -18,7 +17,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import {MatNativeDateModule} from "@angular/material/core";
+import {MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 import {MatInputModule} from "@angular/material/input";
 import {CompanyFormComponent} from './company-form/company-form.component';
 import {DegreeProgramListComponent} from './degree-program-list/degree-program-list.component';
@@ -106,9 +105,10 @@ export function tokenGetter() {
     MatGridListModule,
     MatDividerModule,
     FullCalendarModule,
-    MatExpansionModule,
+    MatExpansionModule
   ],
-  providers: [],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
+    { provide: MAT_DATE_FORMATS, useValue: 'de-DE' }],
   bootstrap: [AppComponent]
 })
 export class AppModule {
