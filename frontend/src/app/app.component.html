@@ -13,7 +13,7 @@
   </ng-template>
   <ng-template #routeCompanyList>
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
-            routerLink="company-list">
+            [routerLink]="['/company-list']">
       <mat-icon>home</mat-icon>
     </button>
     <a [routerLink]="['/company-list']" style="text-decoration: none">Job Application Manager</a>
@@ -32,16 +32,16 @@
     <button class="login-container" mat-button (click)="userService.logout()"> Logout</button>
   </ng-template>
   <ng-template #loggedOut>
-    <button class="login-container" mat-button routerLink="login"> Login</button>
+    <button class="login-container" mat-button [routerLink]="['/login']"> Login</button>
   </ng-template>
 </div>
 
 <div class="second-row" *ngIf="this.userService.isLoggedIn$ | async">
-  <button *ngIf="!(this.userService.isLecturer())" mat-button class="custom-button" routerLink="internship-list">My Internships</button>
-  <button mat-button class="custom-button" routerLink="degree-program-list">List Degree Programs</button>
-  <button *ngIf="this.userService.isLecturer()" mat-button class="custom-button" routerLink="internship-list">List Internships</button>
-  <button mat-button class="custom-button" routerLink="company-list">List Companies</button>
-  <button mat-button class="custom-button" routerLink="vacancies-list">List Vacancies</button>
+  <button *ngIf="!(this.userService.isLecturer())" mat-button class="custom-button" [routerLink]="['/internship-list']">My Internships</button>
+  <button mat-button class="custom-button" [routerLink]="['/degree-program-list']">List Degree Programs</button>
+  <button *ngIf="this.userService.isLecturer()" mat-button class="custom-button" [routerLink]="['/internship-list']">List Internships</button>
+  <button mat-button class="custom-button" [routerLink]="['/company-list']">List Companies</button>
+  <button mat-button class="custom-button" [routerLink]="['/vacancies-list']">List Vacancies</button>
 </div>
 
 

@@ -8,6 +8,7 @@ import {CompanyDataSource} from "../services/company-data-source.service";
 import {CompanyAPIService} from "../services/company-api.service";
 import {PageEvent} from "@angular/material/paginator";
 import {debounceTime, distinctUntilChanged} from "rxjs";
+import {UserService} from "../services/user.service";
 
 export interface Company_API_Result {
   orb_num: number;
@@ -51,7 +52,8 @@ export class CompanyListComponent implements OnInit {
               public route: ActivatedRoute,
               private router: Router,
               private snackbar: MatSnackBar,
-              private companyAPI: CompanyAPIService
+              private companyAPI: CompanyAPIService,
+              public userService: UserService
   ) {
     this.dataSource = new CompanyDataSource(this.companyAPI);
     this.pageEvent = new PageEvent();
