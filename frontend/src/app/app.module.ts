@@ -44,6 +44,7 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import {FullCalendarModule} from "@fullcalendar/angular";
 import { CalendarComponent } from './calendar/calendar.component';
 import {MatDialogModule, MatDialog} from "@angular/material/dialog";
+import { DialogComponent } from './dialog/dialog.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -66,7 +67,8 @@ export function tokenGetter() {
     FileUploadComponent,
     LecturerDashboardComponent,
     DashboardComponent,
-    CalendarComponent
+    CalendarComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,

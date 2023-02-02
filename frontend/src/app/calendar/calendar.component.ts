@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {CalendarOptions, EventInput, EventSourceInput} from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/daygrid';
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog"
+import {MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog"
 import {DegreeProgram, DegreeProgramService} from "../services/degree-program-service";
 import {HttpClient} from "@angular/common/http";
 import {UserService} from "../services/user.service";
+import {DialogComponent} from "../dialog/dialog.component";
+
 
 @Component({
   selector: 'app-calendar',
@@ -14,9 +16,19 @@ import {UserService} from "../services/user.service";
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent {
-  constructor(private dialog: MatDialog, private http: HttpClient, private userService: UserService, private degreeProgramService :DegreeProgramService) {}
+  constructor(private dialog: MatDialog, private http: HttpClient, private userService: UserService,
+              private degreeProgramService :DegreeProgramService) {}
   eventsNew: any[] = []
   tempEvent: any[] =[]
+  dialogRef!: MatDialogRef<DialogComponent>
+  config: MatDialogConfig = {
+    height: '280px',
+    width: '400px',
+    data: {
+      event: [],
+      date: []
+    }
+  }
 
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
@@ -28,15 +40,17 @@ export class CalendarComponent {
     },
     events: '',
     eventClick: this.handleDateClick.bind(this)
+
   };
 
   ngOnInit() {
    this.getAllEvents();
-   this.calendarOptions.events = this.eventsNew;
   }
 
   handleDateClick(arg: any) {
-    alert(arg.event._def.title)
+   // alert(arg.event._def.title)
+    this.config.data = {event: arg.event._def.title, date: arg.event._def.end}
+    this.dialogRef = this.dialog.open(DialogComponent, this.config);
   }
 
   getAllEvents(){
@@ -56,4 +70,4 @@ export class CalendarComponent {
       }
     })
   }
-}
+  }

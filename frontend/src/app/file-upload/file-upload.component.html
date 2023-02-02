@@ -1,4 +1,6 @@
 <form [formGroup]="formGroup">
   <input type="file" name="fileInput" (change)="onChange($event)"/>
 </form>
+<div style='margin-top: 10px'>
 <button mat-raised-button color="primary" (click)="upload()">Upload</button>
+</div>
