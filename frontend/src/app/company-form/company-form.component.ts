@@ -18,21 +18,21 @@ export class CompanyFormComponent implements OnInit{
               private companyDbService: CompanyDbService,
               private emailService: EmailService) {
     this.companyFormGroup = new FormGroup({
-      name: new FormControl(''),
+      name: new FormControl('',[Validators.required]),
       description: new FormControl(''),
-      country: new FormControl(''),
-      city: new FormControl(''),
-      zip: new FormControl(''),
-      address1: new FormControl(''),
-      phone: new FormControl(''),
-      email: new FormControl(''),
+      country: new FormControl('',[Validators.required]),
+      city: new FormControl('',[Validators.required]),
+      zip: new FormControl('',[Validators.required, Validators.minLength(4)]),
+      address1: new FormControl('',[Validators.required]),
+      phone: new FormControl('',[Validators.required]),
+      email: new FormControl('',[Validators.required,Validators.email]),
       website: new FormControl(''),
       linkedin_account: new FormControl(''),
       facebook_account: new FormControl(''),
       twitter_account: new FormControl(''),
       employees: new FormControl(''),
       revenue: new FormControl(''),
-      year_founded: new FormControl(''),
+      year_founded: new FormControl('',[Validators.required,Validators.minLength(4)]),
     })
   }
   ngOnInit(): void {

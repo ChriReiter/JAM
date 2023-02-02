@@ -56,6 +56,7 @@ class DegreeProgramViewSet(viewsets.ViewSet):
         degree_program.deadline_report1=request.data["deadline_report1"]
         degree_program.deadline_report2=request.data["deadline_report2"]
         degree_program.deadline_report3=request.data["deadline_report3"]
+        degree_program.backgroundColor=request.data["backgroundColor"]
 
         degree_program.save()
         serializer = serializers.DegreeProgramSerializer(degree_program)

@@ -3,7 +3,7 @@ import {DegreeProgram, DegreeProgramService} from "../services/degree-program-se
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {FileService} from "../services/file.service";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Student, UserService} from "../services/user.service";
 import {D} from "@angular/cdk/keycodes";
 
@@ -34,15 +34,15 @@ export class DegreeProgramListComponent {
     })
 
     this.degProgramFormGroup = new FormGroup({
-      name: new FormControl(''),
-      abbreviation: new FormControl(''),
-      current_class: new FormControl(''),
-      deadline_application: new FormControl(''),
-      internship_start: new FormControl(''),
-      internship_end: new FormControl(''),
-      deadline_report1: new FormControl(''),
-      deadline_report2: new FormControl(''),
-      deadline_report3: new FormControl('')
+      name: new FormControl('',[Validators.required]),
+      abbreviation: new FormControl('',[Validators.required]),
+      current_class: new FormControl('',[Validators.required]),
+      deadline_application: new FormControl('',[Validators.required]),
+      internship_start: new FormControl('',[Validators.required]),
+      internship_end: new FormControl('',[Validators.required]),
+      deadline_report1: new FormControl('',[Validators.required]),
+      deadline_report2: new FormControl('',[Validators.required]),
+      deadline_report3: new FormControl('',[Validators.required])
     })
       this.initDate = new Date()
   }
