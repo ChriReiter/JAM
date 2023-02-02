@@ -2,6 +2,7 @@ import {Component, Injectable, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Company_DB, CompanyDbService} from "../services/company.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {EmailService} from "../services/email-service";
 
 @Component({
   selector: 'app-company-form',
@@ -11,11 +12,11 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 export class CompanyFormComponent implements OnInit{
   companyFormGroup: FormGroup;
-  ngOnInit(): void {
+  mailRecipients: string[] = []
 
-  }
   constructor(private route: ActivatedRoute,
-              private companyDbService: CompanyDbService) {
+              private companyDbService: CompanyDbService,
+              private emailService: EmailService) {
     this.companyFormGroup = new FormGroup({
       name: new FormControl(''),
       description: new FormControl(''),
@@ -34,6 +35,9 @@ export class CompanyFormComponent implements OnInit{
       year_founded: new FormControl(''),
     })
   }
+  ngOnInit(): void {
+    this.mailRecipients = this.emailService.getMailReceivers()
+  }
 
   createOrUpdateCompany() {
     let company: Company_DB = {
@@ -43,7 +47,15 @@ export class CompanyFormComponent implements OnInit{
       custom_companies: null,
       orb_num: ""
     }
-    this.companyDbService.createCompany(company)
+    this.companyDbService.createCompany(company).subscribe( () => {
+      this.emailService.sendEmail(this.emailService.mailBuilder(
+        "New company waiting for approval",
+        "Hi!\n\nThe company \"" + company.name + "\" was just added to the database!\n\n" +
+        "Please accept or reject the request for students to see it!" +
+        "\n\nKind Greetings, your JAM-Team",
+        this.mailRecipients
+      )).subscribe()
+    })
   }
 
 

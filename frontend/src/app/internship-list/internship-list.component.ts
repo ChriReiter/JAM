@@ -10,6 +10,7 @@ import {PageEvent} from "@angular/material/paginator";
 import {CompanyFormComponent} from "../company-form/company-form.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ApplicationStatusDialogComponent} from "../application-status-dialog/application-status-dialog.component";
+import {EmailService} from "../services/email-service";
 
 @Component({
   selector: 'app-internship-list',
@@ -35,14 +36,16 @@ export class InternshipListComponent {
   pageIndex = 0;
   pageEvent: PageEvent;
 
+  mailRecipients: string[] = []
+
   editMode = false;
 
-  displayedColumns = ['title', 'application_status', 'approval_status', 'company', 'approve', 'reject', 'update']
+  displayedColumns = ['title', 'application_status', 'approval_status', 'company', 'approve', 'reject']
 
   constructor(private http: HttpClient, public internshipService: InternshipService,
               public userService: UserService, private snackbar: MatSnackBar,
               private route: ActivatedRoute, private jwtHelperService: JwtHelperService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog, private emailService: EmailService) {
     this.pageEvent = new PageEvent();
   }
 
@@ -74,6 +77,8 @@ export class InternshipListComponent {
         this.paginatedInternships = internships.slice(this.pageIndex * this.pageSize, (this.pageIndex * this.pageSize) + this.pageSize);
       })
     }
+
+    this.mailRecipients = this.emailService.getMailReceivers()
   }
 
   filterForStudent(filterValue: string | null) {
@@ -92,6 +97,12 @@ export class InternshipListComponent {
     this.internshipService.getInternship(internship_pk.toString()).subscribe(internship => {
       internship.approval_status = 'y'
       this.internshipService.updateInternships(internship).subscribe(() => {
+        this.emailService.sendEmail(this.emailService.mailBuilder(
+          "Internship Approved",
+          "Hi!\n\nCongratulations! The internship \"" + internship.title + "\" has just been approved!\n\n" +
+          "\n\nKind Greetings, your JAM-Team",
+          this.mailRecipients
+        )).subscribe()
         this.ngOnInit()
         this.snackbar.open('Approved Internship: ' + internship.title)
       })

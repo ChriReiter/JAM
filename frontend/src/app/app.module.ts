@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {CompanyListComponent} from './company-list/company-list.component';
@@ -106,7 +105,7 @@ export function tokenGetter() {
     MatGridListModule,
     MatDividerModule,
     FullCalendarModule,
-    MatExpansionModule,
+    MatExpansionModule
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
     { provide: MAT_DATE_FORMATS, useValue: 'de-DE' }],

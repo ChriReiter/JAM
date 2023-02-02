@@ -29,6 +29,10 @@ export class EmailService {
     }
     return mail
   }
+
+  getMailReceivers(): string[] {
+    return ['jedori4622@ezgiant.com', 'nofafom923@breazeim.com']
+  }
   //use this function to send your emails
   sendEmail(mail: Mail) {
     return this.http.post(`${environment.apiBaseUrl}/send-mail/`, mail)
