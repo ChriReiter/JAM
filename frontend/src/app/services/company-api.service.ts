@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Company_API_All} from "../company-view/company-view.component";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {concat, concatMap, forkJoin, map, merge, mergeAll, Observable, of, tap} from "rxjs";
+import {concatMap, map, Observable, of} from "rxjs";
 import {CompanyDetailService} from "./company-detail.service";
 import {UserService} from "./user.service";
+
 interface API_Request {
   request_fields: undefined;
   results: Company_API_All[];
@@ -42,22 +43,20 @@ export class CompanyAPIService {
       pageIndex+=10;
     }
 
-    const mergedObservable = observables.reduce((acc, curr) => acc.pipe(
-      concatMap(val1 => curr.pipe(
-        map(val2 => [...val1, ...val2])
-      ))
-    ), of([]));
-  return mergedObservable;
+  return observables.reduce((acc, curr) => acc.pipe(
+    concatMap(val1 => curr.pipe(
+      map(val2 => [...val1, ...val2])
+    ))
+  ), of([]));
   }
 
   getCompanyDetails(orb_num:string):Observable<Company_API_All>{
 
-    let result = this.http.get(`https://api.orb-intelligence.com/3/fetch/${orb_num}`, {
+    return this.http.get(`https://api.orb-intelligence.com/3/fetch/${orb_num}`, {
       params: new HttpParams()
         .set('api_key', 'c66c5dad-395c-4ec6-afdf-7b78eb94166a')
     }).pipe(
-      map((res: any) =>  res)
+      map((res: any) => res)
     );
-    return result;
   }
 }
