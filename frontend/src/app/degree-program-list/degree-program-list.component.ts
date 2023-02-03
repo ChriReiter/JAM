@@ -97,7 +97,7 @@ export class DegreeProgramListComponent {
   }
 
   handleReportClick(dp_pk: number, report: number) {
-    this.fileUploadConfig.data = {event: 'Report ' + dp_pk}
+    this.fileUploadConfig.data = {event: 'Report ' + report}
     this.dialogRef = this.dialog.open(DialogComponent, this.fileUploadConfig);
     this.dialogRef.componentInstance.degree_program = dp_pk
     this.dialogRef.componentInstance.report_no = report

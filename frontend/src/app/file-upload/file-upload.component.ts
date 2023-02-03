@@ -51,13 +51,13 @@ export class FileUploadComponent {
   upload() {
     if (this.file != null) {
       this.fileService.uploadFile(this.file!, this.student, this.report_no, this.degree_program).subscribe(x=>{
-        this.snackBar.open("File Successfully uploaded")
+        this.snackBar.open("File Successfully uploaded", 'OK', {duration: 3000})
         if(this.dialogRef)
          this.dialogRef.close()
         }
       )
     } else {
-      this.snackBar.open("Please select a file first!")
+      this.snackBar.open("Please select a file first!", 'OK', {duration: 3000})
     }
 
   }
