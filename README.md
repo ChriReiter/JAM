@@ -19,7 +19,9 @@ JAM is a single page application built with Angular for the frontend, and Django
 
 ## Installation Requirements
 
-### Frontend
+* An up to date browser; we recommend using Mozilla Firefox or Google Chrome for
 
-
-### Backend
+In order to host this application:
+* Run as explained in frontend and backend documentation
+    * [Angular Frontend Documentation]()
+    * [Django Backend Documentation]()

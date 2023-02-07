@@ -1,6 +1,17 @@
-# Frontend
+# JAM - Job Application Management - Frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.5.
+
+## Libraries
+
+* [Material Design](https://material.angular.io/)
+* [FullCalendar](https://fullcalendar.io/)
+
+## Requirements
+
+* Newest version of NodeJS ([Download here](https://nodejs.org/en/download/))
+* Check if installed with ```npm --version```
+* In the *frontend* folder run ```npm install```
 
 ## Development server
 
