@@ -23,5 +23,5 @@ JAM is a single page application built with Angular for the frontend, and Django
 
 In order to host this application:
 * Run as explained in frontend and backend documentation
-    * [Angular Frontend Documentation]()
-    * [Django Backend Documentation]()
+    * [Angular Frontend Documentation](https://github.com/ChriReiter/JAM/blob/main/frontend/README.md)
+    * [Django Backend Documentation](https://github.com/ChriReiter/JAM/blob/main/backend/README.md)
